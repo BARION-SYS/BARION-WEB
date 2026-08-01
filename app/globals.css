@@ -5,128 +5,296 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-heading: var(--font-sans);
-    --font-sans: var(--font-sans);
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-exito: var(--exito);
+  --color-info: var(--info);
+  --color-advertencia: var(--advertencia);
+  --color-hero: var(--hero);
+  --color-hero-foreground: var(--hero-foreground);
+  --color-hero-muted: var(--hero-muted);
+  --color-hero-sutil: var(--hero-sutil);
+  --color-hero-suave: var(--hero-suave);
+  --color-hero-superficie: var(--hero-superficie);
+  --color-hero-superficie-alta: var(--hero-superficie-alta);
+  --color-hero-borde: var(--hero-borde);
+  --color-hero-primary: var(--hero-primary);
+  --color-hero-primary-foreground: var(--hero-primary-foreground);
+  --color-hero-exito: var(--hero-exito);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/*
+  Única fuente de color del sistema.
+  Tema claro en :root, tema oscuro en .dark — los componentes usan SOLO
+  tokens semánticos; nunca la variante `dark:` ni hex crudos.
+*/
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+  color-scheme: light;
+  /* Permite animar tamaños hacia `auto` — lo usa `.acordeon-suave`. Solo afecta
+     a lo que declare esa transición: nada más del sitio la pide. */
+  interpolate-size: allow-keywords;
+  --background: #fafaf9;
+  --foreground: #18181b;
+  --card: #ffffff;
+  --card-foreground: #18181b;
+  --popover: #ffffff;
+  --popover-foreground: #18181b;
+  --primary: #8f6b21;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #f5efe0;
+  --accent-foreground: #6b4f16;
+  --destructive: #dc2626;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #8f6b21;
+  --chart-1: #b8912f;
+  --chart-2: #16a34a;
+  --chart-3: #2563eb;
+  --chart-4: #d97706;
+  --chart-5: #dc2626;
+  --exito: #15803d;
+  --info: #1d4ed8;
+  --advertencia: #a16207;
+  /*
+    Hero de la landing: escala propia para el bloque que va SOBRE la fotografía
+    de barbería. Existe aparte de la escala general porque ahí el contraste no
+    lo decide la superficie del tema, sino la foto y sus velos.
+
+    Cada tema tiene su fotografía —sala clara con oro, sala oscura con oro— y
+    estos valores acompañan a la suya. Definirlos como tokens (y no `text-white`
+    / `bg-black/55` sueltos) mantiene la regla de cero color crudo y de cero
+    variante `dark:` en los componentes.
+  */
+  --hero: #f5f2ec;
+  /*
+    Velo de la fotografía. UN solo degradado y solo por la IZQUIERDA, que es
+    donde va el titular: a los dos tercios ya es transparente, así que la mitad
+    derecha —la del panel— enseña la sala sin tocar. No hay velo plano a propósito;
+    cubrir la foto entera para «asegurar contraste» la apaga donde no hace falta,
+    y una foto apagada no vende una barbería.
+  */
+  --hero-velo-fuerte: #f5f2ecf7;
+  --hero-velo-medio: #f5f2ecc4;
+  --hero-foreground: #1c1917;
+  --hero-muted: #44403c;
+  /*
+    Tercer nivel de texto. Existe como token y no como `text-hero-muted/60`
+    porque diluir un gris con opacidad sobre blanco lo deja en 2,6:1 — por
+    debajo del mínimo legible— y sobre negro hace lo contrario. Cada tema
+    necesita su valor, no el mismo con transparencia.
+  */
+  --hero-sutil: #6f6862;
+  /* Superficie inerte: barras sin seleccionar, puntos de la barra de ventana */
+  --hero-suave: #ded8cd;
+  --hero-superficie: #ffffff;
+  --hero-superficie-alta: #faf8f4;
+  --hero-borde: #1c19172e;
+  /* Algo más oscuro que el `--primary` del tema: aquí compite con una
+     fotografía luminosa, no con una tarjeta blanca */
+  --hero-primary: #7d5c1b;
+  --hero-primary-foreground: #ffffff;
+  --hero-exito: #15803d;
+  /* Radio contenido: formularios e inputs rectos suaves, no circulares */
+  --radius: 0.45rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #18181b;
+  --sidebar-primary: #8f6b21;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #8f6b21;
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+  color-scheme: dark;
+  --background: #0a0a0b;
+  --foreground: #fafafa;
+  --card: #111113;
+  --card-foreground: #fafafa;
+  --popover: #18181b;
+  --popover-foreground: #fafafa;
+  --primary: #d4a843;
+  --primary-foreground: #0a0a0b;
+  /* Superficies con más separación y textos secundarios legibles (contraste AA) */
+  --secondary: #1d1d23;
+  --secondary-foreground: #fafafa;
+  --muted: #1d1d23;
+  --muted-foreground: #a1a1aa;
+  --accent: #d4a843;
+  --accent-foreground: #0a0a0b;
+  --destructive: #ef4444;
+  --border: #2e2e36;
+  --input: #1e1e24;
+  --ring: #d4a843;
+  --chart-1: #d4a843;
+  --chart-2: #22c55e;
+  --chart-3: #3b82f6;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+  --exito: #34d399;
+  --info: #60a5fa;
+  --advertencia: #facc15;
+  /* Hero en oscuro — ver la nota de :root. Va con la fotografía nocturna */
+  --hero: #090909;
+  --hero-velo-fuerte: #090909f7;
+  --hero-velo-medio: #090909c4;
+  --hero-foreground: #ffffff;
+  --hero-muted: #b3b3b3;
+  --hero-sutil: #8a8a90;
+  --hero-suave: #2b2b31;
+  --hero-superficie: #111113;
+  --hero-superficie-alta: #17171b;
+  --hero-borde: #ffffff1f;
+  --hero-primary: #d4a843;
+  --hero-primary-foreground: #0a0a0b;
+  --hero-exito: #34d399;
+  --sidebar: #111113;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #d4a843;
+  --sidebar-primary-foreground: #0a0a0b;
+  --sidebar-accent: #1d1d23;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #2e2e36;
+  --sidebar-ring: #d4a843;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    }
+  }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/*
+  Cinta de barbería — franja diagonal animada de la marca (login, acentos).
+  Usa tokens, funciona en ambos temas. El desplazamiento equivale a un periodo
+  del patrón (40px / sin 45° ≈ 56.57px) para que el bucle sea continuo.
+*/
+@layer utilities {
+  /* Scrollbar fino y tematizado para áreas con scroll interno (calendario, paneles) */
+  .scroll-fino {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    /* Sin encadenamiento: al llegar al fondo del área NO sigue scrolleando el padre */
+    overscroll-behavior: contain;
+  }
+  .scroll-fino::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scroll-fino::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 9999px;
+  }
+  .scroll-fino::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /*
+    Único velo del hero: entra opaco por la izquierda para sostener el titular y
+    se retira del todo antes de la mitad. De ahí a la derecha la fotografía va
+    limpia — el panel se separa de ella con su borde y su sombra, no tapándola.
+  */
+  .velo-hero-lateral {
+    background-image: linear-gradient(
+      to right,
+      var(--hero-velo-fuerte) 0%,
+      var(--hero-velo-medio) 34%,
+      transparent 62%
+    );
+  }
+
+  /*
+    Acordeón de las preguntas frecuentes. El despliegue de un <details> es
+    instantáneo por defecto y da un salto seco; esto lo convierte en un
+    deslizamiento SIN JavaScript ni medir alturas.
+
+    `interpolate-size` (en :root) es lo que permite animar hacia `auto`, y
+    `content-visibility` con `allow-discrete` mantiene el contenido pintado
+    durante el cierre — sin eso desaparece de golpe en el primer fotograma.
+    Donde el navegador no lo soporte se abre de una vez, que es exactamente el
+    comportamiento de siempre.
+  */
+  .acordeon-suave::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 280ms ease,
+      content-visibility 280ms allow-discrete;
+  }
+  .acordeon-suave[open]::details-content {
+    block-size: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .acordeon-suave::details-content {
+      transition: none;
     }
-  button:not(:disabled), [role="button"]:not(:disabled) {
-    cursor: pointer;
+  }
+
+  .cinta-barberia {
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--primary) 0 10px,
+      transparent 10px 20px,
+      var(--destructive) 20px 30px,
+      transparent 30px 40px
+    );
+    animation: cinta-desplazamiento 2.4s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cinta-barberia {
+      animation: none;
     }
-  html {
-    @apply font-sans;
-    }
+  }
+}
+
+@keyframes cinta-desplazamiento {
+  to {
+    background-position: 56.57px 0;
+  }
 }
