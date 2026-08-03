@@ -32,8 +32,20 @@ export const nombresDeRegion: Record<CodigoRegion, string> = {
   ES: "España",
 }
 
-/** Límite sin techo (`null`) dicho en lenguaje humano, no con un guion. */
-export function textoLimite(cantidad: number | null, singular: string, plural: string): string {
+/**
+ * Un tope de uso dicho en lenguaje humano, no con un guion.
+ *
+ * Tres estados, como en `LimitesPlan`: un número es el tope, `null` es sin
+ * techo y **ausente devuelve `null`** — el plan no declara ese tope y quien
+ * pinta se salta la línea. Traducir un tope ausente a «sin límite» sería
+ * prometer en la página algo que nadie decidió.
+ */
+export function textoLimite(
+  cantidad: number | null | undefined,
+  singular: string,
+  plural: string
+): string | null {
+  if (cantidad === undefined) return null
   if (cantidad === null) return `${plural} sin límite`
   return cantidad === 1 ? `1 ${singular}` : `Hasta ${cantidad} ${plural}`
 }

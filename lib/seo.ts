@@ -108,6 +108,33 @@ export function grafoLanding(planes: PlanPublico[]): Nodo | null {
 }
 
 function aplicacion(planes: PlanPublico[], sitio: string): Nodo {
+  const ofertas = planes.flatMap((plan) =>
+    plan.precios.map((precio) => {
+      const monto = montoDecimal(precio.montoCentavos, precio.moneda)
+      return {
+        "@type": "Offer",
+        name: plan.nombre,
+        description: plan.descripcion,
+        category: "Suscripción",
+        price: monto,
+        priceCurrency: precio.moneda,
+        availability: "https://schema.org/InStock",
+        url: rutasApp.registro,
+        eligibleRegion: pais(precio.codigoPais),
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: monto,
+          priceCurrency: precio.moneda,
+          // Cuánto dura lo que se paga: sin esto, «89000» se lee como el
+          // precio de comprar el programa, no el de un mes de servicio.
+          billingDuration: 1,
+          billingIncrement: 1,
+          unitCode: precio.periodo === "anual" ? "ANN" : "MON",
+        },
+      }
+    })
+  )
+
   return {
     "@type": "SoftwareApplication",
     "@id": idAplicacion(sitio),
@@ -134,32 +161,11 @@ function aplicacion(planes: PlanPublico[], sitio: string): Nodo {
     // Sin `aggregateRating` ni `review`: no hay clientes todavía. Inventar una
     // valoración es la manera más rápida de que a un sitio se le retire el
     // resultado enriquecido para siempre.
-    offers: planes.flatMap((plan) =>
-      plan.precios.map((precio) => {
-        const monto = montoDecimal(precio.montoCentavos, precio.moneda)
-        return {
-          "@type": "Offer",
-          name: plan.nombre,
-          description: plan.descripcion,
-          category: "Suscripción",
-          price: monto,
-          priceCurrency: precio.moneda,
-          availability: "https://schema.org/InStock",
-          url: rutasApp.registro,
-          eligibleRegion: pais(precio.codigoPais),
-          priceSpecification: {
-            "@type": "UnitPriceSpecification",
-            price: monto,
-            priceCurrency: precio.moneda,
-            // Cuánto dura lo que se paga: sin esto, «89000» se lee como el
-            // precio de comprar el programa, no el de un mes de servicio.
-            billingDuration: 1,
-            billingIncrement: 1,
-            unitCode: precio.periodo === "anual" ? "ANN" : "MON",
-          },
-        }
-      })
-    ),
+    //
+    // `offers` se OMITE si no hay ninguna tarifa publicable, en vez de declarar
+    // una lista vacía: un nodo que dice «tengo ofertas: ninguna» es peor que uno
+    // que no habla de precios, y es justo lo que un validador marca.
+    ...(ofertas.length > 0 ? { offers: ofertas } : {}),
   }
 }
 

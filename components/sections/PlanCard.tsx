@@ -15,7 +15,19 @@ interface LandingPlanCardProps {
 
 export function PlanCard({ plan, region }: LandingPlanCardProps) {
   const { locale } = regiones[region]
+
+  // El precio del país que se está mirando, **mensual**. Si el plan solo tiene
+  // tarifa anual en esta región no se divide entre doce para inventar una
+  // mensual: eso es exactamente la conversión que el sitio no hace. Se dice
+  // «Consultar», igual que cuando no hay ninguna tarifa.
   const precio = plan.precios.find((p) => p.codigoPais === region && p.periodo === "mensual")
+
+  // Los topes que el plan DECLARA. Uno ausente no se pinta: ni número inventado
+  // ni «sin límite» de regalo.
+  const topes = [
+    { icono: MapPin, texto: textoLimite(plan.limites.sedes, "sede", "sedes") },
+    { icono: Users, texto: textoLimite(plan.limites.barberos, "barbero", "barberos") },
+  ].filter((tope): tope is { icono: typeof MapPin; texto: string } => tope.texto !== null)
 
   return (
     <div
@@ -53,16 +65,16 @@ export function PlanCard({ plan, region }: LandingPlanCardProps) {
         )}
       </p>
 
-      <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
-        <li className="flex items-center gap-1.5">
-          <MapPin className="size-3.5" aria-hidden />
-          {textoLimite(plan.limites.sedes, "sede", "sedes")}
-        </li>
-        <li className="flex items-center gap-1.5">
-          <Users className="size-3.5" aria-hidden />
-          {textoLimite(plan.limites.barberos, "barbero", "barberos")}
-        </li>
-      </ul>
+      {topes.length > 0 && (
+        <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
+          {topes.map(({ icono: Icono, texto }) => (
+            <li key={texto} className="flex items-center gap-1.5">
+              <Icono className="size-3.5" aria-hidden />
+              {texto}
+            </li>
+          ))}
+        </ul>
+      )}
 
       <ul className="mt-6 flex-1 space-y-2.5">
         {plan.funciones.map((funcion) => (

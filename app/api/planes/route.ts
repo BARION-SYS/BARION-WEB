@@ -16,10 +16,12 @@ import { obtenerPlanesPublicos } from "@/services/planes"
  *  · **La caché es de este sitio.** La respuesta se guarda una hora aquí, así
  *    que mil visitas no son mil peticiones a la api.
  *
- * Devuelve `{ data }`, la MISMA envoltura del contrato de la api: si algún día
- * el cliente pasa a hablar con ella directamente, no cambia nada más que la
- * dirección. Y como pasa por `services/planes`, hereda su validación y su
- * respaldo — nunca contesta con algo fuera de contrato.
+ * Devuelve `{ data }`, la MISMA envoltura del contrato de la api. Lo de dentro
+ * ya es la vista de ESTE sitio y no la de la api: el importe viene convertido a
+ * número, las funciones traducidas a frases de venta y el copy del plan
+ * incorporado. Es lo que necesita un componente, y viene de `services/planes`,
+ * así que hereda su validación y su respaldo — nunca contesta con algo fuera de
+ * contrato, ni con la forma cruda de la api.
  *
  * Hoy no lo consume nadie: la landing resuelve los planes en el servidor, que
  * es lo correcto para lo que tiene que posicionar. Está para que el primer

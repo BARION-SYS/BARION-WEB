@@ -121,6 +121,14 @@ function seccionPrecios(planes: PlanPublico[]): string {
       return `  - ${nombresDeRegion[precio.codigoPais]}: ${importe} / ${precio.periodo === "anual" ? "año" : "mes"}`
     })
 
+    // Un tope que el plan no declara no se escribe. Aquí menos que en ninguna
+    // parte: lo que diga este archivo lo repite un asistente como si fuera la
+    // ficha del producto, y un «sin límite» de más no se puede desdecir.
+    const topes = [
+      textoLimite(plan.limites.sedes, "sede", "sedes"),
+      textoLimite(plan.limites.barberos, "barbero", "barberos"),
+    ].filter((tope): tope is string => tope !== null)
+
     return [
       // «Plan recomendado» y no «el más elegido»: aquí escribe la máquina que
       // luego cita un asistente, y no hay clientes cuyo número respalde un
@@ -129,10 +137,13 @@ function seccionPrecios(planes: PlanPublico[]): string {
       "",
       plan.descripcion,
       "",
-      `- ${textoLimite(plan.limites.sedes, "sede", "sedes")}, ${textoLimite(plan.limites.barberos, "barbero", "barberos")}`,
+      ...(topes.length > 0 ? [`- ${topes.join(", ")}`] : []),
       ...plan.funciones.map((funcion) => `- ${funcion}`),
-      "- Precio por barbería:",
-      ...precios,
+      // Sin ninguna tarifa publicable no se calla el plan —existe— pero tampoco
+      // se le pone cifra: se dice lo mismo que la tarjeta de la página.
+      ...(precios.length > 0
+        ? ["- Precio por barbería:", ...precios]
+        : ["- Precio por barbería: consultar."]),
       "",
     ].join("\n")
   })
