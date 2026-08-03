@@ -14,7 +14,7 @@ interface LandingPlanCardProps {
 }
 
 export function PlanCard({ plan, region }: LandingPlanCardProps) {
-  const { moneda, locale } = regiones[region]
+  const { locale } = regiones[region]
   const precio = plan.precios.find((p) => p.codigoPais === region && p.periodo === "mensual")
 
   return (
@@ -38,8 +38,13 @@ export function PlanCard({ plan, region }: LandingPlanCardProps) {
             en el cliente es un precio inventado. */}
         {precio ? (
           <>
+            {/* La moneda es la DEL PRECIO, no la que este sitio asocia al país:
+                el importe y su moneda viajan juntos desde la API y separarlos
+                es cómo se acaba pintando un importe en dólares con el formato
+                del peso. El `locale` sí es el de quien mira — decide los puntos
+                y los decimales, no la escala. */}
             <span className="text-4xl font-bold tracking-tight tabular-nums">
-              {formatMoney(precio.montoCentavos, moneda, locale)}
+              {formatMoney(precio.montoCentavos, precio.moneda, locale)}
             </span>
             <span className="text-sm text-muted-foreground">/ mes</span>
           </>
