@@ -17,7 +17,7 @@ import type { LimitesPlan, PeriodoPlan, PlanPublico, PrecioPublico } from "@/typ
  * que un segundo sitio necesite lo mismo.
  */
 
-const PERIODOS = ["mensual", "anual"] as const
+const PERIODOS = ["mensual", "semestral", "anual"] as const
 
 /** Marca de todas las líneas de este servicio: `grep "\[planes\]"` y ya está. */
 const ETIQUETA = "[planes]"
@@ -236,8 +236,8 @@ function publicar(plan: PlanApi, descartados: string[]): PlanPublico {
  *    ni entrada en el selector; enseñarlo sería una fila sin país;
  *  · **la moneda no está en `escalaPorMoneda`** — sin escala no hay división
  *    posible y `formatMoney` pintaría «NaN» en el sitio del precio;
- *  · **el periodo no es `mensual` ni `anual`** — hoy lo garantiza un CHECK en la
- *    base, pero el contrato lo declara como cadena y un tercer periodo no puede
+ *  · **el periodo no es uno de los tres publicados** — hoy lo garantiza un CHECK
+ *    en la base, pero el contrato lo declara como cadena y un periodo nuevo no puede
  *    tumbar la tabla entera.
  *
  * `trim` y mayúsculas porque `codigo_pais` es `char(2)` y `moneda` es `char(3)`:

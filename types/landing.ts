@@ -3,7 +3,7 @@ import type { CodigoMoneda, CodigoRegion } from "@/config/regiones"
 // Lo que devuelve `GET /publico/planes` — lectura anónima, sin sesión.
 // Como todo el dinero del sistema: unidad menor (centavos) + ISO 4217.
 
-export type PeriodoPlan = "mensual" | "anual"
+export type PeriodoPlan = "mensual" | "semestral" | "anual"
 
 export interface PrecioPublico {
   codigoPais: CodigoRegion

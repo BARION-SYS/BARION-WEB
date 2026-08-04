@@ -3,7 +3,10 @@
     "codigo": "esencial",
     "nombre": "Esencial",
     "descripcion": "Para la barbería de un local que quiere dejar el cuaderno.",
-    "limites": { "sedes": 1, "barberos": 5 },
+    "limites": {
+      "sedes": 1,
+      "barberos": 5
+    },
     "funciones": [
       "Agenda con reserva en línea",
       "Escaparate público con tu enlace",
@@ -13,16 +16,70 @@
     ],
     "destacado": false,
     "precios": [
-      { "codigoPais": "CO", "montoCentavos": 8900000, "moneda": "COP", "periodo": "mensual" },
-      { "codigoPais": "US", "montoCentavos": 2900, "moneda": "USD", "periodo": "mensual" },
-      { "codigoPais": "ES", "montoCentavos": 2500, "moneda": "EUR", "periodo": "mensual" }
+      {
+        "codigoPais": "CO",
+        "montoCentavos": 8900000,
+        "moneda": "COP",
+        "periodo": "mensual"
+      },
+      {
+        "codigoPais": "US",
+        "montoCentavos": 2900,
+        "moneda": "USD",
+        "periodo": "mensual"
+      },
+      {
+        "codigoPais": "ES",
+        "montoCentavos": 2500,
+        "moneda": "EUR",
+        "periodo": "mensual"
+      },
+      {
+        "codigoPais": "CO",
+        "montoCentavos": 48060000,
+        "moneda": "COP",
+        "periodo": "semestral"
+      },
+      {
+        "codigoPais": "CO",
+        "montoCentavos": 85440000,
+        "moneda": "COP",
+        "periodo": "anual"
+      },
+      {
+        "codigoPais": "US",
+        "montoCentavos": 15660,
+        "moneda": "USD",
+        "periodo": "semestral"
+      },
+      {
+        "codigoPais": "US",
+        "montoCentavos": 27840,
+        "moneda": "USD",
+        "periodo": "anual"
+      },
+      {
+        "codigoPais": "ES",
+        "montoCentavos": 13500,
+        "moneda": "EUR",
+        "periodo": "semestral"
+      },
+      {
+        "codigoPais": "ES",
+        "montoCentavos": 24000,
+        "moneda": "EUR",
+        "periodo": "anual"
+      }
     ]
   },
   {
     "codigo": "pro",
     "nombre": "Pro",
     "descripcion": "Para la barbería con equipo, varias sedes y clientes que vuelven.",
-    "limites": { "sedes": 5, "barberos": 25 },
+    "limites": {
+      "sedes": 5,
+      "barberos": 25
+    },
     "funciones": [
       "Todo lo de Esencial",
       "Campañas de cumpleaños y reactivación",
@@ -32,9 +89,60 @@
     ],
     "destacado": true,
     "precios": [
-      { "codigoPais": "CO", "montoCentavos": 19900000, "moneda": "COP", "periodo": "mensual" },
-      { "codigoPais": "US", "montoCentavos": 6900, "moneda": "USD", "periodo": "mensual" },
-      { "codigoPais": "ES", "montoCentavos": 5900, "moneda": "EUR", "periodo": "mensual" }
+      {
+        "codigoPais": "CO",
+        "montoCentavos": 19900000,
+        "moneda": "COP",
+        "periodo": "mensual"
+      },
+      {
+        "codigoPais": "US",
+        "montoCentavos": 6900,
+        "moneda": "USD",
+        "periodo": "mensual"
+      },
+      {
+        "codigoPais": "ES",
+        "montoCentavos": 5900,
+        "moneda": "EUR",
+        "periodo": "mensual"
+      },
+      {
+        "codigoPais": "CO",
+        "montoCentavos": 107460000,
+        "moneda": "COP",
+        "periodo": "semestral"
+      },
+      {
+        "codigoPais": "CO",
+        "montoCentavos": 191040000,
+        "moneda": "COP",
+        "periodo": "anual"
+      },
+      {
+        "codigoPais": "US",
+        "montoCentavos": 37260,
+        "moneda": "USD",
+        "periodo": "semestral"
+      },
+      {
+        "codigoPais": "US",
+        "montoCentavos": 66240,
+        "moneda": "USD",
+        "periodo": "anual"
+      },
+      {
+        "codigoPais": "ES",
+        "montoCentavos": 31860,
+        "moneda": "EUR",
+        "periodo": "semestral"
+      },
+      {
+        "codigoPais": "ES",
+        "montoCentavos": 56640,
+        "moneda": "EUR",
+        "periodo": "anual"
+      }
     ]
   }
 ]

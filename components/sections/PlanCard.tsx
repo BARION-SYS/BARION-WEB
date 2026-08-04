@@ -1,7 +1,8 @@
 import { ArrowRight, Check, MapPin, Users } from "lucide-react"
 import type { CodigoRegion } from "@/config/regiones"
 import { regiones } from "@/config/regiones"
-import type { PlanPublico } from "@/types/landing"
+import type { PeriodoPlan, PlanPublico } from "@/types/landing"
+import { ahorroPorcentual, periodos } from "@/config/periodos"
 import { textoLimite } from "@/lib/region"
 import { rutasApp } from "@/config/rutas"
 import { Button } from "@/components/ui/button"
@@ -11,16 +12,24 @@ import { cn } from "@/lib/utils"
 interface LandingPlanCardProps {
   plan: PlanPublico
   region: CodigoRegion
+  periodo: PeriodoPlan
 }
 
-export function PlanCard({ plan, region }: LandingPlanCardProps) {
+export function PlanCard({ plan, region, periodo }: LandingPlanCardProps) {
   const { locale } = regiones[region]
 
-  // El precio del país que se está mirando, **mensual**. Si el plan solo tiene
-  // tarifa anual en esta región no se divide entre doce para inventar una
-  // mensual: eso es exactamente la conversión que el sitio no hace. Se dice
+  // El precio del país que se está mirando, en el período elegido. Si el plan no
+  // tiene esa tarifa publicada aquí **no se calcula desde otra**: ni dividiendo
+  // la anual entre doce ni multiplicando la mensual por seis. Se dice
   // «Consultar», igual que cuando no hay ninguna tarifa.
-  const precio = plan.precios.find((p) => p.codigoPais === region && p.periodo === "mensual")
+  const precio = plan.precios.find((p) => p.codigoPais === region && p.periodo === periodo)
+
+  // El mensual solo para comparar. Sin él no se presume ahorro: el porcentaje
+  // sale de restar dos importes publicados, nunca de uno supuesto.
+  const mensual = plan.precios.find((p) => p.codigoPais === region && p.periodo === "mensual")
+  const ahorro = precio
+    ? ahorroPorcentual(periodo, precio.montoCentavos, mensual?.montoCentavos ?? null)
+    : null
 
   // Los topes que el plan DECLARA. Uno ausente no se pinta: ni número inventado
   // ni «sin límite» de regalo.
@@ -58,12 +67,20 @@ export function PlanCard({ plan, region }: LandingPlanCardProps) {
             <span className="text-4xl font-bold tracking-tight tabular-nums">
               {formatMoney(precio.montoCentavos, precio.moneda, locale)}
             </span>
-            <span className="text-sm text-muted-foreground">/ mes</span>
+            <span className="text-sm text-muted-foreground">{periodos[periodo].sufijo}</span>
           </>
         ) : (
           <span className="text-2xl font-bold tracking-tight">Consultar</span>
         )}
       </p>
+
+      {/* El ahorro se enseña solo cuando existe de verdad. Un hueco fijo con
+          «ahorra 0 %» en el mensual sería ruido en la tarjeta que más se mira. */}
+      {ahorro !== null && (
+        <p className="mt-2 text-sm font-medium text-primary">
+          Ahorras un {ahorro}% frente a pagar mes a mes
+        </p>
+      )}
 
       {topes.length > 0 && (
         <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground">

@@ -8,6 +8,7 @@ import {
   PAISES_SERVIDOS,
   RESUMEN_IA,
 } from "@/config/sitio"
+import { periodos } from "@/config/periodos"
 import type { CodigoRegion } from "@/config/regiones"
 import { preguntasFrecuentes } from "@/constants/faq"
 import { bloquesValor, capacidadesExtra } from "@/constants/valor"
@@ -126,10 +127,14 @@ function aplicacion(planes: PlanPublico[], sitio: string): Nodo {
           price: monto,
           priceCurrency: precio.moneda,
           // Cuánto dura lo que se paga: sin esto, «89000» se lee como el
-          // precio de comprar el programa, no el de un mes de servicio.
-          billingDuration: 1,
+          // precio de comprar el programa, no el de un período de servicio.
+          // Cuántos meses cubre el importe. El semestral no tiene código propio
+          // en UN/CEFACT, así que se declara como seis meses en vez de
+          // aproximarlo a un año: un dato estructurado que redondea el período
+          // contradice al precio que la página enseña al lado.
+          billingDuration: periodos[precio.periodo].meses,
           billingIncrement: 1,
-          unitCode: precio.periodo === "anual" ? "ANN" : "MON",
+          unitCode: "MON",
         },
       }
     })

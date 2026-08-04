@@ -1,10 +1,9 @@
 import type { CodigoRegion } from "@/config/regiones"
-import { PlanCard } from "@/components/sections/PlanCard"
+import { PreciosGrid } from "@/components/sections/PreciosGrid"
 import { RegionSelect } from "@/components/sections/RegionSelect"
 import { garantiasPlan } from "@/constants/valor"
 import type { PlanPublico } from "@/types/landing"
 import { RevelarEnScroll } from "@/components/common/RevelarEnScroll"
-import { cn } from "@/lib/utils"
 
 interface LandingPreciosListProps {
   planes: PlanPublico[]
@@ -14,7 +13,11 @@ interface LandingPreciosListProps {
 /**
  * La sección que decide. Se renderiza en servidor con los precios ya resueltos:
  * sin parpadeo de «cargando» y con las cifras en el HTML de origen, que es lo
- * que ve el buscador. Lo único cliente es el selector de país.
+ * que ve el buscador.
+ *
+ * Dos elecciones y viajan distinto, a propósito: el **país** vuelve al servidor
+ * porque decide qué precios existen, y el **período** se resuelve en el cliente
+ * porque los tres ya vinieron en la misma respuesta.
  */
 export function PreciosList({ planes, region }: LandingPreciosListProps) {
   return (
@@ -30,27 +33,15 @@ export function PreciosList({ planes, region }: LandingPreciosListProps) {
               Un precio por barbería, no por cada cosa que uses
             </h2>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              El precio depende del país donde factures, no del cambio del día. Cambias de plan
-              cuando el negocio lo pida, y lo que ya está agendado no se toca.
+              El precio depende del país donde factures, no del cambio del día. Pagas mes a mes o
+              adelantas y pagas menos; cambias de plan cuando el negocio lo pida, y lo que ya está
+              agendado no se toca.
             </p>
           </div>
           <RegionSelect region={region} />
         </RevelarEnScroll>
 
-        {/* La rejilla se adapta a cuántos planes devuelva la API: con dos, tres
-            columnas dejarían un hueco que se lee como un plan que falta */}
-        <div
-          className={cn(
-            "mt-12 grid grid-cols-1 gap-6",
-            planes.length >= 3 ? "md:grid-cols-3" : "mx-auto max-w-4xl md:grid-cols-2"
-          )}
-        >
-          {planes.map((plan, indice) => (
-            <RevelarEnScroll key={plan.codigo} retardo={indice * 0.08} className="h-full">
-              <PlanCard plan={plan} region={region} />
-            </RevelarEnScroll>
-          ))}
-        </div>
+        <PreciosGrid planes={planes} region={region} />
 
         {/* Lo que trae CUALQUIER plan: es lo que se pregunta justo después de
             mirar los precios, y responderlo aquí evita una tabla comparativa */}
