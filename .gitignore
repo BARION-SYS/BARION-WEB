@@ -37,3 +37,7 @@ next-env.d.ts
 
 # el ejemplo SÍ se versiona: es la documentación de qué variables hacen falta
 !.env.example
+
+# Skills del asistente: contenido descargado. Se versiona el lock, no la copia.
+.agents
+.claude
