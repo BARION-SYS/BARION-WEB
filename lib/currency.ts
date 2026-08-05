@@ -26,6 +26,28 @@ const escalaPorMoneda: Record<CodigoMoneda, number> = {
   EUR: 2,
 }
 
+/**
+ * Cuántos decimales se PINTAN. Nada que ver con la escala de arriba.
+ *
+ * Estos valores son los de CLDR —el peso colombiano no lleva decimales, el
+ * dólar y el euro sí— pero se declaran aquí en vez de dejárselos al formateador,
+ * y el motivo no es estético: **`Intl` no da el mismo resultado en el servidor
+ * que en el navegador**. Cada uno trae su propia versión de ICU y los datos de
+ * moneda cambian entre versiones. Con Node 22 (ICU 78) el servidor emitía
+ * `$ 1.280.000` y el navegador `$ 1.280.000,00` para el mismo importe: React ve
+ * dos textos distintos, falla la hidratación y **vuelve a renderizar el árbol
+ * entero en el cliente**, que es lo que además hacía saltar el aviso del
+ * `<script>` de next-themes.
+ *
+ * Un importe que se sirve renderizado no puede depender de qué ICU tenga
+ * delante. Moneda nueva = entrada aquí, igual que en la escala.
+ */
+const decimalesPorMoneda: Record<CodigoMoneda, number> = {
+  COP: 0,
+  USD: 2,
+  EUR: 2,
+}
+
 // Formateadores Intl memoizados por locale+opciones — nunca crear por render.
 const formatos = new Map<string, Intl.NumberFormat>()
 
@@ -61,16 +83,25 @@ export function montoDecimal(amountMinor: number, currency: CodigoMoneda): strin
 }
 
 /**
- * El importe para leer. Los decimales los pone el formateador según moneda y
- * locale —CLDR ya sabe que el peso colombiano no los lleva y el euro sí—, así
- * que aquí no se fuerzan: forzarlos fue lo que rompió el precio.
+ * El importe para leer. Los decimales salen de `decimalesPorMoneda` y **se le
+ * imponen al formateador**: dejárselos a CLDR daba un texto en el servidor y
+ * otro en el navegador, y eso rompe la hidratación de una página que se sirve
+ * renderizada.
+ *
+ * Que se fijen aquí no reabre el error del factor cien: lo que se pinta y lo que
+ * se divide siguen siendo dos tablas separadas, y quien divide es
+ * `aUnidadMayor` con `escalaPorMoneda`.
  */
 export function formatMoney(
   amountMinor: number,
   currency: CodigoMoneda,
   locale = LOCALE_DEFAULT
 ): string {
-  return getNumberFormat(locale, { style: "currency", currency }).format(
-    aUnidadMayor(amountMinor, currency)
-  )
+  const decimales = decimalesPorMoneda[currency]
+  return getNumberFormat(locale, {
+    style: "currency",
+    currency,
+    minimumFractionDigits: decimales,
+    maximumFractionDigits: decimales,
+  }).format(aUnidadMayor(amountMinor, currency))
 }
