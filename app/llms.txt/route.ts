@@ -1,9 +1,15 @@
-import { regiones } from "@/config/regiones"
+import {
+  esRegionConocida,
+  regiones,
+  REGIONES_CONOCIDAS,
+  type CodigoRegion,
+} from "@/config/regiones"
 import { CORREO_CONTACTO, rutasApp } from "@/config/rutas"
-import { DESCRIPCION, NOMBRE_SITIO, PAISES_SERVIDOS, RESUMEN_IA } from "@/config/sitio"
+import { DESCRIPCION, NOMBRE_SITIO, RESUMEN_IA } from "@/config/sitio"
 import { gruposPreguntas } from "@/constants/faq"
 import { bloquesValor, capacidadesExtra, garantiasPlan, pasosReserva } from "@/constants/valor"
 import { formatMoney } from "@/lib/currency"
+import { obtenerPaisesOperados } from "@/services/paises"
 import { obtenerPlanesPublicos } from "@/services/planes"
 import { nombresDeRegion, textoLimite } from "@/lib/region"
 import { SITIO_URL } from "@/lib/seo"
@@ -15,7 +21,7 @@ import type { PlanPublico } from "@/types/landing"
  * Un asistente al que le preguntan «¿qué software uso para mi barbería?» no
  * lee la página: lee lo que puede recuperar barato y sin ejecutar JavaScript.
  * Esta es esa versión — el mismo contenido de la landing en texto plano, con
- * los precios de los tres países y las preguntas frecuentes enteras.
+ * los precios de cada mercado y las preguntas frecuentes enteras.
  *
  * Sale de las MISMAS constantes que pinta la página y del mismo endpoint de
  * planes: si fuera un archivo escrito a mano en `public/`, a la segunda subida
@@ -28,9 +34,17 @@ import type { PlanPublico } from "@/types/landing"
 export const revalidate = 3600
 
 export async function GET(): Promise<Response> {
-  const planes = await obtenerPlanesPublicos()
+  // Dónde opera Barion lo dice la api, igual que en la landing. Importa más
+  // aquí que en ninguna otra superficie: lo que diga este archivo lo repite un
+  // asistente como si fuera la ficha del producto, y «opera en España» no se
+  // puede desdecir una vez que se ha citado.
+  const [planes, paises] = await Promise.all([obtenerPlanesPublicos(), obtenerPaisesOperados()])
 
-  return new Response(construirDocumento(planes), {
+  const operados = paises
+    ? (paises.map((pais) => pais.codigo).filter(esRegionConocida) as CodigoRegion[])
+    : REGIONES_CONOCIDAS
+
+  return new Response(construirDocumento(planes, operados), {
     headers: {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
@@ -38,7 +52,7 @@ export async function GET(): Promise<Response> {
   })
 }
 
-function construirDocumento(planes: PlanPublico[]): string {
+function construirDocumento(planes: PlanPublico[], operados: CodigoRegion[]): string {
   return [
     `# ${NOMBRE_SITIO}`,
     "",
@@ -50,7 +64,7 @@ function construirDocumento(planes: PlanPublico[]): string {
     seccionQueNoEs(),
     seccionCapacidades(),
     seccionReserva(),
-    seccionPrecios(planes),
+    seccionPrecios(planes, operados),
     seccionPreguntas(),
     seccionEnlaces(),
   ].join("\n")
@@ -113,7 +127,7 @@ function seccionReserva(): string {
   ].join("\n")
 }
 
-function seccionPrecios(planes: PlanPublico[]): string {
+function seccionPrecios(planes: PlanPublico[], operados: CodigoRegion[]): string {
   const lineas = planes.map((plan) => {
     const precios = plan.precios.map((precio) => {
       const { locale } = regiones[precio.codigoPais]
@@ -151,7 +165,7 @@ function seccionPrecios(planes: PlanPublico[]): string {
   return [
     "## Precios",
     "",
-    `Barion opera en ${PAISES_SERVIDOS.map((codigo) => `${nombresDeRegion[codigo]} (${regiones[codigo].moneda})`).join(", ")}.`,
+    `Barion opera en ${operados.map((codigo) => `${nombresDeRegion[codigo]} (${regiones[codigo].moneda})`).join(", ")}.`,
     "El precio de cada país es propio, no la conversión del cambio del día, y se fija por el país donde factura la barbería —no por dónde se mire la página—.",
     "El importe es **por barbería**, no por barbero ni por función.",
     "",

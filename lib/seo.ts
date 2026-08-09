@@ -1,13 +1,6 @@
 import { envPublico } from "@/config/env.public"
 import { CORREO_CONTACTO, rutasApp } from "@/config/rutas"
-import {
-  DESCRIPCION,
-  IDIOMA,
-  LOGO_SOCIAL,
-  NOMBRE_SITIO,
-  PAISES_SERVIDOS,
-  RESUMEN_IA,
-} from "@/config/sitio"
+import { DESCRIPCION, IDIOMA, LOGO_SOCIAL, NOMBRE_SITIO, RESUMEN_IA } from "@/config/sitio"
 import { periodos } from "@/config/periodos"
 import type { CodigoRegion } from "@/config/regiones"
 import { preguntasFrecuentes } from "@/constants/faq"
@@ -57,6 +50,13 @@ const idAplicacion = (sitio: string) => `${sitio}#aplicacion`
 /**
  * Quién publica y qué sitio es. Va en el layout porque vale para TODA página
  * servida desde aquí, incluido el 404.
+ *
+ * **Sin `areaServed`, y no es un olvido.** Dónde opera Barion lo dice la api y
+ * cambia con el negocio; este grafo lo pinta el layout, que se sirve en cada
+ * página y no tiene por qué ir a buscarlo. El dato vive donde se puede
+ * mantener: en el nodo de la aplicación, que ya lo recibe (`grafoLanding`).
+ * Declararlo aquí obligaría a repetirlo en dos sitios, y el que se
+ * desincroniza es siempre el que nadie mira.
  */
 export function grafoSitio(): Nodo | null {
   const sitio = SITIO_URL
@@ -73,7 +73,6 @@ export function grafoSitio(): Nodo | null {
         logo: new URL(LOGO_SOCIAL, sitio).toString(),
         email: CORREO_CONTACTO,
         description: RESUMEN_IA,
-        areaServed: PAISES_SERVIDOS.map(pais),
       },
       {
         "@type": "WebSite",
@@ -93,22 +92,27 @@ export function grafoSitio(): Nodo | null {
 /**
  * El producto y sus precios, más las preguntas frecuentes.
  *
- * Se publican los precios de LOS TRES PAÍSES, no solo los de la región que se
- * está mirando: quien indexa la página entra una vez, sin cookie y con la
- * cabecera de su centro de datos, y lo que interesa es que sepa que el mismo
- * plan tiene precio propio en Colombia, Estados Unidos y España.
+ * Se publican los precios de TODOS los países con tarifa, no solo los de la
+ * región que se está mirando: quien indexa la página entra una vez, sin cookie
+ * y con la cabecera de su centro de datos, y lo que interesa es que sepa que el
+ * mismo plan tiene precio propio en cada mercado.
+ *
+ * **`operados` es otra cosa que los precios publicados**, y por eso viaja
+ * aparte: un país puede tener tarifa cargada y estar cerrado. Lo que declara
+ * `areaServed` es dónde se puede CONTRATAR, que es lo que un buscador entiende
+ * por «área de servicio» — no dónde hay una cifra en una tabla.
  */
-export function grafoLanding(planes: PlanPublico[]): Nodo | null {
+export function grafoLanding(planes: PlanPublico[], operados: CodigoRegion[]): Nodo | null {
   const sitio = SITIO_URL
   if (!sitio) return null
 
   return {
     "@context": "https://schema.org",
-    "@graph": [aplicacion(planes, sitio), preguntas(sitio)],
+    "@graph": [aplicacion(planes, operados, sitio), preguntas(sitio)],
   }
 }
 
-function aplicacion(planes: PlanPublico[], sitio: string): Nodo {
+function aplicacion(planes: PlanPublico[], operados: CodigoRegion[], sitio: string): Nodo {
   const ofertas = planes.flatMap((plan) =>
     plan.precios.map((precio) => {
       const monto = montoDecimal(precio.montoCentavos, precio.moneda)
@@ -158,7 +162,7 @@ function aplicacion(planes: PlanPublico[], sitio: string): Nodo {
       "@type": "BusinessAudience",
       audienceType: "Dueños y administradores de barberías",
     },
-    areaServed: PAISES_SERVIDOS.map(pais),
+    areaServed: operados.map(pais),
     featureList: [
       ...bloquesValor.flatMap((bloque) => bloque.detalles),
       ...capacidadesExtra.map((capacidad) => capacidad.texto),

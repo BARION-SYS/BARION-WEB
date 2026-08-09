@@ -1,5 +1,3 @@
-import { regiones, type CodigoRegion } from "@/config/regiones"
-
 /**
  * Identidad del sitio en un solo sitio.
  *
@@ -84,5 +82,9 @@ export const IMAGEN_SOCIAL = {
 /** Logotipo en absoluto para el JSON-LD (la variante clara, sobre fondo claro). */
 export const LOGO_SOCIAL = "/barion-logo-light.webp"
 
-/** Dónde opera Barion, derivado de las regiones: agregar un país las actualiza. */
-export const PAISES_SERVIDOS = Object.keys(regiones) as CodigoRegion[]
+// Aquí vivía `PAISES_SERVIDOS`, derivado de `regiones`. Se retiró porque decía
+// una cosa y significaba otra: eran los países que este repositorio sabe
+// FORMATEAR, publicados en el JSON-LD y en `/llms.txt` como los países donde
+// Barion opera. Dónde se opera lo decide `paises.activo` en la base y lo sirve
+// `GET /publico/paises` — la misma respuesta que consumen el selector de
+// precios y el formulario de alta.

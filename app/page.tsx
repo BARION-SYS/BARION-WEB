@@ -75,7 +75,7 @@ export default async function LandingPage() {
       {/* El producto, sus precios en los tres países y las preguntas, en la
           forma que lee una máquina. Los precios son los MISMOS que pinta
           `PreciosList` — salen del mismo `planes`. */}
-      <DatosEstructurados datos={grafoLanding(planes)} />
+      <DatosEstructurados datos={grafoLanding(planes, operados)} />
       <Hero region={region} />
       <ValorList />
       <VistaPrevia region={region} />
