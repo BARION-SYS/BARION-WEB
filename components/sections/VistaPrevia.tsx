@@ -1,8 +1,27 @@
 import { CalendarDays, Check, Users } from "lucide-react"
+import { envPublico } from "@/config/env.public"
 import type { CodigoRegion } from "@/config/regiones"
 import { EscaparateDemo } from "@/components/sections/EscaparateDemo"
 import { pasosReserva } from "@/constants/valor"
 import { RevelarEnScroll } from "@/components/common/RevelarEnScroll"
+
+/**
+ * La dirección que se lee en la barra de la maqueta.
+ *
+ * Sale del dominio real de la aplicación y no de una constante escrita a mano,
+ * por lo mismo que en el resto del sistema: un dominio cableado enseña uno que
+ * no existe en cuanto el despliegue vive en otro sitio, y quien lo teclee no
+ * llega a ninguna parte. Sin `host` legible se cae a la ruta sola, que sigue
+ * siendo cierta.
+ */
+function direccionDelPanel(): string {
+  const ruta = "/dashboard/citas"
+  try {
+    return `${new URL(envPublico.appUrl).host}${ruta}`
+  } catch {
+    return ruta
+  }
+}
 
 /**
  * El panel y el escaparate, dibujados con componentes.
@@ -95,7 +114,7 @@ function MarcoPanel() {
             <span className="size-2.5 rounded-full bg-border" />
           </div>
           <span className="ml-2 truncate rounded-md bg-muted px-2 py-1 text-[11px] text-muted-foreground">
-            barion.app/dashboard/citas
+            {direccionDelPanel()}
           </span>
         </div>
 

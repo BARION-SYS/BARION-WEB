@@ -41,5 +41,13 @@ export const rutasApp = {
   registro: `${envPublico.appUrl}/registro`,
 } as const
 
-/** Contacto comercial. Hasta que exista una página propia, es el canal. */
-export const CORREO_CONTACTO = "hola@barion.app"
+/**
+ * Contacto comercial. Hasta que exista una página propia, es el canal.
+ *
+ * Va sobre `buildrion.com`, que es el dominio del sistema y el único verificado
+ * para correo: `barion.app` no está registrado a nombre de Barion, así que lo
+ * que se escribiera ahí no llegaba a ningún buzón. La dirección existe como
+ * regla de Cloudflare Email Routing, no como cuenta — ver
+ * `BARION-SYS/docs/CORREO-DOMINIO.md`.
+ */
+export const CORREO_CONTACTO = "contacto@buildrion.com"
