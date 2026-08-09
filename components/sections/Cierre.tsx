@@ -97,7 +97,7 @@ export function Cierre() {
               Ver los planes
             </Button>
           </div>
-          <p className="mt-4 text-sm text-muted-foreground">15 días de prueba · Sin tarjeta</p>
+          <p className="mt-4 text-sm text-muted-foreground">7 días de prueba · Sin tarjeta</p>
         </RevelarEnScroll>
       </div>
     </section>

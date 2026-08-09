@@ -29,7 +29,7 @@ export const PLANTILLA_TITULO = "%s · Barion"
  * llamada a la acción.
  */
 export const DESCRIPCION =
-  "Software de gestión para barberías: agenda con reservas en línea, ficha de clientes, comisiones por barbero y nómina. 15 días de prueba, sin tarjeta."
+  "Software de gestión para barberías: agenda con reservas en línea, ficha de clientes, comisiones por barbero y nómina. 7 días de prueba, sin tarjeta."
 
 /** Versión corta para donde el espacio manda (Twitter/X, pies, resúmenes). */
 export const DESCRIPCION_CORTA =

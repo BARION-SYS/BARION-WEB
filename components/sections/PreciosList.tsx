@@ -56,7 +56,7 @@ export function PreciosList({ planes, region }: LandingPreciosListProps) {
             ))}
           </ul>
           <p className="mt-6 text-sm text-muted-foreground">
-            15 días de prueba. Sin tarjeta. Eliges plan al final.
+            7 días de prueba. Sin tarjeta. Eliges plan al final.
           </p>
         </div>
       </div>

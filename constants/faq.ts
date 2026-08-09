@@ -52,7 +52,7 @@ export const gruposPreguntas: GrupoPreguntas[] = [
       {
         pregunta: "¿La prueba pide tarjeta?",
         respuesta:
-          "No. Son 15 días completos sin tarjeta y eliges plan al final. Si decides no seguir, exportas tus datos y ya está.",
+          "No. Son 7 días completos sin tarjeta y eliges plan al final. Si decides no seguir, exportas tus datos y ya está.",
       },
       {
         pregunta: "¿Sirve si trabajo solo, sin equipo?",

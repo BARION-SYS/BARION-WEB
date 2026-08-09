@@ -184,7 +184,7 @@ export function Hero({ region }: LandingHeroProps) {
             </motion.div>
 
             <motion.p variants={entrada} className="mt-4 text-sm text-hero-muted">
-              15 días de prueba · Sin tarjeta
+              7 días de prueba · Sin tarjeta
             </motion.p>
 
             <motion.ul
