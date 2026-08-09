@@ -13,4 +13,9 @@
 export const endpointsApi = {
   /** Lectura anónima, sin sesión: el catálogo comercial y sus precios. */
   planesPublicos: "/publico/planes",
+  /**
+   * Dónde opera Barion hoy. Es la MISMA lista que consume el formulario de alta
+   * de la aplicación: por eso los dos no pueden discrepar.
+   */
+  paisesPublicos: "/publico/paises",
 } as const

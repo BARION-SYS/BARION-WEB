@@ -28,3 +28,15 @@ export const REGION_DEFAULT: CodigoRegion = "CO"
 export const monedas: CodigoMoneda[] = [
   ...new Set(Object.values(regiones).map((region) => region.moneda)),
 ]
+
+/**
+ * Los códigos que este repositorio sabe FORMATEAR. No es lo mismo que dónde
+ * opera Barion —eso lo dice la API— y por eso son dos listas: esta cambia
+ * cuando se añade soporte de moneda y locale, aquella cuando se abre un mercado.
+ */
+export const REGIONES_CONOCIDAS = Object.keys(regiones) as CodigoRegion[]
+
+/** Descarta un país que la API opere y este sitio todavía no sepa pintar. */
+export function esRegionConocida(codigo: string): codigo is CodigoRegion {
+  return codigo in regiones
+}

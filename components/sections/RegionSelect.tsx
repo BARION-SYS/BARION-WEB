@@ -14,6 +14,15 @@ import {
 
 interface LandingRegionSelectProps {
   region: CodigoRegion
+  /**
+   * Los países donde Barion opera HOY, según la API.
+   *
+   * Se recibe por props y no se lee de `config/regiones.ts` porque esa constante
+   * dice qué monedas sabe pintar este sitio, no dónde se puede comprar. Ofrecer
+   * un país cerrado manda a alguien a rellenar el formulario de alta entero para
+   * recibir un 422 al final, que es el peor sitio para enterarse.
+   */
+  operados: CodigoRegion[]
 }
 
 /**
@@ -23,7 +32,7 @@ interface LandingRegionSelectProps {
  * pintar— es de `useRegion`. Va JUNTO a los precios, no en el pie: detectar mal
  * y no poder corregirlo es peor que preguntar.
  */
-export function RegionSelect({ region }: LandingRegionSelectProps) {
+export function RegionSelect({ region, operados }: LandingRegionSelectProps) {
   const { elegirRegion, cambiando } = useRegion()
 
   const alCambiar = (valor: CodigoRegion | null) => {
@@ -43,9 +52,9 @@ export function RegionSelect({ region }: LandingRegionSelectProps) {
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {Object.entries(regiones).map(([codigo, config]) => (
+          {operados.map((codigo) => (
             <SelectItem key={codigo} value={codigo}>
-              {nombresDeRegion[codigo as CodigoRegion]} ({config.moneda})
+              {nombresDeRegion[codigo]} ({regiones[codigo].moneda})
             </SelectItem>
           ))}
         </SelectContent>

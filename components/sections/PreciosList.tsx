@@ -8,6 +8,8 @@ import { RevelarEnScroll } from "@/components/common/RevelarEnScroll"
 interface LandingPreciosListProps {
   planes: PlanPublico[]
   region: CodigoRegion
+  /** Dónde opera Barion, según la API. Solo estos se pueden elegir. */
+  operados: CodigoRegion[]
 }
 
 /**
@@ -19,7 +21,7 @@ interface LandingPreciosListProps {
  * porque decide qué precios existen, y el **período** se resuelve en el cliente
  * porque los tres ya vinieron en la misma respuesta.
  */
-export function PreciosList({ planes, region }: LandingPreciosListProps) {
+export function PreciosList({ planes, region, operados }: LandingPreciosListProps) {
   return (
     <section
       id="precios"
@@ -38,7 +40,7 @@ export function PreciosList({ planes, region }: LandingPreciosListProps) {
               agendado no se toca.
             </p>
           </div>
-          <RegionSelect region={region} />
+          <RegionSelect region={region} operados={operados} />
         </RevelarEnScroll>
 
         <PreciosGrid planes={planes} region={region} />

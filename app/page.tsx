@@ -10,6 +10,8 @@ import { VistaPrevia } from "@/components/sections/VistaPrevia"
 import { rutas, rutasMaquina } from "@/config/rutas"
 import { obtenerPlanesPublicos } from "@/services/planes"
 import { COOKIE_REGION, regionDesdeCabeceras } from "@/lib/region"
+import { obtenerPaisesOperados } from "@/services/paises"
+import { REGIONES_CONOCIDAS, esRegionConocida, type CodigoRegion } from "@/config/regiones"
 import { grafoLanding } from "@/lib/seo"
 
 /**
@@ -44,16 +46,29 @@ export const metadata: Metadata = {
  * cliente colgando de ella. NO ponerle 'use client': rompería las tres cosas.
  */
 export default async function LandingPage() {
-  const [cookiesPeticion, cabeceras, planes] = await Promise.all([
+  const [cookiesPeticion, cabeceras, planes, paises] = await Promise.all([
     cookies(),
     headers(),
     obtenerPlanesPublicos(),
+    obtenerPaisesOperados(),
   ])
 
-  const region = regionDesdeCabeceras(
+  // Dónde opera Barion lo decide la API, no una constante de este repositorio:
+  // es la MISMA lista que consume el formulario de alta de la aplicación, y por
+  // eso los dos no pueden discrepar. Sin respuesta (`null`) no se filtra — se
+  // prefiere enseñar de más a esconder la tabla de precios entera.
+  const operados = paises
+    ? (paises.map((pais) => pais.codigo).filter(esRegionConocida) as CodigoRegion[])
+    : REGIONES_CONOCIDAS
+
+  const deducida = regionDesdeCabeceras(
     cookiesPeticion.get(COOKIE_REGION)?.value,
     cabeceras.get("accept-language") ?? undefined
   )
+
+  // Quien llega desde un país cerrado no puede quedarse mirando precios que no
+  // se le pueden vender: se le enseña el primero abierto.
+  const region = operados.includes(deducida) ? deducida : (operados[0] ?? deducida)
 
   return (
     <>
@@ -64,7 +79,7 @@ export default async function LandingPage() {
       <Hero region={region} />
       <ValorList />
       <VistaPrevia region={region} />
-      <PreciosList planes={planes} region={region} />
+      <PreciosList planes={planes} region={region} operados={operados} />
       {/* Las objeciones van DESPUÉS del precio y antes del cierre: es donde
           aparecen de verdad, justo después de mirar cuánto cuesta. */}
       <PreguntasFrecuentes />
