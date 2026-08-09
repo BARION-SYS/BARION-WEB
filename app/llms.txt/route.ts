@@ -159,7 +159,7 @@ function seccionPrecios(planes: PlanPublico[]): string {
     "### Incluido en cualquier plan",
     "",
     ...garantiasPlan.map((garantia) => `- ${garantia.texto}`),
-    "- 15 días de prueba, sin tarjeta y sin permanencia.",
+    "- 7 días de prueba, sin tarjeta y sin permanencia.",
     "",
   ].join("\n")
 }
@@ -181,7 +181,7 @@ function seccionEnlaces(): string {
     "## Enlaces",
     "",
     ...(SITIO_URL ? [`- Sitio público: ${SITIO_URL}`] : []),
-    `- Crear una barbería (prueba de 15 días): ${rutasApp.registro}`,
+    `- Crear una barbería (prueba de 7 días): ${rutasApp.registro}`,
     `- Entrar al panel: ${rutasApp.entrar}`,
     `- Contacto: ${CORREO_CONTACTO}`,
     "",
