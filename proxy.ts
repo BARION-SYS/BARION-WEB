@@ -25,16 +25,21 @@ export const config = {
   /**
    * Todo menos lo que no es una página.
    *
-   * `sitemap.xml`, `robots.txt` y `llms.txt` se quedan fuera **a propósito**:
-   * son del sitio entero y no de una de sus versiones, y un rastreador que
-   * pidiera `/robots.txt` y recibiera una redirección a `/es/robots.txt` —que no
-   * existe— se quedaría sin poder leerlo.
+   * **La exclusión es por FORMA, no por lista.** `.*\..*` deja fuera cualquier
+   * cosa con extensión, que es lo que distingue un archivo de una ruta. Con una
+   * lista de nombres se escapa siempre alguno: aquí se escaparon los logotipos
+   * de marca, que viven en la raíz de `public/` y no bajo `assets/`. El
+   * optimizador de imágenes los pedía, recibía una redirección a
+   * `/es/barion-logo-light.webp` —que no existe— y fallaba en cada carga.
    *
-   * `api/` también, y esa es la que de verdad rompe algo: es la ruta que el
-   * navegador llama para pedir los planes. Sin excluirla acabaría redirigida a
-   * `/es/api/planes`, y el fallo saldría como una tabla de precios en blanco.
+   * Con esta forma quedan cubiertos de una vez los logotipos, los iconos,
+   * `sitemap.xml`, `robots.txt` y `llms.txt`. Estos tres, además, son del sitio
+   * entero y no de una de sus versiones: un rastreador que pidiera
+   * `/robots.txt` y recibiera una redirección se quedaría sin poder leerlo.
+   *
+   * `api/` va aparte porque no tiene extensión: es la ruta que el navegador
+   * llama para pedir los planes, y sin excluirla acabaría redirigida a
+   * `/es/api/planes` — el fallo saldría como una tabla de precios en blanco.
    */
-  matcher: [
-    "/((?!api/|_next/static|_next/image|assets/|favicon.ico|apple-icon.png|sitemap.xml|robots.txt|llms.txt).*)",
-  ],
+  matcher: ["/((?!api/|_next/|.*\\..*).*)"],
 }
