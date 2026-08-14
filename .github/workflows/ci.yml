@@ -1,0 +1,48 @@
+# CI de BARION-WEB.
+#
+# `pnpm lint` (eslint + `tsc --noEmit`) y `pnpm format:check`.
+#
+# **Sin paso de pruebas, y no es un olvido**: este repositorio no tiene ninguna
+# todavía. Declarar aquí un `pnpm test` que no existe haría fallar el CI en cada
+# push por un script ausente, y añadir uno que no ejecute nada es peor: pinta
+# una marca verde que no comprueba nada. Cuando haya pruebas, aquí va su paso.
+#
+# ── Por qué NO se construye el sitio aquí ───────────────────────────────────
+# `next build` ejecuta `config/env.server.ts`, que valida las variables con zod
+# y revienta si falta alguna. Construir en CI obligaría a inventar variables de
+# mentira, y el build que pasara no sería el que se despliega.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint y tipos
+        run: pnpm lint
+
+      - name: Formato
+        run: pnpm format:check
