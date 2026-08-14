@@ -1,21 +1,34 @@
+import { useTranslations } from "next-intl"
+import { esClaveFuncion, esClavePlan } from "@/config/contenido"
 import { ArrowRight, Check, MapPin, Users } from "lucide-react"
-import type { CodigoRegion } from "@/config/regiones"
-import { regiones } from "@/config/regiones"
-import type { PeriodoPlan, PlanPublico } from "@/types/landing"
-import { ahorroPorcentual, periodos } from "@/config/periodos"
-import { textoLimite } from "@/lib/region"
-import { rutasApp } from "@/config/rutas"
 import { Button } from "@/components/ui/button"
+import { ahorroPorcentual } from "@/config/periodos"
+import { regiones, type CodigoRegion } from "@/config/regiones"
+import { rutasApp } from "@/config/rutas"
 import { formatMoney } from "@/lib/currency"
+import { TARJETA_AIRE, TARJETA_VIVA } from "@/lib/superficies"
 import { cn } from "@/lib/utils"
+import type { PeriodoPlan, PlanPublico } from "@/types/landing"
 
-interface LandingPlanCardProps {
+interface PlanCardProps {
   plan: PlanPublico
   region: CodigoRegion
   periodo: PeriodoPlan
+  /**
+   * Cuando este plan incluye ENTERO al anterior, en vez de repetir su lista se
+   * dice «Todo lo de Esencial, y además:» y se enumeran solo las diferencias.
+   *
+   * Es una decisión de la tarjeta y no del dato: la API dice qué funciones trae
+   * el plan, todas, y así debe ser —un cliente que pregunta «¿el Pro incluye la
+   * agenda?» necesita un sí—. Lo que no sirve es una tarjeta con diez viñetas
+   * donde cinco son las mismas que la de al lado: al leerlas en paralelo, lo que
+   * de verdad se compra desaparece entre lo repetido.
+   */
+  herencia?: { nombre: string; propias: string[] }
 }
 
-export function PlanCard({ plan, region, periodo }: LandingPlanCardProps) {
+export function PlanCard({ plan, region, periodo, herencia }: PlanCardProps) {
+  const t = useTranslations("precios")
   const { locale } = regiones[region]
 
   // El precio del país que se está mirando, en el período elegido. Si el plan no
@@ -31,28 +44,48 @@ export function PlanCard({ plan, region, periodo }: LandingPlanCardProps) {
     ? ahorroPorcentual(periodo, precio.montoCentavos, mensual?.montoCentavos ?? null)
     : null
 
-  // Los topes que el plan DECLARA. Uno ausente no se pinta: ni número inventado
-  // ni «sin límite» de regalo.
+  /**
+   * Los topes que el plan DECLARA, y sus tres estados.
+   *
+   * `undefined` es «el plan no declara ese tope» y no se pinta: ni número
+   * inventado ni «sin límite» de regalo. `null` es «sin techo», y va con mensaje
+   * propio porque ICU pluraliza cantidades, no ausencias. Un número se pluraliza
+   * en el catálogo, que es donde cada idioma decide su forma.
+   */
+  const tope = (cantidad: number | null | undefined, clave: "limiteSedes" | "limiteBarberos") => {
+    if (cantidad === undefined) return null
+    return cantidad === null ? t(`${clave}SinTope`) : t(clave, { cantidad })
+  }
+
   const topes = [
-    { icono: MapPin, texto: textoLimite(plan.limites.sedes, "sede", "sedes") },
-    { icono: Users, texto: textoLimite(plan.limites.barberos, "barbero", "barberos") },
-  ].filter((tope): tope is { icono: typeof MapPin; texto: string } => tope.texto !== null)
+    { icono: MapPin, texto: tope(plan.limites.sedes, "limiteSedes") },
+    { icono: Users, texto: tope(plan.limites.barberos, "limiteBarberos") },
+  ].filter((valor): valor is { icono: typeof MapPin; texto: string } => valor.texto !== null)
+
+  // Un plan que la API publique y este sitio no sepa describir se enseña igual,
+  // sin descripción: desaparecer es lo único que el visitante no puede notar.
+  const descripcion = esClavePlan(plan.codigo) ? t(`planes.${plan.codigo}.descripcion`) : null
+  const funcionesVisibles = herencia ? herencia.propias : plan.funciones
 
   return (
     <div
       className={cn(
-        "group relative flex h-full flex-col rounded-2xl border bg-card p-7 transition-[border-color,box-shadow,transform] duration-300 hover:shadow-xl motion-safe:hover:-translate-y-1",
-        plan.destacado ? "border-primary shadow-md" : "border-border hover:border-primary/40"
+        "group relative flex h-full flex-col rounded-2xl border bg-card",
+        TARJETA_AIRE,
+        TARJETA_VIVA,
+        // El borde del destacado NO puede salir de `TARJETA`: ese trae
+        // `border-border`, y aquí el borde es lo que marca cuál se recomienda.
+        plan.destacado && "border-primary shadow-md hover:border-primary"
       )}
     >
       {plan.destacado && (
         <span className="absolute -top-3 left-7 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-          El más elegido
+          {t("masElegido")}
         </span>
       )}
 
       <h3 className="text-lg font-semibold tracking-tight">{plan.nombre}</h3>
-      <p className="mt-1.5 text-sm text-muted-foreground">{plan.descripcion}</p>
+      {descripcion && <p className="mt-1.5 text-sm text-muted-foreground">{descripcion}</p>}
 
       <p className="mt-6 flex items-baseline gap-1.5">
         {/* Sin precio para este país NO se calcula uno: se dice. Un `usd × tasa`
@@ -60,17 +93,17 @@ export function PlanCard({ plan, region, periodo }: LandingPlanCardProps) {
         {precio ? (
           <>
             {/* La moneda es la DEL PRECIO, no la que este sitio asocia al país:
-                el importe y su moneda viajan juntos desde la API y separarlos
-                es cómo se acaba pintando un importe en dólares con el formato
-                del peso. El `locale` sí es el de quien mira — decide los puntos
-                y los decimales, no la escala. */}
+                el importe y su moneda viajan juntos desde la API y separarlos es
+                cómo se acaba pintando un importe en dólares con el formato del
+                peso. El `locale` sí es el de quien mira — decide los puntos y los
+                decimales, no la escala. */}
             <span className="text-4xl font-bold tracking-tight tabular-nums">
               {formatMoney(precio.montoCentavos, precio.moneda, locale)}
             </span>
-            <span className="text-sm text-muted-foreground">{periodos[periodo].sufijo}</span>
+            <span className="text-sm text-muted-foreground">{t(`periodos.${periodo}.sufijo`)}</span>
           </>
         ) : (
-          <span className="text-2xl font-bold tracking-tight">Consultar</span>
+          <span className="text-2xl font-bold tracking-tight">{t("consultar")}</span>
         )}
       </p>
 
@@ -78,7 +111,7 @@ export function PlanCard({ plan, region, periodo }: LandingPlanCardProps) {
           «ahorra 0 %» en el mensual sería ruido en la tarjeta que más se mira. */}
       {ahorro !== null && (
         <p className="mt-2 text-sm font-medium text-primary">
-          Ahorras un {ahorro}% frente a pagar mes a mes
+          {t("ahorro", { porcentaje: ahorro })}
         </p>
       )}
 
@@ -93,14 +126,24 @@ export function PlanCard({ plan, region, periodo }: LandingPlanCardProps) {
         </ul>
       )}
 
-      <ul className="mt-6 flex-1 space-y-2.5">
-        {plan.funciones.map((funcion) => (
-          <li key={funcion} className="flex gap-2.5 text-sm">
-            <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
-            <span className="text-muted-foreground">{funcion}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="mt-6 flex-1">
+        {herencia && (
+          <p className="mb-3 text-sm font-medium">{t("todoLoDe", { plan: herencia.nombre })}</p>
+        )}
+        <ul className="space-y-2.5">
+          {funcionesVisibles.map((clave) => (
+            <li key={clave} className="flex gap-2.5 text-sm">
+              <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
+              {/* Una función que la API publique y este sitio no sepa nombrar se
+                  enseña con su clave: desaparecer es lo único que el visitante
+                  no puede notar. */}
+              <span className="text-muted-foreground">
+                {esClaveFuncion(clave) ? t(`funciones.${clave}`) : clave}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <Button
         render={<a href={rutasApp.registro} />}
@@ -109,7 +152,7 @@ export function PlanCard({ plan, region, periodo }: LandingPlanCardProps) {
         size="lg"
         className="group/cta mt-7 h-11 w-full font-semibold"
       >
-        Empezar con {plan.nombre}
+        {t("empezarCon", { plan: plan.nombre })}
         <ArrowRight
           className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
           aria-hidden

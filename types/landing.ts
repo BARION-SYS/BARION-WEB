@@ -30,9 +30,16 @@ export interface LimitesPlan {
 export interface PlanPublico {
   codigo: string
   nombre: string
-  descripcion: string
   limites: LimitesPlan
+  /**
+   * Las CLAVES que la API dice que el plan incluye (`["agenda","portal"]`), no
+   * frases. El texto de venta de cada una vive en el diccionario del idioma que
+   * se esté sirviendo — traducirlas aquí ataría el dato a un idioma.
+   *
+   * Por lo mismo desapareció `descripcion`: era copy, y el copy tiene idioma.
+   */
   funciones: string[]
+  /** Cuál resalta la tabla. Lo decide este sitio (`PLAN_DESTACADO`), no la API. */
   destacado: boolean
   /**
    * Puede venir **vacío**: la API publica solo los precios activos, y un plan

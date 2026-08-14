@@ -1,37 +1,77 @@
+import { getTranslations } from "next-intl/server"
+import {
+  CLAVES_BLOQUE,
+  CLAVES_CAPACIDAD,
+  CLAVES_GARANTIA,
+  CLAVES_GRUPO_PREGUNTAS,
+  CLAVES_PASO,
+  esClaveFuncion,
+  esClavePlan,
+  preguntasPorGrupo,
+} from "@/config/contenido"
+import { nombresDeIdioma } from "@/config/idiomas"
 import {
   esRegionConocida,
   regiones,
   REGIONES_CONOCIDAS,
   type CodigoRegion,
 } from "@/config/regiones"
-import { CORREO_CONTACTO, rutasApp } from "@/config/rutas"
-import { DESCRIPCION, NOMBRE_SITIO, RESUMEN_IA } from "@/config/sitio"
-import { gruposPreguntas } from "@/constants/faq"
-import { bloquesValor, capacidadesExtra, garantiasPlan, pasosReserva } from "@/constants/valor"
+import { CORREO_CONTACTO, rutas, rutasApp } from "@/config/rutas"
+import { NOMBRE_SITIO } from "@/config/sitio"
+import { getPathname } from "@/i18n/navigation"
+import { routing } from "@/i18n/routing"
 import { formatMoney } from "@/lib/currency"
+import { SITIO_URL, urlAbsoluta } from "@/lib/seo"
 import { obtenerPaisesOperados } from "@/services/paises"
 import { obtenerPlanesPublicos } from "@/services/planes"
-import { nombresDeRegion, textoLimite } from "@/lib/region"
-import { SITIO_URL } from "@/lib/seo"
 import type { PlanPublico } from "@/types/landing"
 
 /**
  * `/llms.txt` — el sitio contado para un modelo de lenguaje.
  *
- * Un asistente al que le preguntan «¿qué software uso para mi barbería?» no
- * lee la página: lee lo que puede recuperar barato y sin ejecutar JavaScript.
- * Esta es esa versión — el mismo contenido de la landing en texto plano, con
- * los precios de cada mercado y las preguntas frecuentes enteras.
+ * Un asistente al que le preguntan «¿qué software uso para mi barbería?» no lee
+ * la página: lee lo que puede recuperar barato y sin ejecutar JavaScript. Esta
+ * es esa versión — el mismo contenido de la landing en texto plano, con los
+ * precios de cada mercado y las preguntas frecuentes enteras.
  *
- * Sale de las MISMAS constantes que pinta la página y del mismo endpoint de
- * planes: si fuera un archivo escrito a mano en `public/`, a la segunda subida
- * de precios estaría mintiendo, y una respuesta con el precio viejo la da el
- * asistente sin avisar a nadie.
+ * Sale de las MISMAS fuentes que la página: si fuera un archivo escrito a mano
+ * en `public/`, a la segunda subida de precios estaría mintiendo, y una
+ * respuesta con el precio viejo la da el asistente sin avisar a nadie.
+ *
+ * ── Por qué hay UNO solo y va en el idioma por defecto ──────────────────────
+ * `/llms.txt` es una convención de archivo único en la raíz, sin idioma en la
+ * dirección. Publicarlo por idioma exigiría inventarse una convención propia
+ * que ningún cliente busca. Lo que sí hace es **enlazar las dos versiones del
+ * sitio** en su sección final: un modelo que necesite la inglesa sabe dónde
+ * está, y la ficha del producto —que es lo que se cita— es la misma en las dos.
  *
  * `revalidate` igual que los planes (una hora): el resto son constantes del
  * repositorio, que solo cambian con un despliegue.
  */
 export const revalidate = 3600
+
+/**
+ * Los espacios de nombres que este documento necesita, todos del idioma de
+ * referencia. Se piden de una vez para no repetir `getTranslations` en cada
+ * sección — y porque el idioma de este archivo es una decisión del documento
+ * entero, no de cada apartado.
+ */
+async function traductores() {
+  const locale = routing.defaultLocale
+
+  const [identidad, producto, vistaPrevia, precios, preguntas, regionesTexto] = await Promise.all([
+    getTranslations({ locale, namespace: "identidad" }),
+    getTranslations({ locale, namespace: "producto" }),
+    getTranslations({ locale, namespace: "vistaPrevia" }),
+    getTranslations({ locale, namespace: "precios" }),
+    getTranslations({ locale, namespace: "preguntas" }),
+    getTranslations({ locale, namespace: "regiones" }),
+  ])
+
+  return { identidad, producto, vistaPrevia, precios, preguntas, regionesTexto }
+}
+
+type Traductores = Awaited<ReturnType<typeof traductores>>
 
 export async function GET(): Promise<Response> {
   // Dónde opera Barion lo dice la api, igual que en la landing. Importa más
@@ -44,7 +84,9 @@ export async function GET(): Promise<Response> {
     ? (paises.map((pais) => pais.codigo).filter(esRegionConocida) as CodigoRegion[])
     : REGIONES_CONOCIDAS
 
-  return new Response(construirDocumento(planes, operados), {
+  const t = await traductores()
+
+  return new Response(construirDocumento(t, planes, operados), {
     headers: {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
@@ -52,24 +94,34 @@ export async function GET(): Promise<Response> {
   })
 }
 
-function construirDocumento(planes: PlanPublico[], operados: CodigoRegion[]): string {
+function construirDocumento(
+  t: Traductores,
+  planes: PlanPublico[],
+  operados: CodigoRegion[]
+): string {
   return [
     `# ${NOMBRE_SITIO}`,
     "",
-    `> ${RESUMEN_IA}`,
+    `> ${t.identidad("resumenIA")}`,
     "",
-    DESCRIPCION,
+    t.identidad("descripcion"),
     "",
     seccionQuienLoUsa(),
     seccionQueNoEs(),
-    seccionCapacidades(),
-    seccionReserva(),
-    seccionPrecios(planes, operados),
-    seccionPreguntas(),
+    seccionCapacidades(t),
+    seccionReserva(t),
+    seccionPrecios(t, planes, operados),
+    seccionPreguntas(t),
     seccionEnlaces(),
   ].join("\n")
 }
 
+/**
+ * Estas dos secciones no salen del diccionario y no es un descuido: no se
+ * pintan en ninguna página. Son la ficha que un modelo necesita para no
+ * equivocarse al describir el producto —a quién sirve y qué NO es—, y ese es
+ * exactamente el contexto que un sitio de venta no escribe para humanos.
+ */
 function seccionQuienLoUsa(): string {
   return [
     "## Para quién es",
@@ -93,17 +145,18 @@ function seccionQueNoEs(): string {
   ].join("\n")
 }
 
-function seccionCapacidades(): string {
-  const bloques = bloquesValor.map((bloque) =>
-    [
-      `### ${bloque.titulo}`,
+function seccionCapacidades(t: Traductores): string {
+  const bloques = CLAVES_BLOQUE.map((clave) => {
+    const detalles = t.producto.raw(`bloques.${clave}.detalles`) as string[]
+    return [
+      `### ${t.producto(`bloques.${clave}.titulo`)}`,
       "",
-      bloque.descripcion,
+      t.producto(`bloques.${clave}.descripcion`),
       "",
-      ...bloque.detalles.map((detalle) => `- ${detalle}`),
+      ...detalles.map((detalle) => `- ${detalle}`),
       "",
     ].join("\n")
-  )
+  })
 
   return [
     "## Qué hace",
@@ -111,37 +164,46 @@ function seccionCapacidades(): string {
     ...bloques,
     "### Además",
     "",
-    ...capacidadesExtra.map((capacidad) => `- ${capacidad.texto}`),
+    ...CLAVES_CAPACIDAD.map((clave) => `- ${t.producto(`capacidades.${clave}`)}`),
     "",
   ].join("\n")
 }
 
-function seccionReserva(): string {
+function seccionReserva(t: Traductores): string {
   return [
     "## Cómo llega una cita",
     "",
-    ...pasosReserva.map(
-      (paso) => `${Number(paso.numero)}. **${paso.titulo}** — ${paso.descripcion}`
+    ...CLAVES_PASO.map(
+      (clave, indice) =>
+        `${indice + 1}. **${t.vistaPrevia(`pasos.${clave}.titulo`)}** — ${t.vistaPrevia(`pasos.${clave}.descripcion`)}`
     ),
     "",
   ].join("\n")
 }
 
-function seccionPrecios(planes: PlanPublico[], operados: CodigoRegion[]): string {
-  const lineas = planes.map((plan) => {
-    const precios = plan.precios.map((precio) => {
-      const { locale } = regiones[precio.codigoPais]
-      const importe = formatMoney(precio.montoCentavos, precio.moneda, locale)
-      return `  - ${nombresDeRegion[precio.codigoPais]}: ${importe} / ${precio.periodo === "anual" ? "año" : "mes"}`
-    })
+function seccionPrecios(t: Traductores, planes: PlanPublico[], operados: CodigoRegion[]): string {
+  const tope = (cantidad: number | null | undefined, clave: "limiteSedes" | "limiteBarberos") =>
+    cantidad === undefined
+      ? null
+      : cantidad === null
+        ? t.precios(`${clave}SinTope`)
+        : t.precios(clave, { cantidad })
 
-    // Un tope que el plan no declara no se escribe. Aquí menos que en ninguna
-    // parte: lo que diga este archivo lo repite un asistente como si fuera la
-    // ficha del producto, y un «sin límite» de más no se puede desdecir.
+  const lineas = planes.map((plan) => {
+    const descripcion = esClavePlan(plan.codigo)
+      ? t.precios(`planes.${plan.codigo}.descripcion`)
+      : null
+
     const topes = [
-      textoLimite(plan.limites.sedes, "sede", "sedes"),
-      textoLimite(plan.limites.barberos, "barbero", "barberos"),
-    ].filter((tope): tope is string => tope !== null)
+      tope(plan.limites.sedes, "limiteSedes"),
+      tope(plan.limites.barberos, "limiteBarberos"),
+    ].filter((valor): valor is string => valor !== null)
+
+    const precios = plan.precios.map((precio) => {
+      const { moneda, locale } = regiones[precio.codigoPais]
+      const importe = formatMoney(precio.montoCentavos, precio.moneda, locale)
+      return `  - ${t.regionesTexto(precio.codigoPais)} (${moneda}): ${importe} ${t.precios(`periodos.${precio.periodo}.sufijo`)}`
+    })
 
     return [
       // «Plan recomendado» y no «el más elegido»: aquí escribe la máquina que
@@ -149,15 +211,16 @@ function seccionPrecios(planes: PlanPublico[], operados: CodigoRegion[]): string
       // superlativo. Lo que se puede defender es la recomendación.
       `### ${plan.nombre}${plan.destacado ? " (plan recomendado)" : ""}`,
       "",
-      plan.descripcion,
-      "",
+      ...(descripcion ? [descripcion, ""] : []),
       ...(topes.length > 0 ? [`- ${topes.join(", ")}`] : []),
-      ...plan.funciones.map((funcion) => `- ${funcion}`),
+      ...plan.funciones.map(
+        (clave) => `- ${esClaveFuncion(clave) ? t.precios(`funciones.${clave}`) : clave}`
+      ),
       // Sin ninguna tarifa publicable no se calla el plan —existe— pero tampoco
       // se le pone cifra: se dice lo mismo que la tarjeta de la página.
       ...(precios.length > 0
         ? ["- Precio por barbería:", ...precios]
-        : ["- Precio por barbería: consultar."]),
+        : [`- Precio por barbería: ${t.precios("consultar").toLowerCase()}.`]),
       "",
     ].join("\n")
   })
@@ -165,25 +228,28 @@ function seccionPrecios(planes: PlanPublico[], operados: CodigoRegion[]): string
   return [
     "## Precios",
     "",
-    `Barion opera en ${operados.map((codigo) => `${nombresDeRegion[codigo]} (${regiones[codigo].moneda})`).join(", ")}.`,
+    `Barion opera en ${operados.map((codigo) => `${t.regionesTexto(codigo)} (${regiones[codigo].moneda})`).join(", ")}.`,
     "El precio de cada país es propio, no la conversión del cambio del día, y se fija por el país donde factura la barbería —no por dónde se mire la página—.",
     "El importe es **por barbería**, no por barbero ni por función.",
     "",
     ...lineas,
     "### Incluido en cualquier plan",
     "",
-    ...garantiasPlan.map((garantia) => `- ${garantia.texto}`),
-    "- 7 días de prueba, sin tarjeta y sin permanencia.",
+    ...CLAVES_GARANTIA.map((clave) => `- ${t.precios(`garantias.${clave}`)}`),
+    `- ${t.precios("prueba")}`,
     "",
   ].join("\n")
 }
 
-function seccionPreguntas(): string {
-  const grupos = gruposPreguntas.map((grupo) =>
+function seccionPreguntas(t: Traductores): string {
+  const grupos = CLAVES_GRUPO_PREGUNTAS.map((grupo) =>
     [
-      `### ${grupo.titulo}`,
+      `### ${t.preguntas(`grupos.${grupo}`)}`,
       "",
-      ...grupo.preguntas.map(({ pregunta, respuesta }) => `**${pregunta}**\n${respuesta}\n`),
+      ...preguntasPorGrupo[grupo].map(
+        (clave) =>
+          `**${t.preguntas(`lista.${clave}.pregunta`)}**\n${t.preguntas(`lista.${clave}.respuesta`)}\n`
+      ),
     ].join("\n")
   )
 
@@ -191,13 +257,31 @@ function seccionPreguntas(): string {
 }
 
 function seccionEnlaces(): string {
+  const porIdioma = routing.locales
+    .map((idioma) => {
+      const url = urlAbsoluta(getPathname({ href: rutas.inicio, locale: idioma }))
+      return url ? `- Sitio en ${nombresDeIdioma[idioma]}: ${url}` : null
+    })
+    .filter((linea): linea is string => linea !== null)
+
   return [
     "## Enlaces",
     "",
     ...(SITIO_URL ? [`- Sitio público: ${SITIO_URL}`] : []),
+    ...porIdioma,
     `- Crear una barbería (prueba de 7 días): ${rutasApp.registro}`,
     `- Entrar al panel: ${rutasApp.entrar}`,
     `- Contacto: ${CORREO_CONTACTO}`,
+    ...[
+      ["Términos y condiciones", "terminos"],
+      ["Política de privacidad", "privacidad"],
+      ["Política de cookies", "cookies"],
+    ].flatMap(([nombre, clave]) => {
+      const url = urlAbsoluta(
+        getPathname({ href: rutas[clave as "terminos"], locale: routing.defaultLocale })
+      )
+      return url ? [`- ${nombre}: ${url}`] : []
+    }),
     "",
   ].join("\n")
 }

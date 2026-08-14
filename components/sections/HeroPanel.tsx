@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import type { CodigoMoneda } from "@/config/regiones"
 import { LogoBarion } from "@/components/brand/LogoBarion"
+import { useTranslations } from "next-intl"
 import { formatMoney } from "@/lib/currency"
 import { cn } from "@/lib/utils"
 
@@ -27,14 +28,16 @@ interface LandingHeroPanelProps {
   progreso: MotionValue<number>
 }
 
+// La etiqueta es una CLAVE: lo que se lee dentro de la maqueta se traduce como
+// cualquier otro texto del sitio.
 const navegacion = [
-  { icono: LayoutDashboard, etiqueta: "Resumen", activo: false },
-  { icono: CalendarDays, etiqueta: "Agenda", activo: true },
-  { icono: Users, etiqueta: "Clientes", activo: false },
-  { icono: Scissors, etiqueta: "Barberos", activo: false },
-  { icono: Wallet, etiqueta: "Nómina", activo: false },
-  { icono: BarChart3, etiqueta: "Estadísticas", activo: false },
-  { icono: Settings, etiqueta: "Configuración", activo: false },
+  { icono: LayoutDashboard, clave: "resumen" as const, activo: false },
+  { icono: CalendarDays, clave: "agenda" as const, activo: true },
+  { icono: Users, clave: "clientes" as const, activo: false },
+  { icono: Scissors, clave: "barberos" as const, activo: false },
+  { icono: Wallet, clave: "nomina" as const, activo: false },
+  { icono: BarChart3, clave: "estadisticas" as const, activo: false },
+  { icono: Settings, clave: "configuracion" as const, activo: false },
 ]
 
 /** Media hora por fila; el rail marca las horas en punto. */
@@ -46,71 +49,71 @@ const horas = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00"]
 const dias = [
   {
     letra: "LUN",
-    servicioTop: "Corte clásico",
+    servicioTop: "clasico",
     numero: 12,
     ocupacion: 62,
     factorIngreso: 0.68,
     barbero: "Iván",
     citas: [
-      { fila: 0, alto: 2, cliente: "Andrés V.", servicio: "Corte + barba", tono: "oro" },
-      { fila: 4, alto: 2, cliente: "Mateo C.", servicio: "Corte niño", tono: "suave" },
-      { fila: 8, alto: 3, cliente: "Óscar T.", servicio: "Ritual completo", tono: "oro" },
+      { fila: 0, alto: 2, cliente: "Andrés V.", servicio: "corteBarba", tono: "oro" },
+      { fila: 4, alto: 2, cliente: "Mateo C.", servicio: "corteNino", tono: "suave" },
+      { fila: 8, alto: 3, cliente: "Óscar T.", servicio: "ritualCompleto", tono: "oro" },
     ],
   },
   {
     letra: "MAR",
-    servicioTop: "Fade clásico",
+    servicioTop: "fadeClasico",
     numero: 13,
     ocupacion: 74,
     factorIngreso: 0.81,
     barbero: "Duván",
     citas: [
-      { fila: 1, alto: 3, cliente: "Julián M.", servicio: "Fade clásico", tono: "suave" },
-      { fila: 6, alto: 2, cliente: "Ricardo P.", servicio: "Afeitado", tono: "oro" },
-      { fila: 9, alto: 2, cliente: "Bruno E.", servicio: "Corte clásico", tono: "suave" },
+      { fila: 1, alto: 3, cliente: "Julián M.", servicio: "fadeClasico", tono: "suave" },
+      { fila: 6, alto: 2, cliente: "Ricardo P.", servicio: "afeitado", tono: "oro" },
+      { fila: 9, alto: 2, cliente: "Bruno E.", servicio: "clasico", tono: "suave" },
     ],
   },
   {
     letra: "MIÉ",
-    servicioTop: "Corte + barba",
+    servicioTop: "corteBarba",
     numero: 14,
     hoy: true,
     ocupacion: 86,
     factorIngreso: 1,
     barbero: "Iván",
     citas: [
-      { fila: 0, alto: 2, cliente: "Samuel R.", servicio: "Corte + barba", tono: "oro" },
-      { fila: 3, alto: 2, cliente: "Iván D.", servicio: "Diseño", tono: "oro" },
-      { fila: 6, alto: 3, cliente: "Tomás L.", servicio: "Ritual completo", tono: "oro" },
-      { fila: 10, alto: 2, cliente: "Hugo N.", servicio: "Fade + barba", tono: "suave" },
+      { fila: 0, alto: 2, cliente: "Samuel R.", servicio: "corteBarba", tono: "oro" },
+      { fila: 3, alto: 2, cliente: "Iván D.", servicio: "diseno", tono: "oro" },
+      { fila: 6, alto: 3, cliente: "Tomás L.", servicio: "ritualCompleto", tono: "oro" },
+      { fila: 10, alto: 2, cliente: "Hugo N.", servicio: "fadeBarba", tono: "suave" },
     ],
   },
   {
     letra: "JUE",
-    servicioTop: "Fade + barba",
+    servicioTop: "fadeBarba",
     numero: 15,
     ocupacion: 55,
     factorIngreso: 0.6,
     barbero: "Duván",
     citas: [
-      { fila: 2, alto: 2, cliente: "Nicolás A.", servicio: "Fade + barba", tono: "suave" },
-      { fila: 7, alto: 2, cliente: "Pablo G.", servicio: "Corte clásico", tono: "oro" },
+      { fila: 2, alto: 2, cliente: "Nicolás A.", servicio: "fadeBarba", tono: "suave" },
+      { fila: 7, alto: 2, cliente: "Pablo G.", servicio: "clasico", tono: "oro" },
     ],
   },
   {
     letra: "VIE",
-    servicioTop: "Color + corte",
+    servicioTop: "colorCorte",
     numero: 16,
     ocupacion: 93,
     factorIngreso: 1.18,
     barbero: "Iván",
     citas: [
-      { fila: 1, alto: 2, cliente: "Emilio S.", servicio: "Corte clásico", tono: "suave" },
-      { fila: 5, alto: 3, cliente: "Damián O.", servicio: "Color + corte", tono: "oro" },
-      { fila: 9, alto: 2, cliente: "Lucas B.", servicio: "Corte + barba", tono: "oro" },
+      { fila: 1, alto: 2, cliente: "Emilio S.", servicio: "clasico", tono: "suave" },
+      { fila: 5, alto: 3, cliente: "Damián O.", servicio: "colorCorte", tono: "oro" },
+      { fila: 9, alto: 2, cliente: "Lucas B.", servicio: "corteBarba", tono: "oro" },
     ],
   },
-]
+] as const
 
 // Importe de muestra por moneda, en unidad menor. Se declara por moneda y no se
 // convierte: un `usd × tasa` en el cliente es un precio inventado. El factor de
@@ -138,6 +141,8 @@ const ingresoDemo: Record<CodigoMoneda, number> = {
  * hay que enseñar es que funciona.
  */
 export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
+  const panel = useTranslations("maquetas.panel")
+  const nombresServicio = useTranslations("maquetas.servicios")
   const [diaActivo, setDiaActivo] = useState(2)
   const dia = dias[diaActivo]
   const base = ingresoDemo[moneda]
@@ -150,11 +155,11 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
   const indicadores = [
     {
       icono: TrendingUp,
-      etiqueta: "Ingresos",
+      etiqueta: panel("ingresos"),
       valor: formatMoney(ingresoDelDia, moneda, locale),
     },
-    { icono: CalendarDays, etiqueta: "Citas", valor: String(dia.citas.length * 4) },
-    { icono: Users, etiqueta: "Ocupación", valor: `${dia.ocupacion} %` },
+    { icono: CalendarDays, etiqueta: panel("citas"), valor: String(dia.citas.length * 4) },
+    { icono: Users, etiqueta: panel("ocupacion"), valor: `${dia.ocupacion} %` },
   ]
 
   // Muelle de por medio: sin él el giro copia el salto de la rueda del ratón en
@@ -206,10 +211,10 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
             <nav className="hidden w-14 shrink-0 flex-col items-center gap-1 border-r border-hero-borde py-4 sm:flex">
               {/* La marca donde está en el panel de verdad: arriba del todo */}
               <LogoBarion variante="icono" className="mb-4 h-6" />
-              {navegacion.map(({ icono: Icono, etiqueta, activo }) => (
+              {navegacion.map(({ icono: Icono, clave, activo }) => (
                 <span
-                  key={etiqueta}
-                  title={etiqueta}
+                  key={clave}
+                  title={panel(`secciones.${clave}`)}
                   className={cn(
                     "flex size-9 items-center justify-center rounded-xl",
                     activo ? "bg-hero-primary/15 text-hero-primary" : "text-hero-sutil"
@@ -345,7 +350,9 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
                           <p className="truncate text-[10px] font-medium text-hero-foreground">
                             {cita.cliente}
                           </p>
-                          <p className="truncate text-[10px] text-hero-muted">{cita.servicio}</p>
+                          <p className="truncate text-[10px] text-hero-muted">
+                            {nombresServicio(cita.servicio)}
+                          </p>
                         </motion.div>
                       ))}
                     </div>
@@ -421,13 +428,13 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
               <div className="mt-3 grid grid-cols-2 gap-2">
                 <Metrica
                   icono={<Wallet className="size-3 text-hero-primary" aria-hidden />}
-                  etiqueta="Ticket promedio"
+                  etiqueta={panel("ticketPromedio")}
                   valor={formatMoney(Math.round(ingresoDelDia / citasDelDia), moneda, locale)}
                 />
                 <Metrica
                   icono={<Scissors className="size-3 text-hero-primary" aria-hidden />}
-                  etiqueta="Servicio top"
-                  valor={dia.servicioTop}
+                  etiqueta={panel("servicioTop")}
+                  valor={nombresServicio(dia.servicioTop)}
                 />
               </div>
             </div>
@@ -440,7 +447,7 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
         <TarjetaFlotante
           className="-top-5 -left-3 sm:-left-10"
           icono={<UserPlus className="size-3.5 text-hero-primary" aria-hidden />}
-          titulo="Cliente registrado"
+          titulo={panel("clienteRegistrado")}
           detalle="Camila Ortega · desde el escaparate"
           retardo={1}
           profundidad={70}
@@ -448,7 +455,7 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
         <TarjetaFlotante
           className="-bottom-7 left-4 sm:left-10"
           icono={<CheckCircle2 className="size-3.5 text-hero-exito" aria-hidden />}
-          titulo="Recordatorio enviado"
+          titulo={panel("recordatorioEnviado")}
           detalle="Cita de mañana · 10:30"
           retardo={1.15}
           profundidad={90}
@@ -456,8 +463,8 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
         <TarjetaFlotante
           className="right-4 -bottom-12 hidden sm:right-14 sm:flex"
           icono={<Bell className="size-3.5 text-hero-primary" aria-hidden />}
-          titulo="Próxima cita"
-          detalle="Andrés Villa · Corte + barba"
+          titulo={panel("proximaCita")}
+          detalle={`Andrés Villa · ${nombresServicio("corteBarba")}`}
           retardo={1.3}
           profundidad={110}
         />

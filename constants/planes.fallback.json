@@ -2,19 +2,11 @@
   {
     "codigo": "esencial",
     "nombre": "Esencial",
-    "descripcion": "Para la barbería de un local que quiere dejar el cuaderno.",
     "limites": {
       "sedes": 1,
       "barberos": 5
     },
-    "funciones": [
-      "Agenda con reserva en línea",
-      "Escaparate público con tu enlace",
-      "Recordatorios de cita",
-      "Ficha de clientes e historial",
-      "Comisiones por barbero"
-    ],
-    "destacado": false,
+    "funciones": ["agenda", "portal", "recordatorios", "clientes", "comisiones"],
     "precios": [
       {
         "codigoPais": "CO",
@@ -75,19 +67,22 @@
   {
     "codigo": "pro",
     "nombre": "Pro",
-    "descripcion": "Para la barbería con equipo, varias sedes y clientes que vuelven.",
     "limites": {
       "sedes": 5,
       "barberos": 25
     },
     "funciones": [
-      "Todo lo de Esencial",
-      "Campañas de cumpleaños y reactivación",
-      "Programa de fidelidad",
-      "Lista de espera",
-      "Estadísticas de ocupación e ingresos"
+      "agenda",
+      "portal",
+      "recordatorios",
+      "clientes",
+      "comisiones",
+      "campanas",
+      "fidelidad",
+      "listaEspera",
+      "reportes",
+      "multisede"
     ],
-    "destacado": true,
     "precios": [
       {
         "codigoPais": "CO",

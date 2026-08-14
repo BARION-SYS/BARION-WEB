@@ -1,49 +1,80 @@
 "use client"
 
 import { motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import { Check } from "lucide-react"
-import { bloquesValor, capacidadesExtra } from "@/constants/valor"
+import { EncabezadoSeccion } from "@/components/sections/EncabezadoSeccion"
+import { Seccion } from "@/components/sections/Seccion"
+import { CLAVES_BLOQUE, CLAVES_CAPACIDAD, iconosBloque, iconosCapacidad } from "@/config/contenido"
+import { TARJETA, TARJETA_AIRE, TARJETA_VIVA } from "@/lib/superficies"
+import { cn } from "@/lib/utils"
 
-// Tres bloques de valor, cada uno con lo que hace de verdad. Entran en cascada
-// al aparecer, una sola vez, y desde ahí responden al puntero: una tarjeta que
-// no reacciona parece una imagen.
-export function ValorList() {
+interface ValorListProps {
+  nivel?: "h1" | "h2"
+  /**
+   * En la portada se recorta, pero **NO la prueba**.
+   *
+   * Los tres bloques van enteros —con lo que hace cada uno exactamente—, porque
+   * eso es lo que convence y la portada tiene que vender sola: obligar a un clic
+   * para leer lo concreto es meter un paso entre alguien interesado y la compra.
+   * Lo que se guarda para `/producto` son las siete capacidades extra, que son
+   * el detalle de segundo orden.
+   */
+  resumen?: boolean
+  enlace?: { href: string; texto: string }
+  tono?: "base" | "alterno"
+  separador?: boolean
+}
+
+/**
+ * Los tres bloques de valor. Entran en cascada al aparecer, una sola vez, y
+ * desde ahí responden al puntero: una tarjeta que no reacciona parece una imagen.
+ */
+export function ValorList({
+  nivel = "h2",
+  resumen = false,
+  enlace,
+  tono = "base",
+  separador = true,
+}: ValorListProps) {
+  const t = useTranslations("producto")
   return (
-    <section
-      id="producto"
-      className="flex min-h-dvh scroll-mt-20 flex-col justify-center border-b border-border bg-background py-24 lg:py-28"
-    >
-      <div className="mx-auto w-full max-w-[1500px] px-6 sm:px-8 lg:px-14">
-        <div className="max-w-3xl">
-          <p className="text-xs font-medium tracking-widest text-primary uppercase">
-            Lo que cambia el lunes
-          </p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl">
-            Tres cosas que dejas de hacer a mano
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-            No es un calendario con otro nombre. Es la agenda, la ficha de cada cliente y la cuenta
-            de cada barbero funcionando sobre los mismos datos, sin que nadie los copie de un sitio
-            a otro.
-          </p>
-        </div>
+    <Seccion tono={tono} separador={separador}>
+      <EncabezadoSeccion
+        etiqueta={t("etiqueta")}
+        titulo={t("titulo")}
+        entrada={t("entrada")}
+        nivel={nivel}
+        enlace={enlace}
+      />
 
-        <motion.ul
-          initial="oculto"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ staggerChildren: 0.06 }}
-          className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3"
-        >
-          {bloquesValor.map(({ icono: Icono, titulo, descripcion, detalles }, indice) => (
+      <motion.ul
+        initial="oculto"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ staggerChildren: 0.06 }}
+        className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3"
+      >
+        {CLAVES_BLOQUE.map((clave, indice) => {
+          const Icono = iconosBloque[clave]
+          // `raw` porque `detalles` es una lista, no una frase: `t()` devuelve
+          // texto ya formateado y aquí hace falta el array tal cual.
+          const detalles = t.raw(`bloques.${clave}.detalles`) as string[]
+
+          return (
             <motion.li
-              key={titulo}
+              key={clave}
               variants={{ oculto: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ type: "spring", stiffness: 140, damping: 22 }}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-7 transition-[border-color,box-shadow,transform] duration-300 hover:border-primary/40 hover:shadow-lg motion-safe:hover:-translate-y-1"
+              className={cn(
+                "group relative flex flex-col overflow-hidden",
+                TARJETA,
+                TARJETA_AIRE,
+                TARJETA_VIVA
+              )}
             >
               {/* Resplandor que entra desde la esquina al apuntar. Opacidad, no
-                  un fondo que repinte la tarjeta entera */}
+                    un fondo que repinte la tarjeta entera */}
               <span
                 className="pointer-events-none absolute -top-16 -right-16 size-40 rounded-full bg-primary/10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
                 aria-hidden
@@ -59,9 +90,16 @@ export function ValorList() {
                 </span>
               </div>
 
-              <h3 className="mt-6 text-xl font-semibold tracking-tight">{titulo}</h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">{descripcion}</p>
+              <h3 className="mt-6 text-xl font-semibold tracking-tight text-balance">
+                {t(`bloques.${clave}.titulo`)}
+              </h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
+                {t(`bloques.${clave}.descripcion`)}
+              </p>
 
+              {/* También en la portada: es lo concreto, y lo concreto es lo
+                  que convence. Esconderlo tras un clic mete un paso entre
+                  alguien interesado y la compra. */}
               <ul className="mt-6 space-y-2.5 border-t border-border pt-6">
                 {detalles.map((detalle) => (
                   <li key={detalle} className="flex gap-2.5 text-sm">
@@ -71,10 +109,12 @@ export function ValorList() {
                 ))}
               </ul>
             </motion.li>
-          ))}
-        </motion.ul>
+          )
+        })}
+      </motion.ul>
 
-        {/* Lo que no cabe en tres bloques pero decide una compra */}
+      {/* Lo que no cabe en tres bloques pero decide una compra */}
+      {!resumen && (
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -82,18 +122,21 @@ export function ValorList() {
           transition={{ type: "spring", stiffness: 140, damping: 22 }}
           className="mt-12 flex flex-wrap items-center gap-3 border-t border-border pt-8"
         >
-          <span className="text-sm font-medium text-foreground">Y además:</span>
-          {capacidadesExtra.map(({ icono: Icono, texto }) => (
-            <span
-              key={texto}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
-            >
-              <Icono className="size-3.5 text-primary" aria-hidden />
-              {texto}
-            </span>
-          ))}
+          <span className="text-sm font-medium text-foreground">{t("ademas")}</span>
+          {CLAVES_CAPACIDAD.map((clave) => {
+            const Icono = iconosCapacidad[clave]
+            return (
+              <span
+                key={clave}
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+              >
+                <Icono className="size-3.5 text-primary" aria-hidden />
+                {t(`capacidades.${clave}`)}
+              </span>
+            )
+          })}
         </motion.div>
-      </div>
-    </section>
+      )}
+    </Seccion>
   )
 }

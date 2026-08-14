@@ -1,7 +1,7 @@
 import "server-only"
 import { z } from "zod"
 import { monedas, regiones, type CodigoMoneda, type CodigoRegion } from "@/config/regiones"
-import { copyDe, fraseDeFuncion } from "@/constants/planes.copy"
+import { PLAN_DESTACADO } from "@/config/contenido"
 import planesRespaldo from "@/constants/planes.fallback.json"
 import { ErrorApi, leerJson } from "@/lib/api/cliente"
 import { endpointsApi } from "@/lib/api/endpoints"
@@ -115,8 +115,6 @@ const esquemaRespuesta = z.object({ data: z.array(esquemaPlanApi) })
  * que aquí no existe.
  */
 const esquemaPlanCompleto = esquemaPlanApi.extend({
-  descripcion: z.string(),
-  destacado: z.boolean(),
   limites: z.object({
     sedes: z.number().int().positive().nullable(),
     barberos: z.number().int().positive().nullable(),
@@ -131,10 +129,21 @@ const esquemaPlanCompleto = esquemaPlanApi.extend({
       })
     )
     .min(1),
-}) satisfies z.ZodType<PlanPublico>
+})
 
-/** Un respaldo vacío no es un respaldo: si esto se queda sin planes, que falle. */
-const respaldo: PlanPublico[] = z.array(esquemaPlanCompleto).min(1).parse(planesRespaldo)
+/**
+ * Un respaldo vacío no es un respaldo: si esto se queda sin planes, que falle.
+ *
+ * Pasa por `publicar()` igual que lo que llega de la API, y por eso el archivo
+ * tiene su MISMA forma —claves de función, sin copy—: el respaldo imita a la
+ * fuente, no al componente. Cuando imitaba al componente había que acordarse de
+ * traducirlo a mano, y ese es justo el archivo que nadie vuelve a abrir.
+ */
+const respaldo: PlanPublico[] = z
+  .array(esquemaPlanCompleto)
+  .min(1)
+  .parse(planesRespaldo)
+  .map((plan) => publicar(plan, []))
 
 /** Un precio cambia como mucho una vez al mes. */
 const CACHE_SEGUNDOS = 3600
@@ -199,15 +208,14 @@ function conRespaldo(causa: string): PlanPublico[] {
 }
 
 /**
- * Dato de la API + copy de este repositorio, cruzados por `codigo`.
+ * Lo que la API dice de un plan, quedándose solo con lo que este sitio sabe
+ * pintar.
  *
- * La frontera está aquí a propósito: **a partir de este punto la página no sabe
- * qué parte vino de dónde**, así que el día que la descripción se administre
- * desde el panel de planes, solo cambia esta función.
+ * **Aquí no entra copy**, y esa es la frontera: el texto de venta tiene idioma
+ * y esta respuesta se cachea una vez para los dos. Lo único que se decide en
+ * este punto es cuál se destaca, que es una decisión de la página.
  */
 function publicar(plan: PlanApi, descartados: string[]): PlanPublico {
-  const { descripcion, destacado } = copyDe(plan.codigo)
-
   const precios: PrecioPublico[] = []
   for (const crudo of plan.precios) {
     const precio = precioConocido(crudo)
@@ -218,11 +226,14 @@ function publicar(plan: PlanApi, descartados: string[]): PlanPublico {
   return {
     codigo: plan.codigo,
     nombre: plan.nombre,
-    descripcion,
-    destacado,
+    // Cuál se resalta lo decide ESTE sitio, no la API: es una decisión de venta
+    // —y de una sola página—, no un atributo del plan. Guardarla en la base
+    // obligaría a un despliegue para cambiar de opinión.
+    destacado: plan.codigo === PLAN_DESTACADO,
     limites: topesDe(plan.limites),
-    // Las claves que la API dice que el plan incluye, dichas para quien compra.
-    funciones: plan.funciones.map(fraseDeFuncion),
+    // Las CLAVES, tal como vienen. Traducirlas aquí ataría a un idioma un dato
+    // que se cachea una vez para los dos.
+    funciones: plan.funciones,
     precios,
   }
 }

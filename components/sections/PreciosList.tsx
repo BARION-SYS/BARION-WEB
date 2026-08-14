@@ -1,15 +1,30 @@
-import type { CodigoRegion } from "@/config/regiones"
+import { useTranslations } from "next-intl"
+import { EncabezadoSeccion } from "@/components/sections/EncabezadoSeccion"
 import { PreciosGrid } from "@/components/sections/PreciosGrid"
 import { RegionSelect } from "@/components/sections/RegionSelect"
-import { garantiasPlan } from "@/constants/valor"
+import { Seccion } from "@/components/sections/Seccion"
+import { CLAVES_GARANTIA, iconosGarantia } from "@/config/contenido"
+import type { CodigoRegion } from "@/config/regiones"
 import type { PlanPublico } from "@/types/landing"
-import { RevelarEnScroll } from "@/components/common/RevelarEnScroll"
 
-interface LandingPreciosListProps {
+interface PreciosListProps {
   planes: PlanPublico[]
   region: CodigoRegion
   /** Dónde opera Barion, según la API. Solo estos se pueden elegir. */
   operados: CodigoRegion[]
+  nivel?: "h1" | "h2"
+  /**
+   * En la portada se recorta lo que se pregunta DESPUÉS de decidir —las
+   * garantías de cualquier plan—, que ahora vive en el cierre y en `/precios`.
+   *
+   * El selector de país **no se recorta**: sin él, quien no está en Colombia lee
+   * un precio que no es el suyo, y eso no es un detalle que se pueda dejar para
+   * la página siguiente.
+   */
+  resumen?: boolean
+  enlace?: { href: string; texto: string }
+  tono?: "base" | "alterno"
+  separador?: boolean
 }
 
 /**
@@ -21,47 +36,53 @@ interface LandingPreciosListProps {
  * porque decide qué precios existen, y el **período** se resuelve en el cliente
  * porque los tres ya vinieron en la misma respuesta.
  */
-export function PreciosList({ planes, region, operados }: LandingPreciosListProps) {
+export function PreciosList({
+  planes,
+  region,
+  operados,
+  nivel = "h2",
+  resumen = false,
+  enlace,
+  tono = "base",
+  separador = true,
+}: PreciosListProps) {
+  const t = useTranslations("precios")
+
   return (
-    <section
-      id="precios"
-      className="flex min-h-dvh scroll-mt-20 flex-col justify-center border-b border-border bg-background py-24 lg:py-28"
-    >
-      <div className="mx-auto w-full max-w-[1500px] px-6 sm:px-8 lg:px-14">
-        <RevelarEnScroll className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-3xl">
-            <p className="text-xs font-medium tracking-widest text-primary uppercase">Precios</p>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl">
-              Un precio por barbería, no por cada cosa que uses
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              El precio depende del país donde factures, no del cambio del día. Pagas mes a mes o
-              adelantas y pagas menos; cambias de plan cuando el negocio lo pida, y lo que ya está
-              agendado no se toca.
-            </p>
-          </div>
-          <RegionSelect region={region} operados={operados} />
-        </RevelarEnScroll>
+    <Seccion tono={tono} separador={separador}>
+      <EncabezadoSeccion
+        etiqueta={t("etiqueta")}
+        titulo={t("titulo")}
+        entrada={t("entrada")}
+        nivel={nivel}
+        enlace={enlace}
+        // El selector solo en la página de precios: en la portada competiría
+        // con el CTA por la misma esquina, y quien está mirando por encima
+        // todavía no está eligiendo país.
+        acompanante={<RegionSelect region={region} operados={operados} />}
+      />
 
-        <PreciosGrid planes={planes} region={region} />
+      <PreciosGrid planes={planes} region={region} />
 
-        {/* Lo que trae CUALQUIER plan: es lo que se pregunta justo después de
+      {/* Lo que trae CUALQUIER plan: es lo que se pregunta justo después de
             mirar los precios, y responderlo aquí evita una tabla comparativa */}
+      {!resumen && (
         <div className="mt-12 border-t border-border pt-8">
-          <p className="text-sm font-medium">Todos los planes incluyen</p>
+          <p className="text-sm font-medium">{t("incluyen")}</p>
           <ul className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
-            {garantiasPlan.map(({ icono: Icono, texto }) => (
-              <li key={texto} className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                <Icono className="size-4 shrink-0 text-primary" aria-hidden />
-                {texto}
-              </li>
-            ))}
+            {CLAVES_GARANTIA.map((clave) => {
+              const Icono = iconosGarantia[clave]
+              return (
+                <li key={clave} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                  <Icono className="size-4 shrink-0 text-primary" aria-hidden />
+                  {t(`garantias.${clave}`)}
+                </li>
+              )
+            })}
           </ul>
-          <p className="mt-6 text-sm text-muted-foreground">
-            7 días de prueba. Sin tarjeta. Eliges plan al final.
-          </p>
+          <p className="mt-6 text-sm text-muted-foreground">{t("prueba")}</p>
         </div>
-      </div>
-    </section>
+      )}
+    </Seccion>
   )
 }

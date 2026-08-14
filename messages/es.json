@@ -1,0 +1,429 @@
+{
+  "identidad": {
+    "tituloInicio": "Barion — Software de gestión para barberías",
+    "plantillaTitulo": "%s · Barion",
+    "descripcion": "Software de gestión para barberías: agenda con reservas en línea, ficha de clientes, comisiones por barbero y nómina. 7 días de prueba, sin tarjeta.",
+    "descripcionCorta": "Agenda, clientes, equipo y nómina de tu barbería en un solo sitio. Tus clientes reservan solos desde el móvil.",
+    "resumenIA": "Barion es un SaaS multi-tenant de gestión para barberías —citas, agenda, clientes, equipo, comisiones y nómina— con un escaparate público donde los clientes de cada barbería reservan solos. Opera en Colombia, Estados Unidos y España.",
+    "palabrasClave": [
+      "software para barberías",
+      "programa para barberías",
+      "software de gestión para barberías",
+      "agenda para barbería",
+      "sistema de reservas para barbería",
+      "app de citas para barbería",
+      "gestión de citas barbería",
+      "comisiones de barberos",
+      "nómina de barbería",
+      "software barbería Colombia",
+      "software barbería España",
+      "barbershop software"
+    ],
+    "altImagenSocial": "Barion — panel de gestión para barberías con la agenda del día"
+  },
+  "paginas": {
+    "inicio": {
+      "titulo": "Barion — Software de gestión para barberías",
+      "descripcion": "Software de gestión para barberías: agenda con reservas en línea, ficha de clientes, comisiones por barbero y nómina. 7 días de prueba, sin tarjeta."
+    },
+    "producto": {
+      "titulo": "Qué hace Barion",
+      "descripcion": "La agenda que no se pisa, la ficha de cada cliente y lo que se lleva cada barbero, sobre los mismos datos y sin copiar nada de un sitio a otro."
+    },
+    "vistaPrevia": {
+      "titulo": "Cómo se ve",
+      "descripcion": "El panel es tuyo y el escaparate es el que enseñas. Míralos por dentro y prueba una reserva como la haría tu cliente."
+    },
+    "precios": {
+      "titulo": "Precios",
+      "descripcion": "Un precio por barbería, no por cada cosa que uses. Precio propio para Colombia, Estados Unidos y España. 7 días de prueba, sin tarjeta y sin permanencia."
+    },
+    "preguntas": {
+      "titulo": "Preguntas frecuentes",
+      "descripcion": "Lo que se pregunta antes de decidir, respondido con lo que Barion hace hoy — incluido lo que no hace."
+    },
+    "terminos": {
+      "titulo": "Términos y condiciones",
+      "descripcion": "Las condiciones bajo las que una barbería contrata Barion: qué se contrata, cómo se cobra, cómo se cancela y qué pasa con los datos después."
+    },
+    "privacidad": {
+      "titulo": "Política de privacidad",
+      "descripcion": "Qué datos personales trata Barion, para qué, con quién los comparte, cuánto los guarda y cómo se ejercen los derechos sobre ellos. Ley 1581 de 2012 y RGPD."
+    },
+    "cookies": {
+      "titulo": "Política de cookies",
+      "descripcion": "Qué se guarda en tu navegador cuando usas Barion, para qué sirve cada cosa, cuánto dura y cómo se borra. Cubre el sitio y la aplicación."
+    },
+    "noEncontrada": {
+      "titulo": "Página no encontrada",
+      "descripcion": "La dirección no existe o se movió."
+    }
+  },
+  "regiones": {
+    "CO": "Colombia",
+    "US": "Estados Unidos",
+    "ES": "España"
+  },
+  "navegacion": {
+    "secciones": {
+      "producto": "Producto",
+      "vistaPrevia": "Cómo se ve",
+      "precios": "Precios",
+      "preguntas": "Preguntas"
+    },
+    "inicio": "Inicio",
+    "aria": "Secciones",
+    "abrirMenu": "Abrir menú",
+    "cerrarMenu": "Cerrar menú",
+    "entrar": "Iniciar sesión",
+    "empezar": "Empezar la prueba",
+    "yaTienesCuenta": "¿Ya tienes cuenta? Iniciar sesión",
+    "saltarAlContenido": "Saltar al contenido",
+    "migas": "Ruta de navegación",
+    "logotipo": "Barion — inicio"
+  },
+  "tema": {
+    "cambiar": "Cambiar tema",
+    "claro": "Claro",
+    "oscuro": "Oscuro",
+    "sistema": "Sistema"
+  },
+  "idioma": {
+    "cambiar": "Cambiar idioma"
+  },
+  "hero": {
+    "insignia": "Software premium para barberías",
+    "titularUno": "Administra tu barbería.",
+    "titularDos": "Eleva tu legado.",
+    "entrada": "Agenda, clientes y nómina en un solo sitio. Tus clientes reservan solos desde el móvil y tú ves el negocio entero desde una pantalla.",
+    "ctaPrimario": "Empezar la prueba",
+    "ctaSecundario": "Ver los planes",
+    "prueba": "7 días de prueba · Sin tarjeta",
+    "senales": {
+      "rapido": "Listo en una tarde",
+      "mercados": "Colombia · EE. UU. · España",
+      "sinInstalar": "Sin instalar nada"
+    },
+    "desliza": "Desliza"
+  },
+  "producto": {
+    "etiqueta": "Lo que cambia el lunes",
+    "titulo": "Tres cosas que dejas de hacer a mano",
+    "entrada": "No es un calendario con otro nombre. Es la agenda, la ficha de cada cliente y la cuenta de cada barbero funcionando sobre los mismos datos, sin que nadie los copie de un sitio a otro.",
+    "bloques": {
+      "agenda": {
+        "titulo": "La agenda que no se pisa",
+        "descripcion": "El cliente reserva solo, desde el móvil y sin llamar. Dos citas nunca caen encima de la misma silla.",
+        "detalles": [
+          "Reserva a cualquier hora desde tu enlace público",
+          "El solape lo rechaza el sistema, no tu memoria",
+          "Jornadas, descansos y ausencias por barbero",
+          "Recordatorio automático antes de cada cita"
+        ]
+      },
+      "clientes": {
+        "titulo": "Clientes que vuelven",
+        "descripcion": "El del cumpleaños, el que lleva tres meses sin aparecer y el que siempre pide al mismo barbero. Barion se acuerda por ti.",
+        "detalles": [
+          "Ficha con historial, notas y preferencias",
+          "Aviso de cumpleaños y de cliente dormido",
+          "Barbero favorito recordado en cada reserva",
+          "Segmentos para hablarle a quien toca"
+        ]
+      },
+      "comisiones": {
+        "titulo": "Cuánto se lleva cada uno",
+        "descripcion": "Comisiones, producción y liquidación por barbero. Se acabó cuadrar la semana con un cuaderno.",
+        "detalles": [
+          "Comisión por barbero congelada en cada cita",
+          "Producción del día, la semana y el mes",
+          "Liquidación lista para pagar, sin recalcular",
+          "El barbero ve lo suyo, y solo lo suyo"
+        ]
+      }
+    },
+    "ademas": "Y además:",
+    "capacidades": {
+      "qr": "QR para el local",
+      "sedes": "Varias sedes",
+      "roles": "Roles y permisos",
+      "panelBarbero": "Panel del barbero",
+      "estadisticas": "Estadísticas de ocupación",
+      "exportar": "Tus datos, exportables",
+      "aislamiento": "Cada barbería aislada"
+    },
+    "verTodo": "Ver todo lo que hace"
+  },
+  "vistaPrevia": {
+    "etiqueta": "Dos caras del mismo sistema",
+    "titulo": "El panel es tuyo. El escaparate es el que enseñas",
+    "entrada": "Tu barbería tiene su propia dirección pública. El cliente entra, elige servicio y barbero, y la cita aparece en tu agenda. Sin llamadas y sin instalar nada.",
+    "pasos": {
+      "escaparate": {
+        "titulo": "Publicas tu escaparate",
+        "descripcion": "Tu barbería tiene su propia dirección y su propio color. La compartes por WhatsApp, en tu perfil o con el QR del local."
+      },
+      "reserva": {
+        "titulo": "El cliente elige y reserva",
+        "descripcion": "Servicio, barbero y hora libre, desde el móvil y sin instalar nada. Confirma su teléfono y la cita queda hecha."
+      },
+      "agenda": {
+        "titulo": "Aparece en tu agenda",
+        "descripcion": "Sin llamadas ni mensajes cruzados. El recordatorio sale solo y la silla se bloquea al instante."
+      }
+    },
+    "pieDelPanel": "El panel: la agenda del día, con quién viene y quién lo atiende.",
+    "pieDelEscaparate": "El escaparate: lo que ve tu cliente en su móvil. Pruébalo — elige servicio, barbero, hora y cómo paga.",
+    "maqueta": {
+      "citasDeHoy": "Citas de hoy",
+      "dia": "Miércoles 14",
+      "barberosEnSilla": "2 barberos en silla",
+      "confirmada": "Confirmada"
+    },
+    "verTodo": "Verlo por dentro"
+  },
+  "precios": {
+    "etiqueta": "Precios",
+    "titulo": "Un precio por barbería, no por cada cosa que uses",
+    "entrada": "El precio depende del país donde factures, no del cambio del día. Pagas mes a mes o adelantas y pagas menos; cambias de plan cuando el negocio lo pida, y lo que ya está agendado no se toca.",
+    "verPreciosEn": "Ver precios en",
+    "cadaCuanto": "Cada cuánto quieres pagar",
+    "periodos": {
+      "mensual": {
+        "etiqueta": "Mensual",
+        "sufijo": "/ mes"
+      },
+      "semestral": {
+        "etiqueta": "Semestral",
+        "sufijo": "/ 6 meses"
+      },
+      "anual": {
+        "etiqueta": "Anual",
+        "sufijo": "/ año"
+      }
+    },
+    "consultar": "Consultar",
+    "masElegido": "El más elegido",
+    "incluyen": "Todos los planes incluyen",
+    "garantias": {
+      "escaparate": "Escaparate público y reservas",
+      "panelBarbero": "Panel del barbero incluido",
+      "exportar": "Exportas tus datos cuando quieras",
+      "permanencia": "Sin permanencia: te vas cuando quieras"
+    },
+    "prueba": "7 días de prueba. Sin tarjeta. Eliges plan al final.",
+    "planes": {
+      "esencial": {
+        "descripcion": "Para la barbería de un local que quiere dejar el cuaderno."
+      },
+      "pro": {
+        "descripcion": "Para la barbería con equipo, varias sedes y clientes que vuelven."
+      }
+    },
+    "funciones": {
+      "agenda": "Agenda con reserva en línea",
+      "portal": "Escaparate público con tu enlace",
+      "recordatorios": "Recordatorios de cita",
+      "clientes": "Ficha de clientes e historial",
+      "comisiones": "Comisiones por barbero",
+      "campanas": "Campañas de cumpleaños y reactivación",
+      "fidelidad": "Programa de fidelidad",
+      "listaEspera": "Lista de espera",
+      "reportes": "Estadísticas de ocupación e ingresos",
+      "multisede": "Varias sedes"
+    },
+    "verTodo": "Comparar los planes",
+    "ahorro": "Ahorras un {porcentaje}% frente a pagar mes a mes",
+    "todoLoDe": "Todo lo de {plan}, y además:",
+    "empezarCon": "Empezar con {plan}",
+    "limiteSedes": "{cantidad, plural, one {1 sede} other {Hasta # sedes}}",
+    "limiteSedesSinTope": "Sedes sin límite",
+    "limiteBarberos": "{cantidad, plural, one {1 barbero} other {Hasta # barberos}}",
+    "limiteBarberosSinTope": "Barberos sin límite"
+  },
+  "preguntas": {
+    "etiqueta": "Preguntas frecuentes",
+    "titulo": "Lo que se pregunta antes de decidir",
+    "entrada": "Respondido con lo que Barion hace hoy, incluido lo que no hace. Si falta la tuya, escríbenos y la contestamos nosotros.",
+    "grupos": {
+      "empezar": "Empezar",
+      "funcionamiento": "Cómo funciona",
+      "precioDatos": "Precio, datos y permanencia"
+    },
+    "lista": {
+      "queEs": {
+        "pregunta": "¿Qué es Barion exactamente?",
+        "respuesta": "Un software de gestión para barberías: la agenda con reserva en línea, la ficha de cada cliente, las comisiones y la liquidación de tu equipo, y un escaparate público donde tus clientes reservan solos. Funciona en el navegador y está hecho para el dueño de la barbería, no para el cliente final."
+      },
+      "queNecesito": {
+        "pregunta": "¿Qué necesito para empezar?",
+        "respuesta": "Un navegador. Creas tu barbería con nombre, correo, teléfono y la dirección pública que elijas, cargas tus servicios y tus barberos, y compartes tu enlace. No se instala nada, ni en tu equipo ni en el móvil de tus clientes."
+      },
+      "cuantoTardo": {
+        "pregunta": "¿Cuánto tardo en tenerlo funcionando?",
+        "respuesta": "Una tarde. Son tres pasos: crear la barbería, cargar servicios y barberos, y compartir tu enlace por WhatsApp, en tu perfil o con el QR del local. A partir de ahí el primer cliente ya puede reservar."
+      },
+      "pruebaTarjeta": {
+        "pregunta": "¿La prueba pide tarjeta?",
+        "respuesta": "No. Son 7 días completos sin tarjeta y eliges plan al final. Si decides no seguir, exportas tus datos y ya está."
+      },
+      "trabajoSolo": {
+        "pregunta": "¿Sirve si trabajo solo, sin equipo?",
+        "respuesta": "Sí. El plan de entrada está pensado para un local, y la agenda, el escaparate y la ficha de clientes funcionan igual con un barbero que con cinco. Las comisiones simplemente se quedan esperando a que contrates."
+      },
+      "comoReservan": {
+        "pregunta": "¿Cómo reservan mis clientes?",
+        "respuesta": "Desde tu escaparate: tu barbería tiene su propia dirección pública. El cliente entra, elige servicio, barbero y una hora que esté libre de verdad, confirma su teléfono y la cita queda hecha. Sin llamar, sin esperar respuesta y sin instalar nada."
+      },
+      "mismaHora": {
+        "pregunta": "¿Qué pasa si dos clientes piden la misma hora?",
+        "respuesta": "No pasa: el solape lo rechaza el sistema, no tu memoria. La agenda conoce la jornada de cada barbero, sus descansos y sus ausencias, así que solo ofrece horas que esa silla puede atender."
+      },
+      "recordatorio": {
+        "pregunta": "¿Se le avisa al cliente antes de la cita?",
+        "respuesta": "Sí, sale un recordatorio automático antes de cada cita. Es lo que baja las ausencias sin que nadie tenga que escribir mensajes uno a uno."
+      },
+      "mensajeria": {
+        "pregunta": "¿Los mensajes de WhatsApp o SMS los pagan ustedes?",
+        "respuesta": "No, y por eso la suscripción cuesta lo que ves. WhatsApp y SMS son canales que conecta cada barbería con su propia cuenta de proveedor: tú contratas el canal y Barion envía por él. Lo que Barion no hace es meter ese coste variable dentro del precio ni cobrarte por mensaje enviado."
+      },
+      "cobroClientes": {
+        "pregunta": "¿Barion le cobra a mis clientes?",
+        "respuesta": "No. Barion no procesa pagos de clientes finales: registra cómo se pagó cada cita para que la caja y las comisiones cuadren. El cobro sigue siendo tuyo, en tu local y con los medios que ya usas."
+      },
+      "verEquipo": {
+        "pregunta": "¿Cada barbero ve toda la información de la barbería?",
+        "respuesta": "No. Hay roles y permisos: el barbero entra a su panel, ve su agenda y lo que ha producido, y nada más. Las cuentas de la barbería, el resto del equipo y la configuración son del dueño y de quien él autorice."
+      },
+      "variasSedes": {
+        "pregunta": "¿Puedo tener varias sedes?",
+        "respuesta": "Sí, con el plan que las incluya. Cada sede lleva su agenda, su equipo y sus horarios, y las cuentas se leen por sede o todas juntas, bajo la misma barbería y con el mismo inicio de sesión."
+      },
+      "moneda": {
+        "pregunta": "¿En qué moneda pago?",
+        "respuesta": "En la de tu país. Barion opera en Colombia (COP), Estados Unidos (USD) y España (EUR), y el precio de cada país es un precio propio, no la conversión del cambio del día. El país de facturación se fija cuando creas la barbería; el selector de esta página solo cambia los precios que estás mirando."
+      },
+      "permanencia": {
+        "pregunta": "¿Hay permanencia?",
+        "respuesta": "No. No hay contrato de permanencia ni penalización: te vas cuando quieras y dejas de pagar el mes siguiente."
+      },
+      "llevarDatos": {
+        "pregunta": "¿Me puedo llevar mis datos si me voy?",
+        "respuesta": "Sí. Tus clientes, tus citas y tus cuentas se exportan cuando quieras, no solo el día que te vas. Los datos de tu barbería son tuyos."
+      },
+      "aislamiento": {
+        "pregunta": "¿Mis datos están mezclados con los de otras barberías?",
+        "respuesta": "No. Cada barbería está aislada y esa separación la impone la base de datos, no una condición que alguien pueda olvidar escribir en el código. Nadie de otra barbería puede leer tu agenda ni tus clientes."
+      },
+      "cambioPlan": {
+        "pregunta": "¿Qué pasa con mis citas si cambio de plan?",
+        "respuesta": "Nada. Cambias de plan cuando el negocio lo pida y lo que ya está agendado se queda tal cual, con su barbero, su hora y su precio."
+      },
+      "directorio": {
+        "pregunta": "¿Mi barbería aparecerá en un directorio de Barion?",
+        "respuesta": "No. Barion no es un marketplace: no hay buscador ni directorio de barberías donde tus clientes se encuentren con la competencia. Tu escaparate es tuyo y a él llega quien tú invitas, con tu enlace o con el QR del local."
+      }
+    },
+    "verTodo": "Ver todas las preguntas"
+  },
+  "cierre": {
+    "titulo": "Tu barbería, ordenada desde esta tarde",
+    "entrada": "Creas la barbería, cargas tus servicios y compartes tu enlace. El primer cliente puede reservar hoy mismo.",
+    "arranque": {
+      "crear": {
+        "titulo": "Creas tu barbería",
+        "descripcion": "Cuatro campos: nombre, correo, teléfono y tu dirección pública. Dos minutos."
+      },
+      "cargar": {
+        "titulo": "Cargas servicios y barberos",
+        "descripcion": "Precio, duración y quién atiende cada cosa. La agenda ya sabe con eso."
+      },
+      "compartir": {
+        "titulo": "Compartes tu enlace",
+        "descripcion": "Por WhatsApp, en tu perfil o con el QR del local. El primer cliente ya puede reservar."
+      }
+    },
+    "ctaPrimario": "Empezar la prueba",
+    "ctaSecundario": "Ver los planes",
+    "prueba": "7 días de prueba · Sin tarjeta",
+    "paso": "Paso {numero}",
+    "comoEmpieza": "Cómo empieza"
+  },
+  "pie": {
+    "descripcion": "Gestión para barberías modernas. Colombia, Estados Unidos y España.",
+    "producto": "Producto",
+    "empezar": "Empezar",
+    "legal": "Legal",
+    "terminos": "Términos y condiciones",
+    "privacidad": "Privacidad",
+    "cookies": "Cookies",
+    "crearBarberia": "Crear mi barbería",
+    "entrarAlPanel": "Entrar al panel",
+    "derechos": "© {anio} Barion. Todos los derechos reservados."
+  },
+  "noEncontrada": {
+    "codigo": "Error 404",
+    "titulo": "Esta página no existe",
+    "entrada": "Puede que el enlace esté mal escrito o que la página se haya movido.",
+    "volver": "Volver al inicio"
+  },
+  "maquetas": {
+    "panel": {
+      "secciones": {
+        "resumen": "Resumen",
+        "agenda": "Agenda",
+        "clientes": "Clientes",
+        "barberos": "Barberos",
+        "nomina": "Nómina",
+        "estadisticas": "Estadísticas",
+        "configuracion": "Configuración"
+      },
+      "ingresos": "Ingresos",
+      "citas": "Citas",
+      "ocupacion": "Ocupación",
+      "ticketPromedio": "Ticket promedio",
+      "servicioTop": "Servicio top",
+      "clienteRegistrado": "Cliente registrado",
+      "recordatorioEnviado": "Recordatorio enviado",
+      "proximaCita": "Próxima cita"
+    },
+    "escaparate": {
+      "barberia": "Barbería Central",
+      "eligeServicio": "Elige tu servicio",
+      "conQuien": "Con quién",
+      "hoy": "Hoy",
+      "comoVasAPagar": "Cómo vas a pagar",
+      "avisoPago": "Se registra para la caja de la barbería. Barion no cobra al cliente.",
+      "total": "Total",
+      "reservar": "Reservar",
+      "cualquiera": "Cualquiera",
+      "elPrimeroLibre": "El primero libre",
+      "especialidadFades": "Fades y diseño",
+      "especialidadClasico": "Clásico y navaja",
+      "pagos": {
+        "efectivo": "Efectivo",
+        "tarjeta": "Tarjeta",
+        "transferencia": "Transferencia"
+      },
+      "resumen": "{servicio} con {barbero} hoy a las {hora}"
+    },
+    "servicios": {
+      "clasico": "Corte clásico",
+      "corteBarba": "Corte + barba",
+      "navaja": "Afeitado a navaja",
+      "corteNino": "Corte niño",
+      "ritualCompleto": "Ritual completo",
+      "fadeClasico": "Fade clásico",
+      "fadeBarba": "Fade + barba",
+      "colorCorte": "Color + corte",
+      "afeitado": "Afeitado",
+      "diseno": "Diseño"
+    },
+    "minutos": "{cantidad} min"
+  },
+  "legal": {
+    "avisoTraduccion": "Estos documentos están redactados en español, que es la versión que rige. Si algo no queda claro, escríbenos antes de darte de alta.",
+    "otrosDocumentos": "Los otros documentos",
+    "titulo": "Legal"
+  }
+}

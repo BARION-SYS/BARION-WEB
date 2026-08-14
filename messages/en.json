@@ -1,0 +1,429 @@
+{
+  "identidad": {
+    "tituloInicio": "Barion — Barbershop management software",
+    "plantillaTitulo": "%s · Barion",
+    "descripcion": "Barbershop management software: online booking, client records, per-barber commissions and payroll. 7-day trial, no card required.",
+    "descripcionCorta": "Your barbershop's calendar, clients, team and payroll in one place. Your clients book themselves from their phone.",
+    "resumenIA": "Barion is a multi-tenant management SaaS for barbershops —appointments, calendar, clients, team, commissions and payroll— with a public booking page where each shop's clients book on their own. Available in Colombia, the United States and Spain.",
+    "palabrasClave": [
+      "barbershop software",
+      "barber shop management software",
+      "barbershop booking software",
+      "barbershop scheduling software",
+      "booking app for barbers",
+      "barber appointment app",
+      "barbershop POS alternative",
+      "barber commission tracking",
+      "barbershop payroll software",
+      "salon software for barbers",
+      "online booking for barbershops",
+      "barbershop software Spain"
+    ],
+    "altImagenSocial": "Barion — barbershop management dashboard showing the day's schedule"
+  },
+  "paginas": {
+    "inicio": {
+      "titulo": "Barion — Barbershop management software",
+      "descripcion": "Barbershop management software: online booking, client records, per-barber commissions and payroll. 7-day trial, no card required."
+    },
+    "producto": {
+      "titulo": "What Barion does",
+      "descripcion": "A calendar that can't double-book, a record for every client, and what each barber earns — all on the same data, with nothing copied between places."
+    },
+    "vistaPrevia": {
+      "titulo": "See it in action",
+      "descripcion": "The dashboard is yours; the booking page is what you share. Look inside both and try a booking the way your client would."
+    },
+    "precios": {
+      "titulo": "Pricing",
+      "descripcion": "One price per shop, not per feature. Local pricing for Colombia, the United States and Spain. 7-day trial, no card, no lock-in."
+    },
+    "preguntas": {
+      "titulo": "Frequently asked questions",
+      "descripcion": "What people ask before deciding, answered with what Barion does today — including what it doesn't."
+    },
+    "terminos": {
+      "titulo": "Terms and conditions",
+      "descripcion": "The terms a barbershop signs up under: what is being bought, how it is billed, how to cancel, and what happens to the data afterwards."
+    },
+    "privacidad": {
+      "titulo": "Privacy policy",
+      "descripcion": "What personal data Barion processes, why, who it is shared with, how long it is kept and how to exercise your rights. Colombian Law 1581 and the GDPR."
+    },
+    "cookies": {
+      "titulo": "Cookie policy",
+      "descripcion": "What gets stored in your browser when you use Barion, what each item is for, how long it lasts and how to clear it. Covers the site and the app."
+    },
+    "noEncontrada": {
+      "titulo": "Page not found",
+      "descripcion": "This address doesn't exist or has moved."
+    }
+  },
+  "regiones": {
+    "CO": "Colombia",
+    "US": "United States",
+    "ES": "Spain"
+  },
+  "navegacion": {
+    "secciones": {
+      "producto": "Product",
+      "vistaPrevia": "See it",
+      "precios": "Pricing",
+      "preguntas": "FAQ"
+    },
+    "inicio": "Home",
+    "aria": "Sections",
+    "abrirMenu": "Open menu",
+    "cerrarMenu": "Close menu",
+    "entrar": "Log in",
+    "empezar": "Start the trial",
+    "yaTienesCuenta": "Already have an account? Log in",
+    "saltarAlContenido": "Skip to content",
+    "migas": "Breadcrumb",
+    "logotipo": "Barion — home"
+  },
+  "tema": {
+    "cambiar": "Change theme",
+    "claro": "Light",
+    "oscuro": "Dark",
+    "sistema": "System"
+  },
+  "idioma": {
+    "cambiar": "Change language"
+  },
+  "hero": {
+    "insignia": "Premium software for barbershops",
+    "titularUno": "Run your barbershop.",
+    "titularDos": "Build your legacy.",
+    "entrada": "Calendar, clients and payroll in one place. Your clients book themselves from their phone, and you see the whole shop from one screen.",
+    "ctaPrimario": "Start the trial",
+    "ctaSecundario": "See the plans",
+    "prueba": "7-day trial · No card",
+    "senales": {
+      "rapido": "Set up in an afternoon",
+      "mercados": "Colombia · U.S. · Spain",
+      "sinInstalar": "Nothing to install"
+    },
+    "desliza": "Scroll"
+  },
+  "producto": {
+    "etiqueta": "What changes on Monday",
+    "titulo": "Three things you stop doing by hand",
+    "entrada": "This isn't a calendar with a new name. It's your schedule, every client's record and each barber's earnings running on the same data — with nobody retyping it from one place into another.",
+    "bloques": {
+      "agenda": {
+        "titulo": "A calendar that can't double-book",
+        "descripcion": "Clients book on their own, from their phone, without calling. Two appointments never land on the same chair.",
+        "detalles": [
+          "Bookings around the clock from your public link",
+          "Overlaps are rejected by the system, not by your memory",
+          "Shifts, breaks and time off per barber",
+          "Automatic reminder before every appointment"
+        ]
+      },
+      "clientes": {
+        "titulo": "Clients who come back",
+        "descripcion": "The one with the birthday, the one who hasn't shown up in three months, and the one who always asks for the same barber. Barion remembers for you.",
+        "detalles": [
+          "Record with history, notes and preferences",
+          "Birthday and lapsed-client alerts",
+          "Favourite barber remembered at every booking",
+          "Segments, so you talk to the right people"
+        ]
+      },
+      "comisiones": {
+        "titulo": "What each barber takes home",
+        "descripcion": "Commissions, output and payout per barber. No more squaring the week with a notebook.",
+        "detalles": [
+          "Each barber's commission frozen onto every appointment",
+          "Output for the day, the week and the month",
+          "Payout ready to pay, with nothing to recalculate",
+          "Barbers see their own numbers, and only their own"
+        ]
+      }
+    },
+    "ademas": "And also:",
+    "capacidades": {
+      "qr": "QR code for the shop",
+      "sedes": "Multiple locations",
+      "roles": "Roles and permissions",
+      "panelBarbero": "Barber dashboard",
+      "estadisticas": "Chair-time analytics",
+      "exportar": "Your data, exportable",
+      "aislamiento": "Every shop isolated"
+    },
+    "verTodo": "See everything it does"
+  },
+  "vistaPrevia": {
+    "etiqueta": "Two sides of the same system",
+    "titulo": "The dashboard is yours. The booking page is what you share",
+    "entrada": "Your shop gets its own public address. A client opens it, picks a service and a barber, and the appointment shows up on your calendar. No phone calls, nothing to install.",
+    "pasos": {
+      "escaparate": {
+        "titulo": "You publish your page",
+        "descripcion": "Your shop gets its own address and its own colour. Share it on WhatsApp, in your profile, or with the QR code on the wall."
+      },
+      "reserva": {
+        "titulo": "The client picks and books",
+        "descripcion": "Service, barber and a slot that's genuinely free, from their phone with nothing to install. They confirm their number and the appointment is set."
+      },
+      "agenda": {
+        "titulo": "It lands on your calendar",
+        "descripcion": "No calls, no crossed messages. The reminder goes out on its own and the chair is held immediately."
+      }
+    },
+    "pieDelPanel": "The dashboard: the day's schedule, who's coming and who's cutting.",
+    "pieDelEscaparate": "The booking page: what your client sees on their phone. Try it — pick a service, a barber, a time and how they pay.",
+    "maqueta": {
+      "citasDeHoy": "Today's appointments",
+      "dia": "Wednesday 14",
+      "barberosEnSilla": "2 barbers on the floor",
+      "confirmada": "Confirmed"
+    },
+    "verTodo": "Look inside"
+  },
+  "precios": {
+    "etiqueta": "Pricing",
+    "titulo": "One price per shop, not per feature you use",
+    "entrada": "The price follows the country you invoice from, not today's exchange rate. Pay monthly, or pay ahead and pay less; change plan whenever the shop needs it, and nothing already booked is touched.",
+    "verPreciosEn": "Show prices for",
+    "cadaCuanto": "How often you want to pay",
+    "periodos": {
+      "mensual": {
+        "etiqueta": "Monthly",
+        "sufijo": "/ month"
+      },
+      "semestral": {
+        "etiqueta": "Every 6 months",
+        "sufijo": "/ 6 months"
+      },
+      "anual": {
+        "etiqueta": "Yearly",
+        "sufijo": "/ year"
+      }
+    },
+    "consultar": "Contact us",
+    "masElegido": "Most popular",
+    "incluyen": "Every plan includes",
+    "garantias": {
+      "escaparate": "Public booking page",
+      "panelBarbero": "Barber dashboard included",
+      "exportar": "Export your data whenever you want",
+      "permanencia": "No lock-in: leave whenever you want"
+    },
+    "prueba": "7-day trial. No card. You pick a plan at the end.",
+    "planes": {
+      "esencial": {
+        "descripcion": "For the single-location shop ready to drop the paper book."
+      },
+      "pro": {
+        "descripcion": "For the shop with a team, several locations and clients who return."
+      }
+    },
+    "funciones": {
+      "agenda": "Calendar with online booking",
+      "portal": "Public booking page with your link",
+      "recordatorios": "Appointment reminders",
+      "clientes": "Client records and history",
+      "comisiones": "Per-barber commissions",
+      "campanas": "Birthday and win-back campaigns",
+      "fidelidad": "Loyalty programme",
+      "listaEspera": "Waiting list",
+      "reportes": "Chair-time and revenue analytics",
+      "multisede": "Multiple locations"
+    },
+    "verTodo": "Compare the plans",
+    "ahorro": "Save {porcentaje}% compared with paying monthly",
+    "todoLoDe": "Everything in {plan}, plus:",
+    "empezarCon": "Start with {plan}",
+    "limiteSedes": "{cantidad, plural, one {1 location} other {Up to # locations}}",
+    "limiteSedesSinTope": "Unlimited locations",
+    "limiteBarberos": "{cantidad, plural, one {1 barber} other {Up to # barbers}}",
+    "limiteBarberosSinTope": "Unlimited barbers"
+  },
+  "preguntas": {
+    "etiqueta": "Frequently asked questions",
+    "titulo": "What people ask before deciding",
+    "entrada": "Answered with what Barion does today, including what it doesn't. If yours is missing, write to us and we'll answer it ourselves.",
+    "grupos": {
+      "empezar": "Getting started",
+      "funcionamiento": "How it works",
+      "precioDatos": "Price, data and commitment"
+    },
+    "lista": {
+      "queEs": {
+        "pregunta": "What exactly is Barion?",
+        "respuesta": "Management software for barbershops: a calendar with online booking, a record for every client, your team's commissions and payouts, and a public page where your clients book on their own. It runs in the browser and it's built for the shop owner, not for the end client."
+      },
+      "queNecesito": {
+        "pregunta": "What do I need to get started?",
+        "respuesta": "A browser. You create your shop with a name, an email, a phone number and the public address you choose, load your services and your barbers, and share your link. Nothing gets installed — not on your machine and not on your clients' phones."
+      },
+      "cuantoTardo": {
+        "pregunta": "How long until it's up and running?",
+        "respuesta": "An afternoon. Three steps: create the shop, load services and barbers, and share your link on WhatsApp, in your profile or with the QR code on the wall. From there the first client can already book."
+      },
+      "pruebaTarjeta": {
+        "pregunta": "Does the trial ask for a card?",
+        "respuesta": "No. It's 7 full days with no card, and you pick a plan at the end. If you decide not to continue, you export your data and that's it."
+      },
+      "trabajoSolo": {
+        "pregunta": "Is it any use if I work alone, with no team?",
+        "respuesta": "Yes. The entry plan is built for a single location, and the calendar, the booking page and the client records work the same with one barber as with five. Commissions simply wait until you hire."
+      },
+      "comoReservan": {
+        "pregunta": "How do my clients book?",
+        "respuesta": "From your booking page: your shop has its own public address. The client opens it, picks a service, a barber and a slot that's genuinely free, confirms their phone number and the appointment is set. No calling, no waiting for a reply, nothing to install."
+      },
+      "mismaHora": {
+        "pregunta": "What if two clients ask for the same slot?",
+        "respuesta": "It doesn't happen: overlaps are rejected by the system, not by your memory. The calendar knows each barber's shift, their breaks and their time off, so it only offers slots that chair can actually take."
+      },
+      "recordatorio": {
+        "pregunta": "Do clients get a reminder before the appointment?",
+        "respuesta": "Yes, an automatic reminder goes out before every appointment. That's what brings no-shows down without anyone writing messages one by one."
+      },
+      "mensajeria": {
+        "pregunta": "Do you pay for the WhatsApp or SMS messages?",
+        "respuesta": "No, and that's why the subscription costs what you see. WhatsApp and SMS are channels each shop connects with its own provider account: you contract the channel and Barion sends through it. What Barion doesn't do is bury that variable cost inside the price or charge you per message sent."
+      },
+      "cobroClientes": {
+        "pregunta": "Does Barion charge my clients?",
+        "respuesta": "No. Barion doesn't process end-client payments: it records how each appointment was paid so that the till and the commissions add up. Taking the money stays yours, in your shop, with the methods you already use."
+      },
+      "verEquipo": {
+        "pregunta": "Does every barber see the whole shop's information?",
+        "respuesta": "No. There are roles and permissions: a barber signs in to their dashboard, sees their schedule and what they've produced, and nothing else. The shop's accounts, the rest of the team and the settings belong to the owner and to whoever they authorise."
+      },
+      "variasSedes": {
+        "pregunta": "Can I have several locations?",
+        "respuesta": "Yes, on the plan that includes them. Each location keeps its own calendar, team and opening hours, and the numbers can be read per location or all together, under the same shop and the same login."
+      },
+      "moneda": {
+        "pregunta": "What currency do I pay in?",
+        "respuesta": "Your country's. Barion operates in Colombia (COP), the United States (USD) and Spain (EUR), and each country's price is its own price, not today's exchange rate. The billing country is fixed when you create your shop; the selector on this page only changes the prices you're looking at."
+      },
+      "permanencia": {
+        "pregunta": "Is there a minimum term?",
+        "respuesta": "No. There's no lock-in contract and no penalty: you leave whenever you want and stop paying the following period."
+      },
+      "llevarDatos": {
+        "pregunta": "Can I take my data with me if I leave?",
+        "respuesta": "Yes. Your clients, your appointments and your numbers can be exported whenever you want, not only on the day you leave. Your shop's data is yours."
+      },
+      "aislamiento": {
+        "pregunta": "Is my data mixed in with other barbershops'?",
+        "respuesta": "No. Every shop is isolated, and that separation is enforced by the database itself — not by a condition somebody could forget to write in the code. Nobody from another shop can read your calendar or your clients."
+      },
+      "cambioPlan": {
+        "pregunta": "What happens to my appointments if I change plan?",
+        "respuesta": "Nothing. You change plan whenever the shop needs it, and everything already booked stays exactly as it is, with its barber, its time and its price."
+      },
+      "directorio": {
+        "pregunta": "Will my shop show up in a Barion directory?",
+        "respuesta": "No. Barion isn't a marketplace: there's no search page and no directory of barbershops where your clients would run into your competition. Your booking page is yours, and the people who reach it are the ones you invite, with your link or with the QR code on the wall."
+      }
+    },
+    "verTodo": "See every question"
+  },
+  "cierre": {
+    "titulo": "Your barbershop, in order by this afternoon",
+    "entrada": "Create the shop, load your services and share your link. Your first client can book today.",
+    "arranque": {
+      "crear": {
+        "titulo": "Create your shop",
+        "descripcion": "Four fields: name, email, phone and your public address. Two minutes."
+      },
+      "cargar": {
+        "titulo": "Load services and barbers",
+        "descripcion": "Price, duration and who does what. That's all the calendar needs to get going."
+      },
+      "compartir": {
+        "titulo": "Share your link",
+        "descripcion": "On WhatsApp, in your profile, or with the QR code on the wall. Your first client can already book."
+      }
+    },
+    "ctaPrimario": "Start the trial",
+    "ctaSecundario": "See the plans",
+    "prueba": "7-day trial · No card",
+    "paso": "Step {numero}",
+    "comoEmpieza": "How it starts"
+  },
+  "pie": {
+    "descripcion": "Management for modern barbershops. Colombia, United States and Spain.",
+    "producto": "Product",
+    "empezar": "Get started",
+    "legal": "Legal",
+    "terminos": "Terms and conditions",
+    "privacidad": "Privacy",
+    "cookies": "Cookies",
+    "crearBarberia": "Create my shop",
+    "entrarAlPanel": "Go to the dashboard",
+    "derechos": "© {anio} Barion. All rights reserved."
+  },
+  "noEncontrada": {
+    "codigo": "Error 404",
+    "titulo": "This page doesn't exist",
+    "entrada": "The link may be mistyped, or the page may have moved.",
+    "volver": "Back to home"
+  },
+  "maquetas": {
+    "panel": {
+      "secciones": {
+        "resumen": "Overview",
+        "agenda": "Calendar",
+        "clientes": "Clients",
+        "barberos": "Barbers",
+        "nomina": "Payroll",
+        "estadisticas": "Analytics",
+        "configuracion": "Settings"
+      },
+      "ingresos": "Revenue",
+      "citas": "Appointments",
+      "ocupacion": "Chair time",
+      "ticketPromedio": "Average ticket",
+      "servicioTop": "Top service",
+      "clienteRegistrado": "Client added",
+      "recordatorioEnviado": "Reminder sent",
+      "proximaCita": "Next appointment"
+    },
+    "escaparate": {
+      "barberia": "Barbería Central",
+      "eligeServicio": "Pick your service",
+      "conQuien": "With whom",
+      "hoy": "Today",
+      "comoVasAPagar": "How you'll pay",
+      "avisoPago": "Recorded for the shop's till. Barion doesn't charge the client.",
+      "total": "Total",
+      "reservar": "Book",
+      "cualquiera": "Anyone",
+      "elPrimeroLibre": "First one free",
+      "especialidadFades": "Fades and designs",
+      "especialidadClasico": "Classic and straight razor",
+      "pagos": {
+        "efectivo": "Cash",
+        "tarjeta": "Card",
+        "transferencia": "Transfer"
+      },
+      "resumen": "{servicio} with {barbero} today at {hora}"
+    },
+    "servicios": {
+      "clasico": "Classic cut",
+      "corteBarba": "Cut + beard",
+      "navaja": "Straight-razor shave",
+      "corteNino": "Kids' cut",
+      "ritualCompleto": "Full ritual",
+      "fadeClasico": "Classic fade",
+      "fadeBarba": "Fade + beard",
+      "colorCorte": "Colour + cut",
+      "afeitado": "Shave",
+      "diseno": "Line-up"
+    },
+    "minutos": "{cantidad} min"
+  },
+  "legal": {
+    "avisoTraduccion": "These documents are written in Spanish, which is the binding version. This page shows that Spanish text; an English translation is being prepared. If anything is unclear, write to us before signing up.",
+    "otrosDocumentos": "The other documents",
+    "titulo": "Legal"
+  }
+}

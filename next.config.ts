@@ -1,4 +1,12 @@
 import type { NextConfig } from "next"
+import createNextIntlPlugin from "next-intl/plugin"
+
+/**
+ * El plugin de next-intl. Conecta `i18n/request.ts` con el render: sin él,
+ * `useTranslations()` no encuentra mensajes y toda página revienta pidiendo una
+ * configuración que nadie le dio.
+ */
+const conIdiomas = createNextIntlPlugin("./i18n/request.ts")
 
 // next.config corre en Node al arrancar — no puede importar config/env.ts (TS de la app).
 // Todo valor configurable entra por variable de entorno, con default seguro.
@@ -36,4 +44,4 @@ const nextConfig: NextConfig = {
   ...(allowedDevOrigins?.length ? { allowedDevOrigins } : {}),
 }
 
-export default nextConfig
+export default conIdiomas(nextConfig)

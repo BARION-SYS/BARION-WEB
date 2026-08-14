@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { AnimatePresence, motion } from "motion/react"
+import { useTranslations } from "next-intl"
 import { Banknote, Check, Clock, CreditCard, MapPin, Scissors, Smartphone } from "lucide-react"
 import { regiones, type CodigoMoneda, type CodigoRegion } from "@/config/regiones"
 import { InitialsAvatar } from "@/components/common/InitialsAvatar"
@@ -12,37 +13,44 @@ interface LandingEscaparateDemoProps {
   region: CodigoRegion
 }
 
+/** Las claves del catálogo de mentira. El texto vive en `messages/*.json`. */
+type ClaveServicioDemo = "clasico" | "corteBarba" | "navaja"
+type ClavePagoDemo = "efectivo" | "tarjeta" | "transferencia"
+
 // Precios declarados POR MONEDA, nunca convertidos: un `usd × tasa` en el
 // cliente es un precio inventado, y en una demo se leería igual de real.
 //
 // En unidad menor, como TODO el dinero del sistema: 3_500_000 son $ 35.000, no
 // tres millones y medio. El peso no se escapa de la regla por enseñarse sin
 // decimales — ver la tabla de escalas de `lib/currency.ts`.
+// El NOMBRE no está aquí: es una clave del diccionario. Lo que se lee en la
+// maqueta se traduce como cualquier otro texto del sitio — un escaparate en
+// español dentro de la versión inglesa dice, sin querer, que el producto no
+// está en inglés.
 const servicios = [
   {
-    id: "clasico",
-    nombre: "Corte clásico",
-    duracion: "40 min",
+    id: "clasico" as ClaveServicioDemo,
+    minutos: 40,
     precio: { COP: 3_500_000, USD: 2_500, EUR: 2_200 } as Record<CodigoMoneda, number>,
   },
   {
-    id: "corte-barba",
-    nombre: "Corte + barba",
-    duracion: "60 min",
+    id: "corteBarba" as ClaveServicioDemo,
+    minutos: 60,
     precio: { COP: 5_200_000, USD: 3_800, EUR: 3_400 } as Record<CodigoMoneda, number>,
   },
   {
-    id: "navaja",
-    nombre: "Afeitado a navaja",
-    duracion: "30 min",
+    id: "navaja" as ClaveServicioDemo,
+    minutos: 30,
     precio: { COP: 2_800_000, USD: 2_000, EUR: 1_800 } as Record<CodigoMoneda, number>,
   },
 ]
 
+// Los NOMBRES de persona sí son literales: un nombre propio no se traduce.
+// Lo que sí se traduce es la especialidad, que es una descripción.
 const barberos = [
-  { id: "cualquiera", nombre: "Cualquiera", iniciales: "", detalle: "El primero libre" },
-  { id: "ivan", nombre: "Iván Duarte", iniciales: "ID", detalle: "Fades y diseño" },
-  { id: "duvan", nombre: "Duván Ríos", iniciales: "DR", detalle: "Clásico y navaja" },
+  { id: "cualquiera", nombre: null, iniciales: "" },
+  { id: "ivan", nombre: "Iván Duarte", iniciales: "ID" },
+  { id: "duvan", nombre: "Duván Ríos", iniciales: "DR" },
 ]
 
 const horas = [
@@ -60,9 +68,9 @@ const horas = [
  * ni importe retenido, ni nada que se parezca a un cobro.
  */
 const metodosPago = [
-  { id: "efectivo", nombre: "Efectivo", icono: Banknote },
-  { id: "tarjeta", nombre: "Tarjeta", icono: CreditCard },
-  { id: "transferencia", nombre: "Transferencia", icono: Smartphone },
+  { id: "efectivo" as ClavePagoDemo, icono: Banknote },
+  { id: "tarjeta" as ClavePagoDemo, icono: CreditCard },
+  { id: "transferencia" as ClavePagoDemo, icono: Smartphone },
 ]
 
 /**
@@ -72,6 +80,9 @@ const metodosPago = [
  * dedo no cuenta esa historia.
  */
 export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
+  const t = useTranslations("maquetas")
+  const escaparate = useTranslations("maquetas.escaparate")
+  const servicio_ = useTranslations("maquetas.servicios")
   const { moneda, locale } = regiones[region]
   const [servicioId, setServicioId] = useState(servicios[0].id)
   const [barberoId, setBarberoId] = useState(barberos[1].id)
@@ -80,6 +91,14 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
 
   const servicio = servicios.find((s) => s.id === servicioId) ?? servicios[0]
   const barbero = barberos.find((b) => b.id === barberoId) ?? barberos[0]
+
+  const nombreBarbero = (nombre: string | null) => nombre ?? escaparate("cualquiera")
+  const especialidad = (id: string) =>
+    id === "cualquiera"
+      ? escaparate("elPrimeroLibre")
+      : id === "ivan"
+        ? escaparate("especialidadFades")
+        : escaparate("especialidadClasico")
 
   return (
     <div className="mx-auto w-full max-w-[20rem] overflow-hidden rounded-[2rem] border-4 border-border bg-card shadow-lg">
@@ -93,7 +112,7 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
             <Scissors className="size-4" aria-hidden />
           </span>
           <span className="min-w-0">
-            <span className="block truncate text-sm font-semibold">Barbería Central</span>
+            <span className="block truncate text-sm font-semibold">{escaparate("barberia")}</span>
             <span className="flex items-center gap-1 text-xs text-muted-foreground">
               <MapPin className="size-3" aria-hidden />
               Medellín · Laureles
@@ -102,7 +121,9 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
         </div>
 
         {/* ── Servicio ─────────────────────────────────────────────────── */}
-        <p className="mt-5 text-xs font-medium text-muted-foreground">Elige tu servicio</p>
+        <p className="mt-5 text-xs font-medium text-muted-foreground">
+          {escaparate("eligeServicio")}
+        </p>
         <ul className="mt-2 space-y-2">
           {servicios.map((cada) => {
             const elegido = cada.id === servicioId
@@ -120,10 +141,10 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
                   )}
                 >
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium">{cada.nombre}</span>
+                    <span className="block truncate text-sm font-medium">{servicio_(cada.id)}</span>
                     <span className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Clock className="size-3" aria-hidden />
-                      {cada.duracion}
+                      {t("minutos", { cantidad: cada.minutos })}
                     </span>
                   </span>
                   <span className="shrink-0 text-sm font-semibold tabular-nums">
@@ -137,7 +158,7 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
         </ul>
 
         {/* ── Barbero ──────────────────────────────────────────────────── */}
-        <p className="mt-5 text-xs font-medium text-muted-foreground">Con quién</p>
+        <p className="mt-5 text-xs font-medium text-muted-foreground">{escaparate("conQuien")}</p>
         <ul className="mt-2 space-y-2">
           {barberos.map((cada) => {
             const elegido = cada.id === barberoId
@@ -162,9 +183,11 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
                     <InitialsAvatar iniciales={cada.iniciales} className="shrink-0" />
                   )}
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-medium">{cada.nombre}</span>
+                    <span className="block truncate text-sm font-medium">
+                      {nombreBarbero(cada.nombre)}
+                    </span>
                     <span className="block truncate text-xs text-muted-foreground">
-                      {cada.detalle}
+                      {especialidad(cada.id)}
                     </span>
                   </span>
                   {elegido && <Check className="size-4 shrink-0 text-primary" aria-hidden />}
@@ -175,7 +198,7 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
         </ul>
 
         {/* ── Hora ─────────────────────────────────────────────────────── */}
-        <p className="mt-5 text-xs font-medium text-muted-foreground">Hoy</p>
+        <p className="mt-5 text-xs font-medium text-muted-foreground">{escaparate("hoy")}</p>
         <div className="mt-2 grid grid-cols-3 gap-2">
           {horas.map((cada) => {
             const elegida = cada.hora === hora
@@ -203,9 +226,11 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
         </div>
 
         {/* ── Método de pago ───────────────────────────────────────────── */}
-        <p className="mt-5 text-xs font-medium text-muted-foreground">Cómo vas a pagar</p>
+        <p className="mt-5 text-xs font-medium text-muted-foreground">
+          {escaparate("comoVasAPagar")}
+        </p>
         <div className="mt-2 grid grid-cols-3 gap-2">
-          {metodosPago.map(({ id, nombre, icono: Icono }) => {
+          {metodosPago.map(({ id, icono: Icono }) => {
             const elegido = id === metodo
             return (
               <button
@@ -221,13 +246,13 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
                 )}
               >
                 <Icono className={cn("size-3.5", elegido && "text-primary")} aria-hidden />
-                {nombre}
+                {escaparate(`pagos.${id}`)}
               </button>
             )
           })}
         </div>
         <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">
-          Se registra para la caja de la barbería. Barion no cobra al cliente.
+          {escaparate("avisoPago")}
         </p>
 
         {/* ── Resumen ──────────────────────────────────────────────────── */}
@@ -241,13 +266,15 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
               transition={{ duration: 0.22, ease: "easeOut" }}
               className="text-xs leading-relaxed text-muted-foreground"
             >
-              <span className="font-medium text-foreground">{servicio.nombre}</span> con{" "}
-              <span className="font-medium text-foreground">{barbero.nombre}</span> hoy a las{" "}
-              <span className="font-medium text-foreground tabular-nums">{hora}</span>
+              {escaparate("resumen", {
+                servicio: servicio_(servicio.id),
+                barbero: nombreBarbero(barbero.nombre),
+                hora,
+              })}
             </motion.p>
           </AnimatePresence>
           <div className="mt-2 flex items-baseline justify-between border-t border-border pt-2">
-            <span className="text-xs text-muted-foreground">Total</span>
+            <span className="text-xs text-muted-foreground">{escaparate("total")}</span>
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.span
                 key={servicio.id}
@@ -264,7 +291,7 @@ export function EscaparateDemo({ region }: LandingEscaparateDemoProps) {
         </div>
 
         <span className="mt-4 flex h-11 items-center justify-center rounded-xl bg-primary text-sm font-semibold text-primary-foreground transition-transform duration-300 motion-safe:hover:scale-[1.02]">
-          Reservar
+          {escaparate("reservar")}
         </span>
       </div>
     </div>

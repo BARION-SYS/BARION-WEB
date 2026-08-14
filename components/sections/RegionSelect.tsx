@@ -1,9 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { Globe } from "lucide-react"
-import { regiones, type CodigoRegion } from "@/config/regiones"
-import { useRegion } from "@/hooks/useRegion"
-import { nombresDeRegion } from "@/lib/region"
 import {
   Select,
   SelectContent,
@@ -11,8 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { regiones, type CodigoRegion } from "@/config/regiones"
+import { useRegion } from "@/hooks/useRegion"
 
-interface LandingRegionSelectProps {
+interface RegionSelectProps {
   region: CodigoRegion
   /**
    * Los países donde Barion opera HOY, según la API.
@@ -31,8 +31,15 @@ interface LandingRegionSelectProps {
  * Solo la vista: qué significa elegir un país —dónde se guarda y quién vuelve a
  * pintar— es de `useRegion`. Va JUNTO a los precios, no en el pie: detectar mal
  * y no poder corregirlo es peor que preguntar.
+ *
+ * **País e idioma son cosas distintas y por eso son dos controles.** Este decide
+ * en qué moneda se leen los precios y vive en una cookie; el idioma decide el
+ * texto y vive en la URL. Juntarlos obligaría a que un colombiano que quiere leer
+ * en inglés viera precios en dólares, que no es lo que va a pagar.
  */
-export function RegionSelect({ region, operados }: LandingRegionSelectProps) {
+export function RegionSelect({ region, operados }: RegionSelectProps) {
+  const t = useTranslations("precios")
+  const paises = useTranslations("regiones")
   const { elegirRegion, cambiando } = useRegion()
 
   const alCambiar = (valor: CodigoRegion | null) => {
@@ -40,10 +47,10 @@ export function RegionSelect({ region, operados }: LandingRegionSelectProps) {
   }
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex shrink-0 items-center gap-2">
       <Globe className="size-4 text-muted-foreground" aria-hidden />
       <label htmlFor="region-precios" className="text-sm text-muted-foreground">
-        Ver precios en
+        {t("verPreciosEn")}
       </label>
       {/* Mientras el servidor repinta, el control no acepta otra elección: dos
           cambios seguidos dejarían la cookie y lo pintado en desacuerdo */}
@@ -54,7 +61,7 @@ export function RegionSelect({ region, operados }: LandingRegionSelectProps) {
         <SelectContent>
           {operados.map((codigo) => (
             <SelectItem key={codigo} value={codigo}>
-              {nombresDeRegion[codigo]} ({regiones[codigo].moneda})
+              {paises(codigo)} ({regiones[codigo].moneda})
             </SelectItem>
           ))}
         </SelectContent>

@@ -1,14 +1,18 @@
 "use client"
 
 import { useRef } from "react"
+import { CLAVES_SENAL } from "@/config/contenido"
+import { CONTENEDOR } from "@/lib/superficies"
+import { cn } from "@/lib/utils"
 import Image from "next/image"
-import Link from "next/link"
 import { useTheme } from "next-themes"
+import { useTranslations } from "next-intl"
 import { motion, useScroll, useTransform, type Variants } from "motion/react"
 import { ArrowRight, ChevronDown, Globe, Smartphone, Sparkles, Timer } from "lucide-react"
 import { regiones, type CodigoRegion } from "@/config/regiones"
 import { HeroPanel } from "@/components/sections/HeroPanel"
-import { anclas, rutasApp } from "@/config/rutas"
+import { rutas, rutasApp } from "@/config/rutas"
+import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 import { useMontado } from "@/hooks/useMontado"
 
@@ -18,11 +22,7 @@ interface LandingHeroProps {
 
 // Hechos comprobables hoy. Nada de «+500 barberías» ni estrellas: no hay
 // clientes todavía y una prueba social inventada se nota y se paga.
-const senales = [
-  { icono: Timer, texto: "Listo en una tarde" },
-  { icono: Globe, texto: "Colombia · EE. UU. · España" },
-  { icono: Smartphone, texto: "Sin instalar nada" },
-]
+const iconosSenal = { rapido: Timer, mercados: Globe, sinInstalar: Smartphone } as const
 
 const resorte = { type: "spring", stiffness: 140, damping: 22 } as const
 
@@ -38,9 +38,6 @@ const palabra: Variants = {
   visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 160, damping: 20 } },
 }
 
-const primeraLinea = "Administra tu barbería."
-const segundaLinea = "Eleva tu legado."
-
 // La misma sala en sus dos luces. No es la misma foto aclarada: en claro es un
 // local blanco con oro y en oscuro uno nocturno, y cada una es la que sostiene
 // el contraste de su tema.
@@ -50,6 +47,7 @@ const fotografias = {
 } as const
 
 export function Hero({ region }: LandingHeroProps) {
+  const t = useTranslations("hero")
   const { moneda, locale } = regiones[region]
   const seccion = useRef<HTMLElement>(null)
 
@@ -105,7 +103,10 @@ export function Hero({ region }: LandingHeroProps) {
 
       <motion.div
         style={{ y: yContenido, opacity: opacidadContenido }}
-        className="relative mx-auto grid w-full max-w-[1500px] grid-cols-1 items-center gap-16 px-6 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:px-14"
+        className={cn(
+          CONTENEDOR,
+          "relative grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-8"
+        )}
       >
         <motion.div
           initial="oculto"
@@ -118,7 +119,7 @@ export function Hero({ region }: LandingHeroProps) {
             className="inline-flex items-center gap-2 rounded-full border border-hero-borde bg-hero-superficie/60 px-4 py-2 text-xs font-medium tracking-widest text-hero-primary uppercase backdrop-blur-md"
           >
             <Sparkles className="size-3.5" aria-hidden />
-            Software premium para barberías
+            {t("insignia")}
           </motion.p>
 
           <h1 className="mt-8 text-5xl leading-[0.95] font-black tracking-tight text-balance sm:text-6xl xl:text-7xl">
@@ -128,11 +129,13 @@ export function Hero({ region }: LandingHeroProps) {
               animate="visible"
               transition={{ delayChildren: 0.15, staggerChildren: 0.055 }}
             >
-              {primeraLinea.split(" ").map((texto) => (
-                <motion.span key={texto} variants={palabra} className="mr-[0.25em] inline-block">
-                  {texto}
-                </motion.span>
-              ))}
+              {t("titularUno")
+                .split(" ")
+                .map((texto) => (
+                  <motion.span key={texto} variants={palabra} className="mr-[0.25em] inline-block">
+                    {texto}
+                  </motion.span>
+                ))}
             </motion.span>
             <motion.span
               className="block text-hero-primary"
@@ -140,11 +143,13 @@ export function Hero({ region }: LandingHeroProps) {
               animate="visible"
               transition={{ delayChildren: 0.35, staggerChildren: 0.055 }}
             >
-              {segundaLinea.split(" ").map((texto) => (
-                <motion.span key={texto} variants={palabra} className="mr-[0.25em] inline-block">
-                  {texto}
-                </motion.span>
-              ))}
+              {t("titularDos")
+                .split(" ")
+                .map((texto) => (
+                  <motion.span key={texto} variants={palabra} className="mr-[0.25em] inline-block">
+                    {texto}
+                  </motion.span>
+                ))}
             </motion.span>
           </h1>
 
@@ -157,8 +162,7 @@ export function Hero({ region }: LandingHeroProps) {
               variants={entrada}
               className="mt-7 max-w-lg text-base leading-relaxed text-hero-muted sm:text-lg"
             >
-              Agenda, clientes y nómina en un solo sitio. Tus clientes reservan solos desde el móvil
-              y tú ves el negocio entero desde una pantalla.
+              {t("entrada")}
             </motion.p>
 
             <motion.div variants={entrada} className="mt-9 flex flex-col gap-4 sm:flex-row">
@@ -167,36 +171,39 @@ export function Hero({ region }: LandingHeroProps) {
                 nativeButton={false}
                 className="group/cta h-14 rounded-2xl bg-hero-primary px-7 text-base font-semibold text-hero-primary-foreground shadow-lg transition-transform hover:bg-hero-primary/85 focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5"
               >
-                Empezar la prueba
+                {t("ctaPrimario")}
                 <ArrowRight
                   className="transition-transform duration-200 group-hover/cta:translate-x-1"
                   aria-hidden
                 />
               </Button>
               <Button
-                render={<Link href={anclas.precios} />}
+                render={<Link href={rutas.precios} />}
                 nativeButton={false}
                 variant="ghost"
                 className="h-14 rounded-2xl border border-hero-borde bg-hero-superficie/50 px-7 text-base font-semibold text-hero-foreground backdrop-blur-md transition-transform hover:bg-hero-superficie/80 hover:text-hero-foreground focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5"
               >
-                Ver los planes
+                {t("ctaSecundario")}
               </Button>
             </motion.div>
 
             <motion.p variants={entrada} className="mt-4 text-sm text-hero-muted">
-              7 días de prueba · Sin tarjeta
+              {t("prueba")}
             </motion.p>
 
             <motion.ul
               variants={entrada}
               className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3"
             >
-              {senales.map(({ icono: Icono, texto }) => (
-                <li key={texto} className="flex items-center gap-2 text-xs text-hero-muted">
-                  <Icono className="size-4 text-hero-primary" aria-hidden />
-                  {texto}
-                </li>
-              ))}
+              {CLAVES_SENAL.map((clave) => {
+                const Icono = iconosSenal[clave]
+                return (
+                  <li key={clave} className="flex items-center gap-2 text-xs text-hero-muted">
+                    <Icono className="size-4 text-hero-primary" aria-hidden />
+                    {t(`senales.${clave}`)}
+                  </li>
+                )
+              })}
             </motion.ul>
           </motion.div>
         </motion.div>
@@ -220,7 +227,7 @@ export function Hero({ region }: LandingHeroProps) {
           transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-1 text-[10px] font-medium tracking-widest text-hero-muted uppercase"
         >
-          Desliza
+          {t("desliza")}
           <ChevronDown className="size-4" />
         </motion.span>
       </motion.div>
