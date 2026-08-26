@@ -13,7 +13,7 @@ Arquitectura y convenciones: `CLAUDE.md`.
 ```bash
 cp .env.example .env    # y ajustar los dominios
 pnpm install            # SIEMPRE desde el host, nunca dentro del contenedor
-pnpm dev                # http://localhost:6525
+pnpm dev                # http://localhost:2004
 ```
 
 Dentro del sistema completo se levanta con el compose del repo padre:
@@ -36,7 +36,7 @@ El contenedor monta este repo entero (incluido `node_modules`) y corre con el ui
 
 Las `NEXT_PUBLIC_*` se hornean en el build: en producción entran como `ARG` del `Dockerfile`, no por `env_file`. Quedan escritas en el JavaScript que descarga el navegador — por eso `API_URL` **no** lleva ese prefijo: el navegador no habla con la api, habla con este sitio (`/api/…`) y el servidor va a buscar el dato.
 
-`API_URL` hace falta en el **build** (`/llms.txt` se prerrenderiza con los precios dentro) y otra vez en **ejecución** (de ahí sale cada revalidación). Y la resuelve el proceso de Next, no el navegador: desde el host `localhost` es la api del host, pero dentro del contenedor hay que apuntar a `http://api:2201/api/v1`.
+`API_URL` hace falta en el **build** (`/llms.txt` se prerrenderiza con los precios dentro) y otra vez en **ejecución** (de ahí sale cada revalidación). Y la resuelve el proceso de Next, no el navegador: desde el host `localhost` es la api del host, pero dentro del contenedor hay que apuntar a `http://api:2001/api/v1`.
 
 `NEXT_PUBLIC_SITE_URL` no es obligatoria para arrancar, pero sin ella no se publican ni el JSON-LD, ni la canónica, ni el sitemap: en dev es lo correcto (nada apuntando a `localhost`), en producción es un despliegue invisible para los buscadores.
 

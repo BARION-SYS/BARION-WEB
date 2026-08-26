@@ -45,7 +45,7 @@ COPY --from=build --chown=barion:barion /app/.next/static ./.next/static
 COPY --from=build --chown=barion:barion /app/public ./public
 
 USER barion
-EXPOSE 3000
-ENV PORT=3000 HOSTNAME=0.0.0.0
+EXPOSE 3004
+ENV PORT=3004 HOSTNAME=0.0.0.0
 
 CMD ["node", "server.js"]
