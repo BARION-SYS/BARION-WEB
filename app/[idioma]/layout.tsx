@@ -11,6 +11,7 @@ import { Nav } from "@/components/layout/Nav"
 import { MotionProvider } from "@/components/providers/MotionProvider"
 import { ThemeProvider } from "@/components/providers/ThemeProvider"
 import { envPublico } from "@/config/env.public"
+import { envServidor } from "@/config/env.server"
 import { etiquetaHtml, localeSocial, type Idioma } from "@/config/idiomas"
 import { IMAGEN_SOCIAL, NOMBRE_SITIO } from "@/config/sitio"
 import { mensajesDelCliente } from "@/i18n/cliente"
@@ -82,6 +83,21 @@ export async function generateMetadata({ params }: ParamsIdioma): Promise<Metada
     // Números de teléfono en el marcado de ejemplo del panel: sin esto Safari
     // los convierte en enlaces telefónicos y rompe el diseño de la maqueta.
     formatDetection: { telephone: false, address: false, email: false },
+    /**
+     * La propiedad del dominio, para Search Console y Bing Webmaster Tools.
+     *
+     * Va en el layout porque verifica el SITIO, no una página, y se pinta solo
+     * si hay código configurado: una etiqueta vacía no verifica nada y hace
+     * fallar la comprobación con un mensaje que no dice por qué. El método
+     * recomendado sigue siendo el DNS —cubre el dominio entero y sobrevive a un
+     * cambio de hosting—; esto es el respaldo para cuando alguien lo mueva.
+     */
+    verification: {
+      ...(envServidor.verificacionGoogle ? { google: envServidor.verificacionGoogle } : {}),
+      ...(envServidor.verificacionBing
+        ? { other: { "msvalidate.01": envServidor.verificacionBing } }
+        : {}),
+    },
     openGraph: {
       type: "website",
       siteName: NOMBRE_SITIO,

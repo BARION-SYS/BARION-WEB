@@ -27,12 +27,34 @@ const esquema = z.object({
   // configuración ausente. Sin la variable esto revienta al arrancar, que es
   // cuando se puede arreglar.
   API_URL: z.url(),
+  /**
+   * Los códigos de verificación de propiedad: Google Search Console y Bing
+   * Webmaster Tools.
+   *
+   * Van aquí y NO con prefijo `NEXT_PUBLIC_` aunque acaben escritos en el HTML:
+   * quien los pinta es `generateMetadata`, que corre en el servidor. Con prefijo
+   * viajarían además dentro del bundle, donde no los lee nadie.
+   *
+   * Opcionales por la misma razón que `NEXT_PUBLIC_SITE_URL`: sin ellos NO se
+   * pinta la etiqueta, en vez de publicar una vacía —que es lo que hace fallar la
+   * verificación con un mensaje que no dice por qué—. La verificación por DNS no
+   * los necesita; existen para sobrevivir a que alguien mueva el DNS sin avisar.
+   */
+  GOOGLE_SITE_VERIFICATION: z.string().min(1).optional(),
+  BING_SITE_VERIFICATION: z.string().min(1).optional(),
 })
 
 const variables = esquema.parse({
   API_URL: process.env.API_URL,
+  // `|| undefined` y no a secas: una variable declarada y vacía en el `.env`
+  // llega como `""`, y `""` no es «no configurado» para zod — es una cadena que
+  // falla el `min(1)` y tumba el arranque por un renglón en blanco.
+  GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+  BING_SITE_VERIFICATION: process.env.BING_SITE_VERIFICATION || undefined,
 })
 
 export const envServidor = {
   apiUrl: variables.API_URL,
+  verificacionGoogle: variables.GOOGLE_SITE_VERIFICATION,
+  verificacionBing: variables.BING_SITE_VERIFICATION,
 } as const

@@ -29,6 +29,22 @@ ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 # contenedor y revienta en la primera revalidación.
 ARG API_URL
 ENV API_URL=$API_URL
+
+# Verificación de propiedad del dominio (Search Console y Bing Webmaster Tools).
+#
+# Van aquí, en el BUILD, aunque no lleven prefijo público y no entren en el
+# bundle: las páginas se prerrenderizan, así que la etiqueta se escribe en el
+# HTML al construir. Pasarlas solo por `env_file` las deja fuera de las páginas
+# ya generadas y la verificación no aparece nunca — con la agravante de que el
+# contenedor arranca sano y el fallo solo se ve mirando el HTML servido.
+#
+# Sin valor no se pinta la etiqueta, que es lo que se quiere: una vacía no
+# verifica nada y hace fallar la comprobación con un mensaje que no dice por qué.
+ARG GOOGLE_SITE_VERIFICATION
+ARG BING_SITE_VERIFICATION
+ENV GOOGLE_SITE_VERIFICATION=$GOOGLE_SITE_VERIFICATION
+ENV BING_SITE_VERIFICATION=$BING_SITE_VERIFICATION
+
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm build
 
