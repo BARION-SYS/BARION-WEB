@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { useTheme } from "next-themes"
 import { useTranslations } from "next-intl"
-import { motion, useScroll, useTransform, type Variants } from "motion/react"
+import { motion, useScroll, useTransform } from "motion/react"
 import { ArrowRight, ChevronDown, Globe, Smartphone, Sparkles, Timer } from "lucide-react"
 import { regiones, type CodigoRegion } from "@/config/regiones"
 import { HeroPanel } from "@/components/sections/HeroPanel"
@@ -24,19 +24,38 @@ interface LandingHeroProps {
 // clientes todavía y una prueba social inventada se nota y se paga.
 const iconosSenal = { rapido: Timer, mercados: Globe, sinInstalar: Smartphone } as const
 
-const resorte = { type: "spring", stiffness: 140, damping: 22 } as const
+/**
+ * La entrada del hero se hace con CSS, y es el cambio más caro de deshacer.
+ *
+ * ── Qué estaba pasando ──────────────────────────────────────────────────────
+ * Todo este bloque entraba con `variants` de Motion, así que el HTML del
+ * servidor lo traía en `opacity: 0` y no llegaba a su forma final hasta que el
+ * JavaScript bajaba, se ejecutaba e hidrataba. El navegador no cuenta como
+ * «pintado» lo que todavía es invisible: el LCP medido era el párrafo de
+ * entrada, con **3.170 ms de retraso de renderizado** sobre 530 ms de servidor.
+ * Un párrafo de texto plano que ya venía escrito en el HTML.
+ *
+ * ── Por qué CSS lo arregla ──────────────────────────────────────────────────
+ * Una animación CSS arranca en el primer fotograma, sin esperar a hidratar: el
+ * texto se ve cuando llega el HTML, no cuando llega el bundle. El movimiento es
+ * el mismo; lo que cambia es de quién depende.
+ *
+ * ── La regla que queda ──────────────────────────────────────────────────────
+ * **Lo que se ve sin desplazar la página no arranca en `opacity: 0` por obra de
+ * un componente cliente.** Motion sigue aquí para el parallax y la pista de
+ * scroll, que solo actúan al desplazar y no deciden el LCP.
+ *
+ * Los retardos son CORTOS a propósito: mientras el elemento está transparente
+ * sigue sin contar como pintado, así que la cascada entera cabe en medio
+ * segundo. Es la diferencia entre un adorno y un elemento que pesa en la
+ * métrica con la que Google ordena.
+ */
+const RETARDO_TITULAR = 60
+const PASO_PALABRA = 40
+const RETARDO_ENTRADA = 300
 
-const entrada: Variants = {
-  oculto: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: resorte },
-}
-
-// El titular entra palabra a palabra. Es la única cascada larga de la página, y
-// va aquí porque es lo primero que se lee: en el resto sería ruido.
-const palabra: Variants = {
-  oculto: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 160, damping: 20 } },
-}
+/** El retardo de un elemento, como variable CSS — nunca un `style` de animación. */
+const conRetardo = (ms: number) => ({ "--retardo": `${ms}ms` }) as React.CSSProperties
 
 // La misma sala en sus dos luces. No es la misma foto aclarada: en claro es un
 // local blanco con oro y en oscuro uno nocturno, y cada una es la que sostiene
@@ -45,6 +64,38 @@ const fotografias = {
   claro: "/assets/barion-hero-light.webp",
   oscuro: "/assets/barion-hero-dark.webp",
 } as const
+
+/**
+ * Una línea del titular, palabra a palabra.
+ *
+ * Cada palabra es su propio `inline-block` porque lo que se anima es un
+ * `transform`, y un `<span>` en línea no lo acepta. El texto sigue siendo UNO
+ * para quien lo lee con un lector de pantalla y para «buscar en la página»: son
+ * espacios de verdad entre palabras de verdad, no elementos vacíos.
+ */
+function Palabras({
+  texto,
+  desde,
+  className,
+}: {
+  texto: string
+  desde: number
+  className?: string
+}) {
+  return (
+    <span className={cn("block", className)}>
+      {texto.split(" ").map((palabra, indice) => (
+        <span
+          key={palabra}
+          className="entra-hero mr-[0.25em] inline-block"
+          style={conRetardo(desde + indice * PASO_PALABRA)}
+        >
+          {palabra}
+        </span>
+      ))}
+    </span>
+  )
+}
 
 export function Hero({ region }: LandingHeroProps) {
   const t = useTranslations("hero")
@@ -108,105 +159,81 @@ export function Hero({ region }: LandingHeroProps) {
           "relative grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-8"
         )}
       >
-        <motion.div
-          initial="oculto"
-          animate="visible"
-          transition={{ staggerChildren: 0.05 }}
-          className="lg:col-span-5"
-        >
-          <motion.p
-            variants={entrada}
-            className="inline-flex items-center gap-2 rounded-full border border-hero-borde bg-hero-superficie/60 px-4 py-2 text-xs font-medium tracking-widest text-hero-primary uppercase backdrop-blur-md"
+        <div className="lg:col-span-5">
+          <p
+            className="entra-hero inline-flex items-center gap-2 rounded-full border border-hero-borde bg-hero-superficie/60 px-4 py-2 text-xs font-medium tracking-widest text-hero-primary uppercase backdrop-blur-md"
+            style={conRetardo(0)}
           >
             <Sparkles className="size-3.5" aria-hidden />
             {t("insignia")}
-          </motion.p>
+          </p>
 
+          {/* El titular entra palabra a palabra. Es la única cascada larga de la
+              página, y va aquí porque es lo primero que se lee: en el resto
+              sería ruido. */}
           <h1 className="mt-8 text-5xl leading-[0.95] font-black tracking-tight text-balance sm:text-6xl xl:text-7xl">
-            <motion.span
-              className="block"
-              initial="oculto"
-              animate="visible"
-              transition={{ delayChildren: 0.15, staggerChildren: 0.055 }}
-            >
-              {t("titularUno")
-                .split(" ")
-                .map((texto) => (
-                  <motion.span key={texto} variants={palabra} className="mr-[0.25em] inline-block">
-                    {texto}
-                  </motion.span>
-                ))}
-            </motion.span>
-            <motion.span
-              className="block text-hero-primary"
-              initial="oculto"
-              animate="visible"
-              transition={{ delayChildren: 0.35, staggerChildren: 0.055 }}
-            >
-              {t("titularDos")
-                .split(" ")
-                .map((texto) => (
-                  <motion.span key={texto} variants={palabra} className="mr-[0.25em] inline-block">
-                    {texto}
-                  </motion.span>
-                ))}
-            </motion.span>
+            <Palabras texto={t("titularUno")} desde={RETARDO_TITULAR} />
+            <Palabras
+              texto={t("titularDos")}
+              desde={RETARDO_TITULAR + PASO_PALABRA * 3}
+              className="text-hero-primary"
+            />
           </h1>
 
-          <motion.div
-            initial="oculto"
-            animate="visible"
-            transition={{ delayChildren: 0.55, staggerChildren: 0.06 }}
+          <p
+            className="entra-hero mt-7 max-w-lg text-base leading-relaxed text-hero-muted sm:text-lg"
+            style={conRetardo(RETARDO_ENTRADA)}
           >
-            <motion.p
-              variants={entrada}
-              className="mt-7 max-w-lg text-base leading-relaxed text-hero-muted sm:text-lg"
+            {t("entrada")}
+          </p>
+
+          <div
+            className="entra-hero mt-9 flex flex-col gap-4 sm:flex-row"
+            style={conRetardo(RETARDO_ENTRADA + 60)}
+          >
+            <Button
+              render={<a href={rutasApp.registro} />}
+              nativeButton={false}
+              className="group/cta h-14 rounded-2xl bg-hero-primary px-7 text-base font-semibold text-hero-primary-foreground shadow-lg transition-transform hover:bg-hero-primary/85 focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5"
             >
-              {t("entrada")}
-            </motion.p>
-
-            <motion.div variants={entrada} className="mt-9 flex flex-col gap-4 sm:flex-row">
-              <Button
-                render={<a href={rutasApp.registro} />}
-                nativeButton={false}
-                className="group/cta h-14 rounded-2xl bg-hero-primary px-7 text-base font-semibold text-hero-primary-foreground shadow-lg transition-transform hover:bg-hero-primary/85 focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5"
-              >
-                {t("ctaPrimario")}
-                <ArrowRight
-                  className="transition-transform duration-200 group-hover/cta:translate-x-1"
-                  aria-hidden
-                />
-              </Button>
-              <Button
-                render={<Link href={rutas.precios} />}
-                nativeButton={false}
-                variant="ghost"
-                className="h-14 rounded-2xl border border-hero-borde bg-hero-superficie/50 px-7 text-base font-semibold text-hero-foreground backdrop-blur-md transition-transform hover:bg-hero-superficie/80 hover:text-hero-foreground focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5"
-              >
-                {t("ctaSecundario")}
-              </Button>
-            </motion.div>
-
-            <motion.p variants={entrada} className="mt-4 text-sm text-hero-muted">
-              {t("prueba")}
-            </motion.p>
-
-            <motion.ul
-              variants={entrada}
-              className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3"
+              {t("ctaPrimario")}
+              <ArrowRight
+                className="transition-transform duration-200 group-hover/cta:translate-x-1"
+                aria-hidden
+              />
+            </Button>
+            <Button
+              render={<Link href={rutas.precios} />}
+              nativeButton={false}
+              variant="ghost"
+              className="h-14 rounded-2xl border border-hero-borde bg-hero-superficie/50 px-7 text-base font-semibold text-hero-foreground backdrop-blur-md transition-transform hover:bg-hero-superficie/80 hover:text-hero-foreground focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5"
             >
-              {CLAVES_SENAL.map((clave) => {
-                const Icono = iconosSenal[clave]
-                return (
-                  <li key={clave} className="flex items-center gap-2 text-xs text-hero-muted">
-                    <Icono className="size-4 text-hero-primary" aria-hidden />
-                    {t(`senales.${clave}`)}
-                  </li>
-                )
-              })}
-            </motion.ul>
-          </motion.div>
-        </motion.div>
+              {t("ctaSecundario")}
+            </Button>
+          </div>
+
+          <p
+            className="entra-hero mt-4 text-sm text-hero-muted"
+            style={conRetardo(RETARDO_ENTRADA + 120)}
+          >
+            {t("prueba")}
+          </p>
+
+          <ul
+            className="entra-hero mt-10 flex flex-wrap items-center gap-x-6 gap-y-3"
+            style={conRetardo(RETARDO_ENTRADA + 180)}
+          >
+            {CLAVES_SENAL.map((clave) => {
+              const Icono = iconosSenal[clave]
+              return (
+                <li key={clave} className="flex items-center gap-2 text-xs text-hero-muted">
+                  <Icono className="size-4 text-hero-primary" aria-hidden />
+                  {t(`senales.${clave}`)}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
 
         {/* Siete columnas y sangrado a la derecha: además de dar aire al panel,
             tapa el rótulo de la barbería que la fotografía trae al fondo — dos

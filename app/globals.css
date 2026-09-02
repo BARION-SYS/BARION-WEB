@@ -275,6 +275,40 @@
     }
   }
 
+  /*
+    Entrada del hero, en CSS y no en JavaScript.
+
+    Es el arreglo del hallazgo grande de la auditoría de septiembre de 2026: el
+    bloque entraba con `variants` de Motion, así que el HTML del servidor lo
+    traía en `opacity: 0` y no se volvía visible hasta que el bundle bajaba, se
+    ejecutaba e hidrataba. El navegador no cuenta como pintado lo que es
+    invisible, y el LCP medido era el párrafo de entrada con 3.170 ms de retraso
+    de renderizado sobre un texto que ya venía escrito en el HTML.
+
+    Una animación CSS arranca en el primer fotograma, sin esperar a nadie. El
+    retardo entra como variable —`--retardo`, que pone el componente— y no como
+    una clase por posición: son ocho elementos con ocho tiempos distintos.
+
+    `both` mantiene el estado inicial durante el retardo; por eso los retardos
+    del hero son cortos: cada milisegundo transparente es un milisegundo que el
+    navegador no cuenta como pintado.
+  */
+  .entra-hero {
+    animation: entra-hero 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--retardo, 0ms);
+  }
+
+  /*
+    Quien pide menos movimiento ve el hero quieto y ENTERO. `animation: none`
+    devuelve el elemento a su estado natural —visible— en vez de dejarlo
+    congelado en el primer fotograma, que es transparente.
+  */
+  @media (prefers-reduced-motion: reduce) {
+    .entra-hero {
+      animation: none;
+    }
+  }
+
   .cinta-barberia {
     background-image: repeating-linear-gradient(
       135deg,
@@ -296,5 +330,16 @@
 @keyframes cinta-desplazamiento {
   to {
     background-position: 56.57px 0;
+  }
+}
+
+@keyframes entra-hero {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
