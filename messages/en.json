@@ -27,19 +27,19 @@
       "descripcion": "Barbershop management software: online booking, client records, per-barber commissions and payroll. 7-day trial, no card required."
     },
     "producto": {
-      "titulo": "What Barion does",
+      "titulo": "Barbershop software: booking, clients and commissions",
       "descripcion": "A calendar that can't double-book, a record for every client, and what each barber earns — all on the same data, with nothing copied between places."
     },
     "vistaPrevia": {
-      "titulo": "See it in action",
+      "titulo": "Barbershop booking system: what your client sees",
       "descripcion": "The dashboard is yours; the booking page is what you share. Look inside both and try a booking the way your client would."
     },
     "precios": {
-      "titulo": "Pricing",
+      "titulo": "Barbershop software pricing and free trial",
       "descripcion": "One price per shop, not per feature. Local pricing for Colombia, the United States and Spain. 7-day trial, no card, no lock-in."
     },
     "preguntas": {
-      "titulo": "Frequently asked questions",
+      "titulo": "Barbershop software: frequently asked questions",
       "descripcion": "What people ask before deciding, answered with what Barion does today — including what it doesn't."
     },
     "terminos": {
@@ -109,7 +109,7 @@
   "producto": {
     "etiqueta": "What changes on Monday",
     "titulo": "Three things you stop doing by hand",
-    "entrada": "This isn't a calendar with a new name. It's your schedule, every client's record and each barber's earnings running on the same data — with nobody retyping it from one place into another.",
+    "entrada": "This isn't a calendar with a new name. It's the management software your barbershop runs on: the schedule, every client's record and each barber's earnings on the same data — with nobody retyping it from one place into another.",
     "bloques": {
       "agenda": {
         "titulo": "A calendar that can't double-book",
@@ -157,7 +157,7 @@
   "vistaPrevia": {
     "etiqueta": "Two sides of the same system",
     "titulo": "The dashboard is yours. The booking page is what you share",
-    "entrada": "Your shop gets its own public address. A client opens it, picks a service and a barber, and the appointment shows up on your calendar. No phone calls, nothing to install.",
+    "entrada": "Your barbershop gets its own online booking page. A client opens it, picks a service and a barber, and the appointment shows up on your calendar. No phone calls, nothing to install.",
     "pasos": {
       "escaparate": {
         "titulo": "You publish your page",
@@ -244,7 +244,7 @@
   "preguntas": {
     "etiqueta": "Frequently asked questions",
     "titulo": "What people ask before deciding",
-    "entrada": "Answered with what Barion does today, including what it doesn't. If yours is missing, write to us and we'll answer it ourselves.",
+    "entrada": "Answered with what Barion does today, including what it doesn't: what the barbershop software covers, how billing works and what happens to your data. If yours is missing, write to us and we'll answer it ourselves.",
     "grupos": {
       "empezar": "Getting started",
       "funcionamiento": "How it works",

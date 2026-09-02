@@ -27,19 +27,19 @@
       "descripcion": "Software de gestión para barberías: agenda con reservas en línea, ficha de clientes, comisiones por barbero y nómina. 7 días de prueba, sin tarjeta."
     },
     "producto": {
-      "titulo": "Qué hace Barion",
+      "titulo": "Software para barberías: agenda, clientes y comisiones",
       "descripcion": "La agenda que no se pisa, la ficha de cada cliente y lo que se lleva cada barbero, sobre los mismos datos y sin copiar nada de un sitio a otro."
     },
     "vistaPrevia": {
-      "titulo": "Cómo se ve",
+      "titulo": "Sistema de reservas para barbería: así lo ve tu cliente",
       "descripcion": "El panel es tuyo y el escaparate es el que enseñas. Míralos por dentro y prueba una reserva como la haría tu cliente."
     },
     "precios": {
-      "titulo": "Precios",
+      "titulo": "Precios del software para barberías y prueba gratis",
       "descripcion": "Un precio por barbería, no por cada cosa que uses. Precio propio para Colombia, Estados Unidos y España. 7 días de prueba, sin tarjeta y sin permanencia."
     },
     "preguntas": {
-      "titulo": "Preguntas frecuentes",
+      "titulo": "Preguntas frecuentes del software para barberías",
       "descripcion": "Lo que se pregunta antes de decidir, respondido con lo que Barion hace hoy — incluido lo que no hace."
     },
     "terminos": {
@@ -109,7 +109,7 @@
   "producto": {
     "etiqueta": "Lo que cambia el lunes",
     "titulo": "Tres cosas que dejas de hacer a mano",
-    "entrada": "No es un calendario con otro nombre. Es la agenda, la ficha de cada cliente y la cuenta de cada barbero funcionando sobre los mismos datos, sin que nadie los copie de un sitio a otro.",
+    "entrada": "No es un calendario con otro nombre. Es el software de gestión de tu barbería: la agenda, la ficha de cada cliente y la cuenta de cada barbero funcionando sobre los mismos datos, sin que nadie los copie de un sitio a otro.",
     "bloques": {
       "agenda": {
         "titulo": "La agenda que no se pisa",
@@ -157,7 +157,7 @@
   "vistaPrevia": {
     "etiqueta": "Dos caras del mismo sistema",
     "titulo": "El panel es tuyo. El escaparate es el que enseñas",
-    "entrada": "Tu barbería tiene su propia dirección pública. El cliente entra, elige servicio y barbero, y la cita aparece en tu agenda. Sin llamadas y sin instalar nada.",
+    "entrada": "Tu barbería tiene su propia página de reservas en línea. El cliente entra, elige servicio y barbero, y la cita aparece en tu agenda. Sin llamadas y sin instalar nada.",
     "pasos": {
       "escaparate": {
         "titulo": "Publicas tu escaparate",
@@ -244,7 +244,7 @@
   "preguntas": {
     "etiqueta": "Preguntas frecuentes",
     "titulo": "Lo que se pregunta antes de decidir",
-    "entrada": "Respondido con lo que Barion hace hoy, incluido lo que no hace. Si falta la tuya, escríbenos y la contestamos nosotros.",
+    "entrada": "Respondido con lo que Barion hace hoy, incluido lo que no hace: qué trae el software de la barbería, cómo se paga y qué pasa con los datos. Si falta la tuya, escríbenos y la contestamos nosotros.",
     "grupos": {
       "empezar": "Empezar",
       "funcionamiento": "Cómo funciona",
