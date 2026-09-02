@@ -1,12 +1,12 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { hasLocale } from "next-intl"
-import { getTranslations, setRequestLocale } from "next-intl/server"
+import { setRequestLocale } from "next-intl/server"
 import { DatosEstructurados } from "@/components/common/DatosEstructurados"
 import { Cierre } from "@/components/sections/Cierre"
 import { PreguntasFrecuentes } from "@/components/sections/PreguntasFrecuentes"
 import { routing } from "@/i18n/routing"
-import { alternativas, grafoPreguntas } from "@/lib/seo"
+import { grafoPagina, grafoPreguntas, metadatosDePagina } from "@/lib/seo"
 
 interface Props {
   params: Promise<{ idioma: string }>
@@ -20,12 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { idioma } = await params
   if (!hasLocale(routing.locales, idioma)) return {}
 
-  const t = await getTranslations({ locale: idioma, namespace: "paginas.preguntas" })
-  return {
-    title: t("titulo"),
-    description: t("descripcion"),
-    alternates: alternativas(idioma, "preguntas"),
-  }
+  return metadatosDePagina(idioma, "preguntas")
 }
 
 /**
@@ -43,6 +38,7 @@ export default async function PreguntasPage({ params }: Props) {
 
   return (
     <>
+      <DatosEstructurados datos={await grafoPagina(idioma, "preguntas")} />
       <DatosEstructurados datos={await grafoPreguntas(idioma)} />
       <div className="pt-20 lg:pt-24">
         <PreguntasFrecuentes nivel="h1" tono="base" />

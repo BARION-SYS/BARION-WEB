@@ -10,7 +10,7 @@ import { PreguntasFrecuentes } from "@/components/sections/PreguntasFrecuentes"
 import { rutas } from "@/config/rutas"
 import { routing } from "@/i18n/routing"
 import { regionDeLaPeticion } from "@/lib/region"
-import { alternativas, grafoAplicacion } from "@/lib/seo"
+import { grafoAplicacion, grafoPagina, metadatosDePagina } from "@/lib/seo"
 import { obtenerPaisesOperados } from "@/services/paises"
 import { obtenerPlanesPublicos } from "@/services/planes"
 
@@ -22,12 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { idioma } = await params
   if (!hasLocale(routing.locales, idioma)) return {}
 
-  const t = await getTranslations({ locale: idioma, namespace: "paginas.precios" })
-  return {
-    title: t("titulo"),
-    description: t("descripcion"),
-    alternates: alternativas(idioma, "precios"),
-  }
+  return metadatosDePagina(idioma, "precios")
 }
 
 /**
@@ -54,6 +49,7 @@ export default async function PreciosPage({ params }: Props) {
 
   return (
     <>
+      <DatosEstructurados datos={await grafoPagina(idioma, "precios")} />
       <DatosEstructurados datos={await grafoAplicacion(idioma, planes, operados)} />
 
       <div className="pt-20 lg:pt-24">

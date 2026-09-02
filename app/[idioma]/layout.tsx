@@ -98,6 +98,12 @@ export async function generateMetadata({ params }: ParamsIdioma): Promise<Metada
         ? { other: { "msvalidate.01": envServidor.verificacionBing } }
         : {}),
     },
+    /**
+     * La tarjeta social del layout es el RESPALDO, no la de cada página: cada
+     * una declara la suya con `metadatosDePagina()`, porque Next sustituye
+     * `openGraph` entero en vez de fusionarlo. Esta es la que hereda lo único
+     * que no la declara — el 404.
+     */
     openGraph: {
       type: "website",
       siteName: NOMBRE_SITIO,

@@ -8,11 +8,11 @@ import {
 } from "@/config/contenido"
 import { getTranslations } from "next-intl/server"
 import { envPublico } from "@/config/env.public"
-import { etiquetaHtml, type Idioma } from "@/config/idiomas"
+import { etiquetaHtml, localeSocial, type Idioma } from "@/config/idiomas"
 import { periodos } from "@/config/periodos"
 import type { CodigoRegion } from "@/config/regiones"
 import { CORREO_CONTACTO, rutas, rutasApp, type ClaveRuta } from "@/config/rutas"
-import { LOGO_SOCIAL, NOMBRE_SITIO } from "@/config/sitio"
+import { IMAGEN_SOCIAL, LOGO_SOCIAL, NOMBRE_SITIO } from "@/config/sitio"
 import { getPathname } from "@/i18n/navigation"
 import { routing } from "@/i18n/routing"
 import { montoDecimal } from "@/lib/currency"
@@ -86,6 +86,61 @@ export function alternativas(idioma: Idioma, clave?: ClaveRuta): Metadata["alter
     languages: {
       ...idiomas,
       "x-default": rutaDe(routing.defaultLocale, clave),
+    },
+  }
+}
+
+/**
+ * Título, descripción, canónica y tarjeta social de una página. **Las cinco
+ * cosas juntas, y por eso existe.**
+ *
+ * ── Qué estaba roto ─────────────────────────────────────────────────────────
+ * Cada página declaraba su `title`, su `description` y su `alternates`, y
+ * heredaba el `openGraph` del layout sin tocarlo: **Next SUSTITUYE `openGraph`
+ * entero, no lo fusiona**, exactamente igual que hace con `alternates`. El
+ * resultado, comprobado en producción, era que `/es/precios` se compartía con el
+ * título de la portada y con `og:url` apuntando a `/es` — dos afirmaciones
+ * distintas, en la misma cabecera, sobre cuál es la dirección buena.
+ *
+ * ── Por qué es UNA función y no cuatro ──────────────────────────────────────
+ * Porque `og:url` y la canónica tienen que ser la MISMA dirección, y el único
+ * modo de garantizarlo es que las escriba el mismo sitio a partir de la misma
+ * `rutaDe()`. Con un constructor para la canónica y otro para la tarjeta,
+ * discrepan el día que alguien use uno y olvide el otro — que es literalmente lo
+ * que ya pasó.
+ *
+ * La portada lleva `absolute`: su título ya nombra la marca («Barion — Software
+ * de gestión para barberías»), y la plantilla `%s · Barion` del layout la
+ * repetiría dos veces en el mismo renglón del resultado.
+ */
+export async function metadatosDePagina(idioma: Idioma, clave: ClaveRuta): Promise<Metadata> {
+  const pagina = await getTranslations({ locale: idioma, namespace: `paginas.${clave}` })
+  const identidad = await getTranslations({ locale: idioma, namespace: "identidad" })
+
+  const titulo = pagina("titulo")
+  const descripcion = pagina("descripcion")
+  const url = rutaDe(idioma, clave)
+
+  return {
+    title: clave === "inicio" ? { absolute: titulo } : titulo,
+    description: descripcion,
+    alternates: alternativas(idioma, clave),
+    openGraph: {
+      type: "website",
+      siteName: NOMBRE_SITIO,
+      locale: localeSocial[idioma],
+      // Relativa a propósito: Next la resuelve contra `metadataBase`, así que en
+      // desarrollo no se publica un dominio inventado.
+      url,
+      title: titulo,
+      description: descripcion,
+      images: [{ ...IMAGEN_SOCIAL, alt: identidad("altImagenSocial") }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: titulo,
+      description: descripcion,
+      images: [IMAGEN_SOCIAL.url],
     },
   }
 }
@@ -239,6 +294,100 @@ export async function grafoAplicacion(
         // peor que uno que no habla de precios, y es lo que marca un validador.
         ...(ofertas.length > 0 ? { offers: ofertas } : {}),
       },
+    ],
+  }
+}
+
+/**
+ * Un escalón de la ruta de migas.
+ *
+ * `clave` es la ruta a la que lleva, y falta en los niveles que **no tienen
+ * página**: «Legal» agrupa tres documentos y no es ninguno.
+ */
+export interface EscalonMiga {
+  texto: string
+  clave?: ClaveRuta
+}
+
+/**
+ * Qué es esta dirección y dónde está dentro del sitio.
+ *
+ * Son dos nodos y van juntos porque responden a la misma pregunta desde dos
+ * lados: el `WebPage` dice «esto es una página de este sitio, publicada por esta
+ * organización» —hasta ahora cada página soltaba su nodo suelto sin decir de qué
+ * sitio formaba parte— y el `BreadcrumbList` dice por dónde se llega. Ese
+ * segundo es el que hace que un resultado profundo salga como
+ * «Barion › Legal › Términos» en vez de como una URL cruda, que es la diferencia
+ * entre parecer parte de un sitio y parecer una página suelta.
+ *
+ * ── Un nivel sin página NO entra en el grafo, aunque sí se pinte ────────────
+ * `Migas` enseña «Legal» porque orienta a quien lee. Aquí se omite: un
+ * `ListItem` intermedio sin `item` es una posición de la ruta a la que no se
+ * puede ir, y un validador la marca como ruta incompleta. Lo que se publica es
+ * la ruta por la que de verdad se navega. El último escalón —la página actual—
+ * sí lleva su dirección: es la que el buscador enseña.
+ */
+export async function grafoPagina(
+  idioma: Idioma,
+  clave: ClaveRuta,
+  migas: EscalonMiga[] = []
+): Promise<Nodo | null> {
+  const sitio = SITIO_URL
+  if (!sitio) return null
+
+  const pagina = await getTranslations({ locale: idioma, namespace: `paginas.${clave}` })
+  const navegacion = await getTranslations({ locale: idioma, namespace: "navegacion" })
+
+  const url = `${sitio}${rutaDe(idioma, clave)}`
+  const enEsteIdioma = `${sitio}/${idioma}`
+
+  // La portada no tiene ruta: es el primer escalón. Declararle una de un solo
+  // item sería decir «para llegar a Inicio, pasa por Inicio».
+  const escalones: EscalonMiga[] =
+    clave === "inicio"
+      ? []
+      : [
+          { texto: navegacion("inicio"), clave: "inicio" },
+          ...migas,
+          { texto: pagina("titulo"), clave },
+        ]
+
+  // `flatMap` y no `filter` + `map`: `rutaDe` tiene la portada como valor por
+  // defecto, así que un escalón sin `clave` que se colara aquí no fallaría —
+  // publicaría la portada con el nombre de otra cosa. Con el destructurado
+  // dentro, el que no lleva ruta no puede llegar a construir una.
+  const itemListElement = escalones.flatMap(({ texto, clave: destino }) =>
+    destino === undefined
+      ? []
+      : [{ "@type": "ListItem", name: texto, item: `${sitio}${rutaDe(idioma, destino)}` }]
+  )
+  // La posición se numera DESPUÉS de descartar: `itemListElement` tiene que ser
+  // 1, 2, 3… sin huecos, y un salto es lo que un validador lee como ruta rota.
+  const conPosicion = itemListElement.map((item, indice) => ({ ...item, position: indice + 1 }))
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${url}#pagina`,
+        url,
+        name: pagina("titulo"),
+        description: pagina("descripcion"),
+        inLanguage: etiquetaHtml[idioma],
+        isPartOf: { "@id": `${enEsteIdioma}#sitio` },
+        about: { "@id": idOrganizacion(sitio) },
+        ...(conPosicion.length > 0 ? { breadcrumb: { "@id": `${url}#migas` } } : {}),
+      },
+      ...(conPosicion.length > 0
+        ? [
+            {
+              "@type": "BreadcrumbList",
+              "@id": `${url}#migas`,
+              itemListElement: conPosicion,
+            },
+          ]
+        : []),
     ],
   }
 }

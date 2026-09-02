@@ -40,9 +40,14 @@ interface MigasProps {
  * que un lector de pantalla diga lo mismo que el color.
  *
  * ── Sin JSON-LD aquí ────────────────────────────────────────────────────────
- * El `BreadcrumbList` de schema.org se declara en la página, junto al resto de
- * su grafo (`lib/seo.ts`): un componente de presentación que además publica
+ * El `BreadcrumbList` lo declara la PÁGINA con `grafoPagina()` (`lib/seo.ts`),
+ * junto al resto de su grafo: un componente de presentación que además publica
  * datos estructurados acaba emitiéndolos dos veces el día que se use dos veces.
+ *
+ * Los dos NO dicen exactamente lo mismo, y es deliberado: aquí se pinta «Legal»
+ * porque orienta a quien lee, y allí se omite porque un escalón intermedio sin
+ * dirección es una posición de la ruta a la que no se puede ir. Lo visible
+ * explica; lo estructurado se navega.
  */
 export function Migas({ migas }: MigasProps) {
   const t = useTranslations("navegacion")

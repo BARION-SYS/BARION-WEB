@@ -13,7 +13,7 @@ import { VistaPrevia } from "@/components/sections/VistaPrevia"
 import { rutas } from "@/config/rutas"
 import { routing } from "@/i18n/routing"
 import { regionDeLaPeticion } from "@/lib/region"
-import { alternativas, grafoAplicacion } from "@/lib/seo"
+import { grafoAplicacion, grafoPagina, metadatosDePagina } from "@/lib/seo"
 import { obtenerPaisesOperados } from "@/services/paises"
 import { obtenerPlanesPublicos } from "@/services/planes"
 
@@ -25,12 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { idioma } = await params
   if (!hasLocale(routing.locales, idioma)) return {}
 
-  const t = await getTranslations({ locale: idioma, namespace: "paginas.inicio" })
-  return {
-    title: t("titulo"),
-    description: t("descripcion"),
-    alternates: alternativas(idioma),
-  }
+  return metadatosDePagina(idioma, "inicio")
 }
 
 /**
@@ -72,6 +67,7 @@ export default async function PortadaPage({ params }: Props) {
           máquina. Los precios son los MISMOS que pinta `PreciosList`. Las
           preguntas NO se declaran aquí: solo se enseñan cinco, y un `FAQPage`
           sobre una página que no las tiene todas promete lo que no da. */}
+      <DatosEstructurados datos={await grafoPagina(idioma, "inicio")} />
       <DatosEstructurados datos={await grafoAplicacion(idioma, planes, operados)} />
 
       <Hero region={region} />

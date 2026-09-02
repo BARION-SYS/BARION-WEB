@@ -15,18 +15,31 @@
 export const NOMBRE_SITIO = "Barion"
 
 /**
- * La sala del hero, en su versión nocturna: es la única imagen del sitio con
- * proporción social (3:2). Se declara la oscura porque la tarjeta se ve casi
- * siempre dentro de una aplicación de mensajería, donde el fondo del hilo es
- * oscuro más veces que claro.
+ * La tarjeta que se ve al compartir un enlace. **Una imagen propia, no la
+ * fotografía del hero.**
+ *
+ * ── Por qué no vale reutilizar el webp de la sala ───────────────────────────
+ *  · **El formato.** WhatsApp, LinkedIn y varios clientes de correo no pintan
+ *    WebP en la vista previa de un enlace: la tarjeta se cae al texto sin
+ *    imagen, que es peor que una imagen fea — el enlace deja de llamar la
+ *    atención. JPEG es el formato que entienden todos, y en una fotografía pesa
+ *    la décima parte que un PNG del mismo encuadre.
+ *  · **La proporción.** Open Graph y Twitter esperan 1,91:1 (1200×630). La sala
+ *    es 3:2, así que se recortaba por arriba y por abajo, y el recorte no lo
+ *    elegía nadie.
+ *
+ * `og.jpg` es esa misma sala compuesta A PROPÓSITO para ese encuadre: recorte
+ * 1200×630, el velo lateral del hero y el logotipo encima. El webp se queda
+ * para lo que es — la fotografía DENTRO de la página, servida por el
+ * optimizador de Next en la variante de cada pantalla.
  *
  * El texto alternativo NO está aquí: se lee y por tanto se traduce
  * (`identidad.altImagenSocial`).
  */
 export const IMAGEN_SOCIAL = {
-  url: "/assets/barion-hero-dark.webp",
-  width: 1535,
-  height: 1024,
+  url: "/og.jpg",
+  width: 1200,
+  height: 630,
 } as const
 
 /** Logotipo en absoluto para el JSON-LD (la variante clara, sobre fondo claro). */
