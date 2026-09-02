@@ -59,8 +59,21 @@ export type ClaveSeccion = (typeof SECCIONES)[number]
 export const rutasMaquina = {
   sitemap: "/sitemap.xml",
   robots: "/robots.txt",
-  /** El sitio en texto plano, para modelos de lenguaje. */
+  /**
+   * El ÍNDICE para modelos de lenguaje: qué es Barion y en qué dirección vive
+   * cada parte, como listas de enlaces — que es lo que espera la convención.
+   */
   llms: "/llms.txt",
+  /**
+   * El sitio ENTERO en texto plano, para citar de una sola petición.
+   *
+   * Son dos direcciones y no una porque hacen cosas distintas: un cliente que
+   * quiere saber qué páginas existen sigue el índice, y uno que va a responder
+   * «¿cuánto cuesta Barion?» se lleva el completo. Un solo archivo obligaba a
+   * descargarlo entero para lo primero y no cumplía la convención para lo
+   * segundo.
+   */
+  llmsFull: "/llms-full.txt",
 } as const
 
 /**

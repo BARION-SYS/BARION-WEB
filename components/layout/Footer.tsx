@@ -114,7 +114,9 @@ export function Footer() {
           <div className="flex items-center gap-4">
             {/* El único enlace real a `/llms.txt`. Un rastreador llega a una
                 dirección porque alguien enlaza a ella: sin esto, el archivo
-                existe y no lo encuentra nadie. */}
+                existe y no lo encuentra nadie. El completo NO se enlaza aquí —
+                lo enlaza el índice, que es a lo que lleva este—: dos enlaces
+                casi iguales en el pie no orientan a nadie. */}
             <a
               href={rutasMaquina.llms}
               className="text-xs text-muted-foreground hover:text-foreground"
