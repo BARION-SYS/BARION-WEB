@@ -65,24 +65,31 @@ export function VistaPrevia({
       />
 
       <ol className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
+        {/* El envoltorio de la animación ES el `<li>`, no un `<div>` metido
+            entre la lista y sus elementos: eso dejaba la `<ol>` con hijos que no
+            son elementos de lista, y para un lector de pantalla los tres pasos
+            dejaban de ser una lista. */}
         {CLAVES_PASO.map((clave, indice) => (
-          <RevelarEnScroll key={clave} retardo={indice * 0.08}>
-            <li className={cn("group relative h-full", TARJETA, TARJETA_AIRE, TARJETA_VIVA)}>
-              <span className={PASO}>{String(indice + 1).padStart(2, "0")}</span>
-              <h3 className="mt-4 text-base font-semibold tracking-tight text-balance">
-                {t(`pasos.${clave}.titulo`)}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {t(`pasos.${clave}.descripcion`)}
-              </p>
-              {/* Hilo entre pasos: la secuencia se ve, no se deduce */}
-              {indice < CLAVES_PASO.length - 1 && (
-                <span
-                  className="absolute top-1/2 -right-3 hidden h-px w-6 bg-border sm:block"
-                  aria-hidden
-                />
-              )}
-            </li>
+          <RevelarEnScroll
+            key={clave}
+            como="li"
+            retardo={indice * 0.08}
+            className={cn("group relative h-full", TARJETA, TARJETA_AIRE, TARJETA_VIVA)}
+          >
+            <span className={PASO}>{String(indice + 1).padStart(2, "0")}</span>
+            <h3 className="mt-4 text-base font-semibold tracking-tight text-balance">
+              {t(`pasos.${clave}.titulo`)}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {t(`pasos.${clave}.descripcion`)}
+            </p>
+            {/* Hilo entre pasos: la secuencia se ve, no se deduce */}
+            {indice < CLAVES_PASO.length - 1 && (
+              <span
+                className="absolute top-1/2 -right-3 hidden h-px w-6 bg-border sm:block"
+                aria-hidden
+              />
+            )}
           </RevelarEnScroll>
         ))}
       </ol>

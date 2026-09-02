@@ -32,6 +32,18 @@ interface RevelarEnScrollProps {
   retardo?: number
   /** Cascada de los hijos directos que declaren `variants`. */
   cascada?: number
+  /**
+   * Qué elemento se pinta. `li` cuando el envoltorio va DENTRO de una lista.
+   *
+   * Sin esto, animar los elementos de una `<ol>` metía un `<div>` entre la lista
+   * y sus `<li>`: la lista pasaba a tener hijos que no son elementos de lista y
+   * los `<li>` a no tener padre válido. Dos auditorías de accesibilidad lo
+   * señalaban, y con razón — para un lector de pantalla dejaba de ser «una lista
+   * de tres pasos» y pasaba a ser texto suelto.
+   *
+   * El envoltorio no se mete en medio: ES el elemento de la lista.
+   */
+  como?: "div" | "li"
   className?: string
 }
 
@@ -48,9 +60,12 @@ export function RevelarEnScroll({
   retardo = 0,
   cascada,
   className,
+  como = "div",
 }: RevelarEnScrollProps) {
+  const Envoltorio = como === "li" ? motion.li : motion.div
+
   return (
-    <motion.div
+    <Envoltorio
       className={cn(className)}
       variants={recorridos[recorrido]}
       initial="oculto"
@@ -59,6 +74,6 @@ export function RevelarEnScroll({
       transition={{ delay: retardo, ...(cascada ? { staggerChildren: cascada } : {}) }}
     >
       {children}
-    </motion.div>
+    </Envoltorio>
   )
 }

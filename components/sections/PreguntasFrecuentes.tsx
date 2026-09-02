@@ -63,6 +63,19 @@ export function PreguntasFrecuentes({
         preguntas: [...preguntasPorGrupo[clave]],
       }))
 
+  /**
+   * Los niveles se DERIVAN del de la sección, no se escriben a mano.
+   *
+   * Estaban fijos —grupo en `h3`, pregunta en `h4`— y por eso el orden dependía
+   * de la página: en la portada la sección abre con `h2`, no hay grupos, y las
+   * preguntas salían en `h4` sin ningún `h3` en medio. Un lector de pantalla
+   * salta por títulos, así que una jerarquía con huecos no es un detalle de
+   * marcado: es la navegación rota. Sin grupo visible, la pregunta ocupa el
+   * nivel que el grupo habría dejado libre.
+   */
+  const NivelGrupo = nivel === "h1" ? "h2" : "h3"
+  const NivelPregunta = recortadas ? NivelGrupo : nivel === "h1" ? "h3" : "h4"
+
   return (
     <Seccion tono={tono} separador={separador}>
       <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
@@ -90,9 +103,9 @@ export function PreguntasFrecuentes({
           {grupos.map((grupo, indice) => (
             <RevelarEnScroll key={grupo.clave} retardo={indice * 0.06}>
               {grupo.titulo && (
-                <h3 className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
+                <NivelGrupo className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
                   {grupo.titulo}
-                </h3>
+                </NivelGrupo>
               )}
 
               <ul className="mt-4 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
@@ -105,7 +118,9 @@ export function PreguntasFrecuentes({
                         {/* `list-none` + el pseudoelemento de WebKit: el triángulo
                             del navegador compite con el signo de la derecha */}
                         <summary className="flex cursor-pointer list-none items-start justify-between gap-4 px-5 py-5 transition-colors hover:bg-secondary/60 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none [&::-webkit-details-marker]:hidden">
-                          <h4 className="text-base font-medium text-balance">{pregunta}</h4>
+                          <NivelPregunta className="text-base font-medium text-balance">
+                            {pregunta}
+                          </NivelPregunta>
                           <ChevronDown
                             className="mt-0.5 size-5 shrink-0 text-muted-foreground transition-transform duration-300 group-open:rotate-180 group-open:text-primary"
                             aria-hidden

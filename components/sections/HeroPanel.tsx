@@ -320,24 +320,32 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
                         ))}
                       </div>
 
+                      {/*
+                        La entrada de cada cita NO toca la opacidad, y ese es el
+                        arreglo: el panel entero ya funde una sola vez en su
+                        envoltorio, así que fundir además cada tarjeta dejaba el
+                        texto a medio color durante la cascada — 3,04:1 medido,
+                        cuando el token `--hero-muted` da cerca de 9:1 por sí
+                        solo. El escalonado se conserva con `scale`, que no
+                        afecta al contraste.
+
+                        El día inactivo sigue atenuado porque es lo que marca
+                        cuál está elegido, pero a 0,75 y no a 0,55: por debajo de
+                        ahí el gris efectivo baja del mínimo legible.
+                      */}
                       {cadaDia.citas.map((cita) => (
                         <motion.div
                           key={`${cadaDia.numero}-${cita.fila}`}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{
-                            opacity: indiceDia === diaActivo ? 1 : 0.55,
-                            scale: 1,
-                          }}
+                          initial={{ scale: 0.9 }}
+                          animate={{ scale: 1 }}
                           transition={{
-                            opacity: { duration: 0.25 },
-                            scale: {
-                              duration: 0.3,
-                              ease: "easeOut",
-                              delay: 0.5 + indiceDia * 0.06,
-                            },
+                            duration: 0.3,
+                            ease: "easeOut",
+                            delay: 0.5 + indiceDia * 0.06,
                           }}
                           className={cn(
-                            "absolute inset-x-0.5 overflow-hidden rounded-md px-1.5 py-1",
+                            "absolute inset-x-0.5 overflow-hidden rounded-md px-1.5 py-1 transition-opacity duration-200",
+                            indiceDia === diaActivo ? "opacity-100" : "opacity-75",
                             cita.tono === "oro"
                               ? "border border-hero-primary/40 bg-hero-primary/15"
                               : "border border-hero-borde bg-hero-superficie"
@@ -347,10 +355,12 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
                             height: `calc(${cita.alto * ALTO_FILA}rem - 0.2rem)`,
                           }}
                         >
-                          <p className="truncate text-[10px] font-medium text-hero-foreground">
+                          {/* 11 px y no 10: por debajo se pierde el margen en la
+                              comprobación de contraste y no se gana maqueta. */}
+                          <p className="truncate text-[11px] font-medium text-hero-foreground">
                             {cita.cliente}
                           </p>
-                          <p className="truncate text-[10px] text-hero-muted">
+                          <p className="truncate text-[11px] text-hero-muted">
                             {nombresServicio(cita.servicio)}
                           </p>
                         </motion.div>
