@@ -320,9 +320,20 @@
     animation: cinta-desplazamiento 2.4s linear infinite;
   }
 
+  /*
+    La cinta NO se para nunca — misma decisión que en la aplicación, y por lo
+    mismo: un poste de barbero que no gira no es un poste, es una raya de
+    colores. Aquí además cierra el hero, que es lo primero que ve quien está
+    decidiendo si contrata.
+
+    La preferencia le baja el ritmo a un tercio en vez de apagarla: sigue
+    habiendo movimiento y deja de ser un bucle rápido. El coste asumido es el
+    mismo, el criterio 2.2.2 de WCAG (contenido en movimiento sin control de
+    pausa); se cerraría con un botón de pausa, no con `animation: none`.
+  */
   @media (prefers-reduced-motion: reduce) {
     .cinta-barberia {
-      animation: none;
+      animation-duration: 7.2s;
     }
   }
 }
