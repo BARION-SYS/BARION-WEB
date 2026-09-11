@@ -184,7 +184,14 @@ export default async function LayoutRaiz({
             <MotionProvider>
               <EnlaceSaltar idioma={idioma} />
               <Nav />
-              <main id="contenido">{children}</main>
+              {/* `clip` y no `hidden`: recorta lo que asome de lado —una
+                  maqueta flotante, un bloque a medio entrar— sin volverse un
+                  contenedor de scroll, así que nada `sticky` de dentro deja
+                  de pegarse. Sin él, un solo elemento desbordado le daba a la
+                  página entera un scroll horizontal. */}
+              <main id="contenido" className="overflow-x-clip">
+                {children}
+              </main>
               <Footer />
             </MotionProvider>
           </ThemeProvider>

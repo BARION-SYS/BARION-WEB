@@ -141,6 +141,14 @@
     casi blanco — el velo blanqueaba la página en vez de apagarla.
   */
   --velo: #18181b73;
+  /*
+    Barra de desplazamiento de la PÁGINA. Sin esto el navegador pinta la suya
+    —gris de sistema, a veces clara sobre la página oscura— y es lo único de la
+    pantalla que no sale de la paleta. El carril es el propio fondo, así que la
+    barra se lee como parte de la página y no como un marco pegado al borde.
+  */
+  --barra: #d4d4d8;
+  --barra-carril: #fafaf9;
   /* Radio contenido: formularios e inputs rectos suaves, no circulares */
   --radius: 0.45rem;
   --sidebar: #ffffff;
@@ -197,6 +205,8 @@
   --hero-primary-foreground: #0a0a0b;
   --hero-exito: #34d399;
   --velo: #000000a6;
+  --barra: #3a3a42;
+  --barra-carril: #0a0a0b;
   --sidebar: #111113;
   --sidebar-foreground: #fafafa;
   --sidebar-primary: #d4a843;
@@ -210,6 +220,27 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  /*
+    La barra de la página sigue al tema. Va en el elemento raíz porque es el que
+    decide la del viewport; `scrollbar-color` es el estándar (Chrome, Edge,
+    Firefox) y, donde existe, el navegador ignora los pseudoelementos `-webkit-`,
+    que quedan solo para Safari.
+  */
+  html {
+    scrollbar-color: var(--barra) var(--barra-carril);
+  }
+  html::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  html::-webkit-scrollbar-track {
+    background: var(--barra-carril);
+  }
+  html::-webkit-scrollbar-thumb {
+    border: 3px solid var(--barra-carril);
+    border-radius: 9999px;
+    background: var(--barra);
   }
   body {
     @apply bg-background text-foreground;
