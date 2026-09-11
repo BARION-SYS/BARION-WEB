@@ -45,7 +45,7 @@ const PAGINAS: {
 }[] = [
   { clave: "inicio", prioridad: 1, frecuencia: "weekly", actualizada: "2026-09-10" },
   { clave: "producto", prioridad: 0.8, frecuencia: "monthly", actualizada: "2026-09-01" },
-  { clave: "vistaPrevia", prioridad: 0.8, frecuencia: "monthly", actualizada: "2026-09-01" },
+  { clave: "vistaPrevia", prioridad: 0.8, frecuencia: "monthly", actualizada: "2026-09-10" },
   { clave: "precios", prioridad: 0.9, frecuencia: "weekly", actualizada: "2026-09-10" },
   { clave: "preguntas", prioridad: 0.7, frecuencia: "monthly", actualizada: "2026-09-10" },
   // Existen para encontrarse cuando se buscan, no para traer visitas. Su fecha

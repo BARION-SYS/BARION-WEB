@@ -68,6 +68,12 @@ export const iconosCapacidad: Record<ClaveCapacidad, LucideIcon> = {
 export const CLAVES_PASO = ["escaparate", "reserva", "agenda"] as const
 export type ClavePaso = (typeof CLAVES_PASO)[number]
 
+export const iconosPaso: Record<ClavePaso, LucideIcon> = {
+  escaparate: Link2,
+  reserva: Smartphone,
+  agenda: CalendarCheck,
+}
+
 // ── Qué trae CUALQUIER plan ─────────────────────────────────────────────────
 export const CLAVES_GARANTIA = ["escaparate", "panelBarbero", "exportar", "permanencia"] as const
 export type ClaveGarantia = (typeof CLAVES_GARANTIA)[number]

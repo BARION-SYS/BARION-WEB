@@ -149,6 +149,11 @@
   */
   --barra: #d4d4d8;
   --barra-carril: #fafaf9;
+  /*
+    Sombra de lo que flota sobre la página (las maquetas). Tinte cálido del
+    propio texto y difusa: en claro una sombra negra pura ensucia el blanco.
+  */
+  --sombra: #1c191724;
   /* Radio contenido: formularios e inputs rectos suaves, no circulares */
   --radius: 0.45rem;
   --sidebar: #ffffff;
@@ -207,6 +212,8 @@
   --velo: #000000a6;
   --barra: #3a3a42;
   --barra-carril: #0a0a0b;
+  /* En oscuro la sombra no se ve contra el fondo: separa más lejos y más negra */
+  --sombra: #000000b3;
   --sidebar: #111113;
   --sidebar-foreground: #fafafa;
   --sidebar-primary: #d4a843;

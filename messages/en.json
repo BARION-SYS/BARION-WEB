@@ -156,30 +156,46 @@
     "verTodo": "See everything it does"
   },
   "vistaPrevia": {
-    "etiqueta": "Two sides of the same system",
-    "titulo": "The dashboard is yours. The booking page is what you share",
-    "entrada": "Your barbershop gets its own online booking page. A client opens it, picks a service and a barber, and the appointment shows up on your calendar. No phone calls, nothing to install.",
+    "etiqueta": "How a booking arrives",
+    "titulo": "You run the calendar. Your clients book themselves",
+    "entrada": "Your barbershop gets its own booking page. A client opens it on their phone, picks a service, a barber and a time, and the appointment shows up on your calendar. No phone calls, no back-and-forth messages, nothing to install.",
     "pasos": {
       "escaparate": {
-        "titulo": "You publish your page",
-        "descripcion": "Your shop gets its own address and its own colour. Share it on WhatsApp, in your profile, or with the QR code on the wall."
+        "quien": "You",
+        "titulo": "You share your booking page",
+        "descripcion": "Your shop gets its own link, with its name and its colours. Send it on WhatsApp, put it in your Instagram bio, or print it as a QR code for the wall."
       },
       "reserva": {
-        "titulo": "The client picks and books",
-        "descripcion": "Service, barber and a slot that's genuinely free, from their phone with nothing to install. They confirm their number and the appointment is set."
+        "quien": "Your client",
+        "titulo": "They pick and book in a minute",
+        "descripcion": "Service, barber and a slot that's genuinely free, from their phone with nothing to download. They confirm their number and the appointment is set."
       },
       "agenda": {
+        "quien": "Automatic",
         "titulo": "It lands on your calendar",
-        "descripcion": "No calls, no crossed messages. The reminder goes out on its own and the chair is held immediately."
+        "descripcion": "No calls, no crossed messages. The chair is held immediately and the reminder reaches them on its own before the appointment."
       }
     },
-    "pieDelPanel": "The dashboard: the day's schedule, who's coming and who's cutting.",
-    "pieDelEscaparate": "The booking page: what your client sees on their phone. Try it — pick a service, a barber, a time and how they pay.",
+    "pieDelPanel": "Your dashboard: the day's schedule, who's coming and who's cutting.",
+    "prueba": {
+      "etiqueta": "Try it yourself",
+      "titulo": "Book the way your client would",
+      "entrada": "This is the page your client opens on their phone. Tap a service, a barber and a time: that's how short booking at your shop is.",
+      "puntos": [
+        "They only see times that chair can actually take",
+        "They pick their barber, or whoever is free first",
+        "They say how they'll pay, and Barion charges them nothing"
+      ],
+      "pie": "What your client sees on their phone."
+    },
     "maqueta": {
       "citasDeHoy": "Today's appointments",
       "dia": "Wednesday 14",
       "barberosEnSilla": "2 barbers on the floor",
-      "confirmada": "Confirmed"
+      "confirmada": "Confirmed",
+      "nueva": "New",
+      "nuevaReserva": "New booking",
+      "desdeTuPagina": "{cliente} · from your page"
     },
     "verTodo": "Look inside"
   },

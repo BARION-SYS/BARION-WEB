@@ -155,30 +155,46 @@
     "verTodo": "Ver todo lo que hace"
   },
   "vistaPrevia": {
-    "etiqueta": "Dos caras del mismo sistema",
-    "titulo": "El panel es tuyo. El escaparate es el que enseñas",
-    "entrada": "Tu barbería tiene su propia página de reservas en línea. El cliente entra, elige servicio y barbero, y la cita aparece en tu agenda. Sin llamadas y sin instalar nada.",
+    "etiqueta": "Cómo llega una cita",
+    "titulo": "Tú manejas la agenda. Tus clientes reservan solos",
+    "entrada": "Tu barbería tiene su propia página de reservas. El cliente la abre desde el celular, elige servicio, barbero y hora, y la cita aparece en tu agenda. Sin llamadas, sin mensajes de ida y vuelta y sin instalar nada.",
     "pasos": {
       "escaparate": {
-        "titulo": "Publicas tu escaparate",
-        "descripcion": "Tu barbería tiene su propia dirección y su propio color. La compartes por WhatsApp, en tu perfil o con el QR del local."
+        "quien": "Tú",
+        "titulo": "Compartes tu página de reservas",
+        "descripcion": "Tu barbería tiene su propio enlace, con su nombre y sus colores. Lo mandas por WhatsApp, lo pones en tu Instagram o lo imprimes en un QR para el local."
       },
       "reserva": {
-        "titulo": "El cliente elige y reserva",
-        "descripcion": "Servicio, barbero y hora libre, desde el móvil y sin instalar nada. Confirma su teléfono y la cita queda hecha."
+        "quien": "Tu cliente",
+        "titulo": "Elige y reserva en un minuto",
+        "descripcion": "Servicio, barbero y una hora libre de verdad, desde el celular y sin descargar nada. Confirma su teléfono y la cita queda hecha."
       },
       "agenda": {
+        "quien": "Automático",
         "titulo": "Aparece en tu agenda",
-        "descripcion": "Sin llamadas ni mensajes cruzados. El recordatorio sale solo y la silla se bloquea al instante."
+        "descripcion": "Sin llamadas ni mensajes cruzados. La silla queda apartada al instante y el recordatorio le llega solo antes de la cita."
       }
     },
-    "pieDelPanel": "El panel: la agenda del día, con quién viene y quién lo atiende.",
-    "pieDelEscaparate": "El escaparate: lo que ve tu cliente en su móvil. Pruébalo — elige servicio, barbero, hora y cómo paga.",
+    "pieDelPanel": "Tu panel: la agenda del día, quién viene y quién lo atiende.",
+    "prueba": {
+      "etiqueta": "Pruébalo tú mismo",
+      "titulo": "Reserva como lo haría tu cliente",
+      "entrada": "Esta es la página que tu cliente abre en su celular. Toca un servicio, un barbero y una hora: así de corto es reservar en tu barbería.",
+      "puntos": [
+        "Solo ve las horas que esa silla puede atender",
+        "Elige a su barbero o el primero que esté libre",
+        "Deja dicho cómo va a pagar, y Barion no le cobra nada"
+      ],
+      "pie": "Lo que ve tu cliente en su celular."
+    },
     "maqueta": {
       "citasDeHoy": "Citas de hoy",
       "dia": "Miércoles 14",
       "barberosEnSilla": "2 barberos en silla",
-      "confirmada": "Confirmada"
+      "confirmada": "Confirmada",
+      "nueva": "Nueva",
+      "nuevaReserva": "Nueva reserva",
+      "desdeTuPagina": "{cliente} · desde tu página"
     },
     "verTodo": "Verlo por dentro"
   },
