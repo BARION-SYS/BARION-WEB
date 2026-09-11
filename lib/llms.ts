@@ -11,12 +11,7 @@ import {
   preguntasPorGrupo,
 } from "@/config/contenido"
 import { nombresDeIdioma } from "@/config/idiomas"
-import {
-  esRegionConocida,
-  regiones,
-  REGIONES_CONOCIDAS,
-  type CodigoRegion,
-} from "@/config/regiones"
+import { esRegionConocida, regiones, REGION_DEFAULT, type CodigoRegion } from "@/config/regiones"
 import { CORREO_CONTACTO, rutas, rutasApp, rutasMaquina, SECCIONES } from "@/config/rutas"
 import { NOMBRE_SITIO } from "@/config/sitio"
 import { getPathname } from "@/i18n/navigation"
@@ -68,7 +63,7 @@ import type { PlanPublico } from "@/types/landing"
  * el contenido, igual que las fechas del sitemap: la del build diría que cambió
  * cada vez que se sube una dependencia.
  */
-export const ACTUALIZADO_EN = "2026-09-01"
+export const ACTUALIZADO_EN = "2026-09-10"
 
 /**
  * Los espacios de nombres que este documento necesita, todos del idioma de
@@ -106,9 +101,11 @@ async function datos() {
     traductores(),
   ])
 
+  // Sin respuesta de la api, el país por defecto: es el único donde se opera
+  // hoy, y afirmar más aquí es justo lo que un asistente citaría sin matiz.
   const operados = paises
     ? (paises.map((pais) => pais.codigo).filter(esRegionConocida) as CodigoRegion[])
-    : REGIONES_CONOCIDAS
+    : [REGION_DEFAULT]
 
   return { planes, operados, t }
 }

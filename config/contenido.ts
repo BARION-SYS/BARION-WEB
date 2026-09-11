@@ -163,11 +163,11 @@ export const CLAVES_FUNCION = [
 export type ClaveFuncion = (typeof CLAVES_FUNCION)[number]
 
 /** Los planes que este sitio sabe describir, por su `codigo` en la API. */
-export const CLAVES_PLAN = ["esencial", "pro"] as const
+export const CLAVES_PLAN = ["basico", "premium", "gold"] as const
 export type ClavePlan = (typeof CLAVES_PLAN)[number]
 
 /** El que la tabla resalta. **Uno solo**: dos destacados no destacan. */
-export const PLAN_DESTACADO: ClavePlan = "pro"
+export const PLAN_DESTACADO: ClavePlan = "premium"
 
 /** Señales del hero. Hechos comprobables hoy, nunca prueba social inventada. */
 export const CLAVES_SENAL = ["rapido", "mercados", "sinInstalar"] as const

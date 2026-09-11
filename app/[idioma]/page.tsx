@@ -63,7 +63,7 @@ export default async function PortadaPage({ params }: Props) {
 
   return (
     <>
-      {/* El producto y sus precios en los tres países, en la forma que lee una
+      {/* El producto y sus precios donde opera, en la forma que lee una
           máquina. Los precios son los MISMOS que pinta `PreciosList`. Las
           preguntas NO se declaran aquí: solo se enseñan cinco, y un `FAQPage`
           sobre una página que no las tiene todas promete lo que no da. */}

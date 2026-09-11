@@ -1,75 +1,39 @@
 [
   {
-    "codigo": "esencial",
-    "nombre": "Esencial",
+    "codigo": "basico",
+    "nombre": "Básico",
     "limites": {
       "sedes": 1,
-      "barberos": 5
+      "barberos": 3
     },
     "funciones": ["agenda", "portal", "recordatorios", "clientes", "comisiones"],
     "precios": [
       {
         "codigoPais": "CO",
-        "montoCentavos": 8900000,
+        "montoCentavos": 5990000,
         "moneda": "COP",
         "periodo": "mensual"
       },
       {
-        "codigoPais": "US",
-        "montoCentavos": 2900,
-        "moneda": "USD",
-        "periodo": "mensual"
-      },
-      {
-        "codigoPais": "ES",
-        "montoCentavos": 2500,
-        "moneda": "EUR",
-        "periodo": "mensual"
-      },
-      {
         "codigoPais": "CO",
-        "montoCentavos": 48060000,
+        "montoCentavos": 32346000,
         "moneda": "COP",
         "periodo": "semestral"
       },
       {
         "codigoPais": "CO",
-        "montoCentavos": 85440000,
+        "montoCentavos": 57504000,
         "moneda": "COP",
-        "periodo": "anual"
-      },
-      {
-        "codigoPais": "US",
-        "montoCentavos": 15660,
-        "moneda": "USD",
-        "periodo": "semestral"
-      },
-      {
-        "codigoPais": "US",
-        "montoCentavos": 27840,
-        "moneda": "USD",
-        "periodo": "anual"
-      },
-      {
-        "codigoPais": "ES",
-        "montoCentavos": 13500,
-        "moneda": "EUR",
-        "periodo": "semestral"
-      },
-      {
-        "codigoPais": "ES",
-        "montoCentavos": 24000,
-        "moneda": "EUR",
         "periodo": "anual"
       }
     ]
   },
   {
-    "codigo": "pro",
-    "nombre": "Pro",
+    "codigo": "premium",
+    "nombre": "Premium",
     "limites": {
-      "sedes": 5,
-      "barberos": 25
+      "sedes": 3,
+      "barberos": 10
     },
     "funciones": [
       "agenda",
@@ -77,65 +41,68 @@
       "recordatorios",
       "clientes",
       "comisiones",
-      "campanas",
+      "reportes",
       "fidelidad",
       "listaEspera",
-      "reportes",
       "multisede"
     ],
     "precios": [
       {
         "codigoPais": "CO",
-        "montoCentavos": 19900000,
+        "montoCentavos": 11990000,
         "moneda": "COP",
         "periodo": "mensual"
       },
       {
-        "codigoPais": "US",
-        "montoCentavos": 6900,
-        "moneda": "USD",
-        "periodo": "mensual"
-      },
-      {
-        "codigoPais": "ES",
-        "montoCentavos": 5900,
-        "moneda": "EUR",
-        "periodo": "mensual"
-      },
-      {
         "codigoPais": "CO",
-        "montoCentavos": 107460000,
+        "montoCentavos": 64746000,
         "moneda": "COP",
         "periodo": "semestral"
       },
       {
         "codigoPais": "CO",
-        "montoCentavos": 191040000,
+        "montoCentavos": 115104000,
         "moneda": "COP",
         "periodo": "anual"
+      }
+    ]
+  },
+  {
+    "codigo": "gold",
+    "nombre": "Gold",
+    "limites": {
+      "sedes": null,
+      "barberos": null
+    },
+    "funciones": [
+      "agenda",
+      "portal",
+      "recordatorios",
+      "clientes",
+      "comisiones",
+      "reportes",
+      "fidelidad",
+      "listaEspera",
+      "multisede",
+      "campanas"
+    ],
+    "precios": [
+      {
+        "codigoPais": "CO",
+        "montoCentavos": 19990000,
+        "moneda": "COP",
+        "periodo": "mensual"
       },
       {
-        "codigoPais": "US",
-        "montoCentavos": 37260,
-        "moneda": "USD",
+        "codigoPais": "CO",
+        "montoCentavos": 107946000,
+        "moneda": "COP",
         "periodo": "semestral"
       },
       {
-        "codigoPais": "US",
-        "montoCentavos": 66240,
-        "moneda": "USD",
-        "periodo": "anual"
-      },
-      {
-        "codigoPais": "ES",
-        "montoCentavos": 31860,
-        "moneda": "EUR",
-        "periodo": "semestral"
-      },
-      {
-        "codigoPais": "ES",
-        "montoCentavos": 56640,
-        "moneda": "EUR",
+        "codigoPais": "CO",
+        "montoCentavos": 191904000,
+        "moneda": "COP",
         "periodo": "anual"
       }
     ]

@@ -4,7 +4,7 @@
     "plantillaTitulo": "%s · Barion",
     "descripcion": "Barbershop management software: online booking, client records, per-barber commissions and payroll. 7-day trial, no card required.",
     "descripcionCorta": "Your barbershop's calendar, clients, team and payroll in one place. Your clients book themselves from their phone.",
-    "resumenIA": "Barion is a multi-tenant management SaaS for barbershops —appointments, calendar, clients, team, commissions and payroll— with a public booking page where each shop's clients book on their own. Available in Colombia, the United States and Spain.",
+    "resumenIA": "Barion is a multi-tenant management SaaS for barbershops —appointments, calendar, clients, team, commissions and payroll— with a public booking page where each shop's clients book on their own. Available in Colombia.",
     "palabrasClave": [
       "barbershop software",
       "barber shop management software",
@@ -17,7 +17,7 @@
       "barbershop payroll software",
       "salon software for barbers",
       "online booking for barbershops",
-      "barbershop software Spain"
+      "barbershop software Colombia"
     ],
     "altImagenSocial": "Barion — barbershop management dashboard showing the day's schedule"
   },
@@ -36,7 +36,7 @@
     },
     "precios": {
       "titulo": "Barbershop software pricing and free trial",
-      "descripcion": "One price per shop, not per feature. Local pricing for Colombia, the United States and Spain. 7-day trial, no card, no lock-in."
+      "descripcion": "One price per shop, not per feature. Priced in Colombian pesos. 7-day trial, no card, no lock-in."
     },
     "preguntas": {
       "titulo": "Barbershop software: frequently asked questions",
@@ -102,7 +102,7 @@
     "prueba": "7-day trial · No card",
     "senales": {
       "rapido": "Set up in an afternoon",
-      "mercados": "Colombia · U.S. · Spain",
+      "mercados": "Built for Colombia",
       "sinInstalar": "Nothing to install"
     },
     "desliza": "Scroll"
@@ -204,7 +204,7 @@
       }
     },
     "consultar": "Contact us",
-    "masElegido": "Most popular",
+    "recomendado": "Recommended",
     "incluyen": "Every plan includes",
     "garantias": {
       "escaparate": "Public booking page",
@@ -214,11 +214,14 @@
     },
     "prueba": "7-day trial. No card. You pick a plan at the end.",
     "planes": {
-      "esencial": {
+      "basico": {
         "descripcion": "For the single-location shop ready to drop the paper book."
       },
-      "pro": {
-        "descripcion": "For the shop with a team, several locations and clients who return."
+      "premium": {
+        "descripcion": "For the shop with a team that wants to keep its clients and open a second location."
+      },
+      "gold": {
+        "descripcion": "For the chain: unlimited locations and barbers, and campaigns to your whole client base."
       }
     },
     "funciones": {
@@ -302,7 +305,7 @@
       },
       "moneda": {
         "pregunta": "What currency do I pay in?",
-        "respuesta": "Your country's. Barion operates in Colombia (COP), the United States (USD) and Spain (EUR), and each country's price is its own price, not today's exchange rate. The billing country is fixed when you create your shop; the selector on this page only changes the prices you're looking at."
+        "respuesta": "In Colombian pesos (COP). Barion currently operates only in Colombia, and each plan's price is a fixed price in pesos, not today's exchange rate. Prices include taxes."
       },
       "permanencia": {
         "pregunta": "Is there a minimum term?",
@@ -351,7 +354,7 @@
     "comoEmpieza": "How it starts"
   },
   "pie": {
-    "descripcion": "Management for modern barbershops. Colombia, United States and Spain.",
+    "descripcion": "Management for modern barbershops in Colombia.",
     "producto": "Product",
     "empezar": "Get started",
     "legal": "Legal",

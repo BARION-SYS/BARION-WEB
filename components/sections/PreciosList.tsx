@@ -56,10 +56,12 @@ export function PreciosList({
         entrada={t("entrada")}
         nivel={nivel}
         enlace={enlace}
-        // El selector solo en la página de precios: en la portada competiría
-        // con el CTA por la misma esquina, y quien está mirando por encima
-        // todavía no está eligiendo país.
-        acompanante={<RegionSelect region={region} operados={operados} />}
+        // Con un solo país operado no hay nada que elegir: un desplegable de
+        // una opción es un control que no hace nada. Vuelve solo el día que la
+        // api publique un segundo país.
+        acompanante={
+          operados.length > 1 ? <RegionSelect region={region} operados={operados} /> : null
+        }
       />
 
       <PreciosGrid planes={planes} region={region} />

@@ -4,7 +4,7 @@
     "plantillaTitulo": "%s · Barion",
     "descripcion": "Software de gestión para barberías: agenda con reservas en línea, ficha de clientes, comisiones por barbero y nómina. 7 días de prueba, sin tarjeta.",
     "descripcionCorta": "Agenda, clientes, equipo y nómina de tu barbería en un solo sitio. Tus clientes reservan solos desde el móvil.",
-    "resumenIA": "Barion es un SaaS multi-tenant de gestión para barberías —citas, agenda, clientes, equipo, comisiones y nómina— con un escaparate público donde los clientes de cada barbería reservan solos. Opera en Colombia, Estados Unidos y España.",
+    "resumenIA": "Barion es un SaaS multi-tenant de gestión para barberías —citas, agenda, clientes, equipo, comisiones y nómina— con un escaparate público donde los clientes de cada barbería reservan solos. Opera en Colombia.",
     "palabrasClave": [
       "software para barberías",
       "programa para barberías",
@@ -16,7 +16,6 @@
       "comisiones de barberos",
       "nómina de barbería",
       "software barbería Colombia",
-      "software barbería España",
       "barbershop software"
     ],
     "altImagenSocial": "Barion — panel de gestión para barberías con la agenda del día"
@@ -36,7 +35,7 @@
     },
     "precios": {
       "titulo": "Precios del software para barberías y prueba gratis",
-      "descripcion": "Un precio por barbería, no por cada cosa que uses. Precio propio para Colombia, Estados Unidos y España. 7 días de prueba, sin tarjeta y sin permanencia."
+      "descripcion": "Un precio por barbería, no por cada cosa que uses. Precio en pesos colombianos. 7 días de prueba, sin tarjeta y sin permanencia."
     },
     "preguntas": {
       "titulo": "Preguntas frecuentes del software para barberías",
@@ -102,7 +101,7 @@
     "prueba": "7 días de prueba · Sin tarjeta",
     "senales": {
       "rapido": "Listo en una tarde",
-      "mercados": "Colombia · EE. UU. · España",
+      "mercados": "Hecho para Colombia",
       "sinInstalar": "Sin instalar nada"
     },
     "desliza": "Desliza"
@@ -204,7 +203,7 @@
       }
     },
     "consultar": "Consultar",
-    "masElegido": "El más elegido",
+    "recomendado": "Recomendado",
     "incluyen": "Todos los planes incluyen",
     "garantias": {
       "escaparate": "Escaparate público y reservas",
@@ -214,11 +213,14 @@
     },
     "prueba": "7 días de prueba. Sin tarjeta. Eliges plan al final.",
     "planes": {
-      "esencial": {
+      "basico": {
         "descripcion": "Para la barbería de un local que quiere dejar el cuaderno."
       },
-      "pro": {
-        "descripcion": "Para la barbería con equipo, varias sedes y clientes que vuelven."
+      "premium": {
+        "descripcion": "Para la barbería con equipo que quiere retener a sus clientes y crecer a otra sede."
+      },
+      "gold": {
+        "descripcion": "Para la cadena: sedes y barberos sin tope, y campañas a toda tu clientela."
       }
     },
     "funciones": {
@@ -302,7 +304,7 @@
       },
       "moneda": {
         "pregunta": "¿En qué moneda pago?",
-        "respuesta": "En la de tu país. Barion opera en Colombia (COP), Estados Unidos (USD) y España (EUR), y el precio de cada país es un precio propio, no la conversión del cambio del día. El país de facturación se fija cuando creas la barbería; el selector de esta página solo cambia los precios que estás mirando."
+        "respuesta": "En pesos colombianos (COP). Hoy Barion opera solo en Colombia, y el precio de cada plan es un precio fijo en pesos, no la conversión del cambio del día. Los precios incluyen impuestos."
       },
       "permanencia": {
         "pregunta": "¿Hay permanencia?",
@@ -351,7 +353,7 @@
     "comoEmpieza": "Cómo empieza"
   },
   "pie": {
-    "descripcion": "Gestión para barberías modernas. Colombia, Estados Unidos y España.",
+    "descripcion": "Gestión para barberías modernas en Colombia.",
     "producto": "Producto",
     "empezar": "Empezar",
     "legal": "Legal",

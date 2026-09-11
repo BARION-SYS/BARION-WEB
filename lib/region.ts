@@ -1,10 +1,4 @@
-import {
-  REGIONES_CONOCIDAS,
-  REGION_DEFAULT,
-  esRegionConocida,
-  regiones,
-  type CodigoRegion,
-} from "@/config/regiones"
+import { REGION_DEFAULT, esRegionConocida, regiones, type CodigoRegion } from "@/config/regiones"
 import type { PaisOperado } from "@/services/paises"
 
 /** Nombre de la cookie que recuerda el país elegido a mano. */
@@ -60,11 +54,12 @@ export function regionDeLaPeticion(
 ): { region: CodigoRegion; operados: CodigoRegion[] } {
   // Dónde opera Barion lo decide la API, no una constante de este repositorio:
   // es la MISMA lista que consume el formulario de alta de la aplicación, y por
-  // eso los dos no pueden discrepar. Sin respuesta (`null`) no se filtra — se
-  // prefiere enseñar de más a esconder la tabla de precios entera.
+  // eso los dos no pueden discrepar. Sin respuesta (`null`) se asume el país por
+  // defecto, que es el único donde se opera hoy: ofrecer los demás enseñaba
+  // precios que el respaldo no tiene y que nadie puede contratar.
   const operados = paises
     ? (paises.map((pais) => pais.codigo).filter(esRegionConocida) as CodigoRegion[])
-    : REGIONES_CONOCIDAS
+    : [REGION_DEFAULT]
 
   const deducida = regionDesdeCabeceras(
     cookiesPeticion.get(COOKIE_REGION)?.value,

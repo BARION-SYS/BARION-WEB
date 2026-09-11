@@ -42,11 +42,11 @@ const centavos = z
  * El precio TAL COMO lo declara la API: `codigoPais`, `moneda` y `periodo` son
  * cadenas libres allá, no enumerados.
  *
- * Y por eso aquí tampoco son un `z.enum`. Barion factura hoy en tres países,
+ * Y por eso aquí tampoco son un `z.enum`. Barion factura hoy solo en Colombia,
  * pero `precios_plan.codigo_pais` es un `char(2)` sin lista cerrada: el día que
  * alguien dé de alta México, un enum haría reventar la validación **de toda la
- * respuesta** y la página entera caería al respaldo —precios congelados de los
- * tres países— por un cuarto precio que este sitio ni siquiera enseña.
+ * respuesta** y la página entera caería al respaldo —precios congelados— por un
+ * precio que este sitio ni siquiera enseña.
  *
  * Lo que se comprueba aquí es la FORMA (que el importe sea dígitos, que los
  * campos existan). Que el valor sea de una región conocida se decide después,
