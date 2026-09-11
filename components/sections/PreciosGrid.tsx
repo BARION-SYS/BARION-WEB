@@ -6,6 +6,7 @@ import { RevelarEnScroll } from "@/components/common/RevelarEnScroll"
 import { PlanCard } from "@/components/sections/PlanCard"
 import { ordenPeriodos } from "@/config/periodos"
 import type { CodigoRegion } from "@/config/regiones"
+import { CASCADA_REVELAR } from "@/lib/movimiento"
 import { cn } from "@/lib/utils"
 import type { PeriodoPlan, PlanPublico } from "@/types/landing"
 
@@ -94,7 +95,7 @@ export function PreciosGrid({ planes, region }: PreciosGridProps) {
         )}
       >
         {planes.map((plan, indice) => (
-          <RevelarEnScroll key={plan.codigo} retardo={indice * 0.08} className="h-full">
+          <RevelarEnScroll key={plan.codigo} retardo={indice * CASCADA_REVELAR} className="h-full">
             <PlanCard
               plan={plan}
               region={region}

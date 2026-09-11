@@ -5,6 +5,7 @@ import { EncabezadoSeccion } from "@/components/sections/EncabezadoSeccion"
 import { CLAVES_GRUPO_PREGUNTAS, preguntasPorGrupo, type ClavePregunta } from "@/config/contenido"
 import { Seccion } from "@/components/sections/Seccion"
 import { CORREO_CONTACTO } from "@/config/rutas"
+import { CASCADA_REVELAR } from "@/lib/movimiento"
 
 interface PreguntasFrecuentesProps {
   nivel?: "h1" | "h2"
@@ -101,7 +102,7 @@ export function PreguntasFrecuentes({
 
         <div className="flex flex-col gap-10 lg:col-span-8">
           {grupos.map((grupo, indice) => (
-            <RevelarEnScroll key={grupo.clave} retardo={indice * 0.06}>
+            <RevelarEnScroll key={grupo.clave} retardo={indice * CASCADA_REVELAR}>
               {grupo.titulo && (
                 <NivelGrupo className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
                   {grupo.titulo}

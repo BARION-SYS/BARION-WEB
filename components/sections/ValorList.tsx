@@ -6,6 +6,12 @@ import { Check } from "lucide-react"
 import { EncabezadoSeccion } from "@/components/sections/EncabezadoSeccion"
 import { Seccion } from "@/components/sections/Seccion"
 import { CLAVES_BLOQUE, CLAVES_CAPACIDAD, iconosBloque, iconosCapacidad } from "@/config/contenido"
+import {
+  CASCADA_REVELAR,
+  RECORRIDO_REVELAR,
+  TRANSICION_REVELAR,
+  VISTA_REVELAR,
+} from "@/lib/movimiento"
 import { TARJETA, TARJETA_AIRE, TARJETA_VIVA } from "@/lib/superficies"
 import { cn } from "@/lib/utils"
 
@@ -48,11 +54,13 @@ export function ValorList({
         enlace={enlace}
       />
 
+      {/* La cascada la lleva la variante del padre: declarada en `transition`
+          del componente, Motion la descartaba y las tres entraban a la vez. */}
       <motion.ul
         initial="oculto"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ staggerChildren: 0.06 }}
+        viewport={VISTA_REVELAR}
+        variants={{ oculto: {}, visible: { transition: { staggerChildren: CASCADA_REVELAR } } }}
         className="mt-10 grid grid-cols-1 gap-4 sm:mt-14 sm:gap-6 md:grid-cols-3"
       >
         {CLAVES_BLOQUE.map((clave, indice) => {
@@ -64,8 +72,10 @@ export function ValorList({
           return (
             <motion.li
               key={clave}
-              variants={{ oculto: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ type: "spring", stiffness: 140, damping: 22 }}
+              variants={{
+                oculto: { opacity: 0, y: RECORRIDO_REVELAR },
+                visible: { opacity: 1, y: 0, transition: TRANSICION_REVELAR },
+              }}
               className={cn(
                 "group relative flex flex-col overflow-hidden",
                 TARJETA,
@@ -116,10 +126,10 @@ export function ValorList({
       {/* Lo que no cabe en tres bloques pero decide una compra */}
       {!resumen && (
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: RECORRIDO_REVELAR }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ type: "spring", stiffness: 140, damping: 22 }}
+          viewport={VISTA_REVELAR}
+          transition={TRANSICION_REVELAR}
           className="mt-10 flex flex-wrap items-center gap-2.5 border-t border-border pt-8 sm:mt-12 sm:gap-3"
         >
           <span className="text-sm font-medium text-foreground">{t("ademas")}</span>

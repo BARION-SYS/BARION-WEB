@@ -103,12 +103,12 @@ export function VistaPrevia({
             : "mt-10 grid grid-cols-1 items-start gap-8 sm:mt-12 lg:grid-cols-5 lg:gap-10"
         }
       >
-        <RevelarEnScroll recorrido="izquierda" className={resumen ? undefined : "lg:col-span-3"}>
+        <RevelarEnScroll className={resumen ? undefined : "lg:col-span-3"}>
           <MarcoPanel />
         </RevelarEnScroll>
 
         {!resumen && (
-          <RevelarEnScroll recorrido="derecha" retardo={0.12} className="lg:col-span-2">
+          <RevelarEnScroll retardo={0.12} className="lg:col-span-2">
             <figure>
               <EscaparateDemo region={region} />
               <figcaption className="mt-3 text-sm text-muted-foreground">
