@@ -108,7 +108,13 @@ export function Nav() {
             // la pantalla y no en el del hueco que quede. Con `mx-auto` en una
             // fila flexible se centraba respecto al espacio libre — y con el
             // logotipo a un lado y tres botones al otro, eso NO es el centro.
-            "grid h-20 grid-cols-[1fr_auto_1fr] items-center gap-4 lg:h-24"
+            //
+            // La rejilla es SOLO de `lg`, que es donde existe la pastilla. Por
+            // debajo la columna del centro está vacía pero sus dos huecos no:
+            // eran 32 px robados a una fila que en un teléfono ya no tiene
+            // sitio. Ahí basta una fila con los extremos separados.
+            "flex h-16 items-center justify-between gap-3 sm:h-20",
+            "lg:grid lg:h-24 lg:grid-cols-[1fr_auto_1fr] lg:gap-4"
           )}
         >
           <Link
@@ -123,13 +129,19 @@ export function Nav() {
              * sostienen esa distancia. Sube por tramos hasta `h-11`, que es lo que
              * lo equilibra con los botones de la derecha (`h-11`) sin engordar la
              * barra — la altura de la cabecera ya crece a `lg` para acompañarlo.
+             *
+             * En el teléfono es al revés: el logotipo mide cuatro veces su alto
+             * de ancho, así que cada paso de altura son ~16 px que se le quitan
+             * a la llamada de al lado. Por debajo de 360 px baja uno más.
              */}
             <LogoBarion
               variante="completo"
               priority
               className={cn(
                 "transition-all duration-300",
-                sobreElHero ? "h-9 sm:h-10 lg:h-11" : "h-8 sm:h-9 lg:h-10"
+                sobreElHero
+                  ? "h-6 min-[360px]:h-7.5 sm:h-10 lg:h-11"
+                  : "h-6 min-[360px]:h-7 sm:h-9 lg:h-10"
               )}
             />
           </Link>
@@ -224,19 +236,28 @@ export function Nav() {
               nativeButton={false}
               size="lg"
               className={cn(
-                "group/cta h-11 rounded-xl px-5 font-semibold",
+                // En el teléfono, a la medida de la barra: `h-9` y sin flecha. La
+                // de escritorio (`h-11`, `px-5`) medía casi 200 px y no cabía
+                // junto al logotipo y al menú — la fila entera se apretaba y los
+                // tres parecían desproporcionados.
+                "group/cta h-9 gap-1.5 rounded-lg px-3.5 text-[0.8125rem] font-semibold",
+                "sm:h-11 sm:gap-2 sm:rounded-xl sm:px-5 sm:text-sm",
                 // Sombra teñida de marca en vez de una gris: es el único elemento
                 // de la barra que puede permitírsela, y es lo que lo separa del
                 // resto sin subirle el tamaño.
-                "shadow-lg shadow-primary/20 transition-[transform,box-shadow] duration-200",
+                "shadow-md shadow-primary/20 transition-[transform,box-shadow] duration-200 sm:shadow-lg",
                 "hover:shadow-xl hover:shadow-primary/30 motion-safe:hover:-translate-y-0.5",
                 sobreElHero &&
                   "bg-hero-primary text-hero-primary-foreground shadow-hero-primary/25 hover:bg-hero-primary/85 hover:shadow-hero-primary/40 focus-visible:ring-hero-primary/40"
               )}
             >
-              {t("empezar")}
+              {/* Dos etiquetas y no una recortada con CSS: el texto corto es una
+                frase propia, y el `hidden` lo saca también del árbol accesible —
+                un lector de pantalla lee solo la que se ve. */}
+              <span className="sm:hidden">{t("empezarCorto")}</span>
+              <span className="hidden sm:inline">{t("empezar")}</span>
               <ArrowRight
-                className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+                className="hidden transition-transform duration-200 group-hover/cta:translate-x-0.5 sm:block"
                 aria-hidden
               />
             </Button>
@@ -245,7 +266,7 @@ export function Nav() {
               variant="ghost"
               size="icon"
               className={cn(
-                "size-11 lg:hidden",
+                "size-10 lg:hidden [&_svg:not([class*='size-'])]:size-5",
                 sobreElHero && "text-hero-foreground hover:bg-hero-superficie/60"
               )}
               aria-label={menuAbierto ? t("cerrarMenu") : t("abrirMenu")}
@@ -288,7 +309,11 @@ export function Nav() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8, transition: { duration: 0.15 } }}
               transition={{ type: "spring", stiffness: 260, damping: 28 }}
-              className="border-t border-border bg-background px-6 pt-2 pb-6 lg:hidden"
+              // Mismo margen lateral que la barra, para que la lista quede
+              // alineada con el logotipo. Y con tope de alto: en un teléfono
+              // apaisado la lista entera no cabe, y sin scroll propio los
+              // últimos enlaces quedaban por debajo del borde de la pantalla.
+              className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-border bg-background px-5 pt-2 pb-6 sm:max-h-[calc(100dvh-5rem)] sm:px-8 lg:hidden"
               aria-label={t("aria")}
             >
               <motion.ul
@@ -310,7 +335,7 @@ export function Nav() {
                     onClick={() => setMenuAbierto(false)}
                     aria-current={activa(rutas.inicio) ? "page" : undefined}
                     className={cn(
-                      "flex min-h-12 items-center justify-between border-b border-border pb-2 text-base font-medium transition-colors",
+                      "flex min-h-11 items-center justify-between border-b border-border pb-2 text-[0.9375rem] font-medium transition-colors",
                       activa(rutas.inicio) ? "text-primary" : "text-foreground"
                     )}
                   >
@@ -332,7 +357,7 @@ export function Nav() {
                       onClick={() => setMenuAbierto(false)}
                       aria-current={activa(rutas[clave]) ? "page" : undefined}
                       className={cn(
-                        "flex min-h-12 items-center justify-between text-base font-medium transition-colors",
+                        "flex min-h-11 items-center justify-between text-[0.9375rem] font-medium transition-colors",
                         activa(rutas[clave]) ? "text-primary" : "text-foreground"
                       )}
                     >
@@ -363,7 +388,9 @@ export function Nav() {
                 ))}
               </div>
 
-              <div className="mt-2 flex items-center gap-2 border-t border-border pt-4">
+              {/* Los dos controles son `size-9` en la barra de escritorio; aquí se
+                pulsan con el pulgar y van a 40 px, el mínimo cómodo. */}
+              <div className="mt-2 flex items-center gap-2 border-t border-border pt-4 [&_button]:size-10">
                 <SelectorIdioma />
                 <ThemeToggle />
                 <a

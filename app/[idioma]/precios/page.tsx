@@ -52,7 +52,7 @@ export default async function PreciosPage({ params }: Props) {
       <DatosEstructurados datos={await grafoPagina(idioma, "precios")} />
       <DatosEstructurados datos={await grafoAplicacion(idioma, planes, operados)} />
 
-      <div className="pt-20 lg:pt-24">
+      <div className="pt-16 sm:pt-20 lg:pt-24">
         <PreciosList planes={planes} region={region} operados={operados} nivel="h1" />
       </div>
 

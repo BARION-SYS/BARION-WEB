@@ -45,7 +45,7 @@ export default async function VistaPreviaPage({ params }: Props) {
   return (
     <>
       <DatosEstructurados datos={await grafoPagina(idioma, "vistaPrevia")} />
-      <div className="pt-20 lg:pt-24">
+      <div className="pt-16 sm:pt-20 lg:pt-24">
         <VistaPrevia region={region} nivel="h1" tono="base" />
       </div>
       <Cierre tono="base" />

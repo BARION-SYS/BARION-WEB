@@ -93,7 +93,7 @@ export function DocumentoLegal({ documento, clave, avisoIdioma }: DocumentoLegal
   const t = useTranslations("legal")
 
   return (
-    <article className={cn(CONTENEDOR, "pt-28 pb-24 lg:pt-32")}>
+    <article className={cn(CONTENEDOR, "pt-24 pb-20 sm:pt-28 sm:pb-24 lg:pt-32")}>
       {/* Lo primero de la página: dónde se está y por dónde se sale. Antes se
           aterrizaba aquí desde el pie y la cabecera no marcaba nada como activo
           —ninguna de sus secciones es «legal»—, así que el documento parecía no
@@ -164,7 +164,9 @@ export function DocumentoLegal({ documento, clave, avisoIdioma }: DocumentoLegal
 
         <div className="flex flex-col gap-12 lg:col-span-8">
           {documento.secciones.map((seccion, indice) => (
-            <section key={seccion.id} id={seccion.id} className="scroll-mt-28">
+            <section key={seccion.id} id={seccion.id} className="scroll-mt-24 sm:scroll-mt-28">
+              {/* La cabecera mide 64 px en el teléfono y 80 px por encima: el
+                  ancla deja el título justo debajo de ella en los dos casos. */}
               <h2 className="text-xl font-semibold tracking-tight text-balance sm:text-2xl">
                 <span className="mr-2 text-primary tabular-nums">{indice + 1}.</span>
                 {seccion.titulo}

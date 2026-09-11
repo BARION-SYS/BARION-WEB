@@ -41,7 +41,7 @@ export default async function ProductoPage({ params }: Props) {
       <DatosEstructurados datos={await grafoPagina(idioma, "producto")} />
       {/* `pt` grande: la cabecera es fija y aquí no hay hero que reserve su
           altura, así que sin esto el titular nacería debajo de la barra. */}
-      <div className="pt-20 lg:pt-24">
+      <div className="pt-16 sm:pt-20 lg:pt-24">
         <ValorList nivel="h1" />
       </div>
       <Cierre tono="base" />

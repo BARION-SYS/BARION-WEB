@@ -40,7 +40,7 @@ export default async function PreguntasPage({ params }: Props) {
     <>
       <DatosEstructurados datos={await grafoPagina(idioma, "preguntas")} />
       <DatosEstructurados datos={await grafoPreguntas(idioma)} />
-      <div className="pt-20 lg:pt-24">
+      <div className="pt-16 sm:pt-20 lg:pt-24">
         <PreguntasFrecuentes nivel="h1" tono="base" />
       </div>
       <Cierre tono="base" />
