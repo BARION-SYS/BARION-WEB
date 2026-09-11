@@ -134,7 +134,7 @@ export const privacidad: ConstructorDocumento = (identidad) => ({
               "Autorización del titular al registrarse y ejecución del contrato",
             ],
             [
-              "Verificar que detrás de un alta hay alguien real, antes de publicar su escaparate",
+              "Verificar que detrás de un alta hay alguien real, antes de publicar su página de reservas",
               "Ejecución del contrato e interés legítimo en evitar altas fraudulentas",
               "Autorización del titular",
             ],

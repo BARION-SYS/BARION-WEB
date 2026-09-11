@@ -41,7 +41,7 @@ export const cookies: ConstructorDocumento = (identidad) => ({
         {
           tipo: "parrafo",
           texto:
-            "Este sitio —la página que explica el producto— y la aplicación —el panel, el escaparate de cada barbería y la pantalla de pago— son dos despliegues con dominios distintos, y sus cookies no se comparten. Se declaran las dos aquí porque quien usa Barion pasa por ambos.",
+            "Este sitio —la página que explica el producto— y la aplicación —el panel, la página de reservas de cada barbería y la pantalla de pago— son dos despliegues con dominios distintos, y sus cookies no se comparten. Se declaran las dos aquí porque quien usa Barion pasa por ambos.",
         },
       ],
     },
@@ -82,7 +82,7 @@ export const cookies: ConstructorDocumento = (identidad) => ({
         {
           tipo: "parrafo",
           texto:
-            "La aplicación es lo que hay detrás de «entrar» y «crear mi barbería», más el escaparate público de cada barbería y la pantalla de pago. Estas son sus cookies:",
+            "La aplicación es lo que hay detrás de «entrar» y «crear mi barbería», más la página de reservas de cada barbería y la pantalla de pago. Estas son sus cookies:",
         },
         {
           tipo: "tabla",
@@ -91,7 +91,7 @@ export const cookies: ConstructorDocumento = (identidad) => ({
             [
               "barion_sesion",
               "Mantener la sesión abierta. Es la que identifica a quien ya entró; sin ella habría que escribir la contraseña en cada pantalla",
-              "En el panel se renueva mientras se trabaja, caduca por inactividad y tiene un tope por jornada. La sesión del cliente final en el escaparate dura 30 días, porque entra pocas veces",
+              "En el panel se renueva mientras se trabaja, caduca por inactividad y tiene un tope por jornada. La sesión del cliente final en la página de reservas dura 30 días, porque entra pocas veces",
               "Estrictamente necesaria, propia",
             ],
             [
@@ -108,7 +108,7 @@ export const cookies: ConstructorDocumento = (identidad) => ({
             ],
             [
               "barion_preregistro_cliente",
-              "Lo mismo, para el cliente final que entra al escaparate de una barbería con Google",
+              "Lo mismo, para el cliente final que entra a la página de reservas de una barbería con Google",
               "20 minutos",
               "Estrictamente necesaria, propia",
             ],
@@ -134,7 +134,7 @@ export const cookies: ConstructorDocumento = (identidad) => ({
         {
           tipo: "parrafo",
           texto:
-            "En producción, la aplicación carga la analítica de Vercel en el panel y en el escaparate público de cada barbería. Sirve para saber qué se usa y qué no, de forma agregada.",
+            "En producción, la aplicación carga la analítica de Vercel en el panel y en la página de reservas de cada barbería. Sirve para saber qué se usa y qué no, de forma agregada.",
         },
         {
           tipo: "parrafo",

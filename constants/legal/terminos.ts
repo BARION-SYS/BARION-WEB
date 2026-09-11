@@ -60,7 +60,7 @@ export const terminos: ConstructorDocumento = (identidad) => ({
           tipo: "lista",
           items: [
             "La agenda de citas y las reservas del día a día.",
-            "Un escaparate público en una dirección propia, donde los clientes de la barbería reservan solos.",
+            "Una página de reservas en una dirección propia, donde los clientes de la barbería reservan solos.",
             "La ficha de cada cliente y su historial.",
             "El equipo, los servicios, las comisiones y la liquidación de la nómina.",
             "El correo transaccional que el servicio envía en nombre de la barbería: verificación, invitaciones al equipo, códigos de acceso y recordatorios de cita.",
@@ -108,7 +108,7 @@ export const terminos: ConstructorDocumento = (identidad) => ({
         {
           tipo: "parrafo",
           texto:
-            "El escaparate público de una barbería no se sirve hasta que se verifica el correo de quien la registró. Es lo que impide que un alta abierta llene internet de escaparates falsos.",
+            "La página de reservas de una barbería no se sirve hasta que se verifica el correo de quien la registró. Es lo que impide que un alta abierta llene internet de páginas de reservas falsas.",
         },
         {
           tipo: "lista",
@@ -116,7 +116,7 @@ export const terminos: ConstructorDocumento = (identidad) => ({
             "Las credenciales son personales: quien las comparte responde de lo que se haga con ellas.",
             "Quien administra decide qué permisos tiene cada persona de su equipo, y responde de esa decisión.",
             "Un acceso que se sospeche comprometido se comunica de inmediato al correo de contacto.",
-            "La sesión del panel se renueva mientras se trabaja y caduca por inactividad, con un tope por jornada. La sesión del cliente final en el escaparate dura más porque entra pocas veces.",
+            "La sesión del panel se renueva mientras se trabaja y caduca por inactividad, con un tope por jornada. La sesión del cliente final en la página de reservas dura más porque entra pocas veces.",
           ],
         },
       ],
@@ -345,7 +345,7 @@ export const terminos: ConstructorDocumento = (identidad) => ({
         {
           tipo: "parrafo",
           texto:
-            "Los datos, el logotipo, los colores y los textos que la barbería carga son de la barbería. Barion los usa exclusivamente para prestarle el servicio, incluido pintarlos en su escaparate público y en los correos que se envían en su nombre, que es para lo que se cargan.",
+            "Los datos, el logotipo, los colores y los textos que la barbería carga son de la barbería. Barion los usa exclusivamente para prestarle el servicio, incluido pintarlos en su página de reservas y en los correos que se envían en su nombre, que es para lo que se cargan.",
         },
       ],
     },

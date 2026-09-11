@@ -21,10 +21,10 @@ import { CORREO_CONTACTO } from "@/config/rutas"
  * Formato de fecha porque es lo que se lee bien en una tabla de auditoría dos
  * años después: `v3` no dice nada, `2026-08-13` dice exactamente qué texto era.
  */
-export const VERSION_LEGAL = "2026-08-13"
+export const VERSION_LEGAL = "2026-09-10"
 
 /** Desde cuándo rige esta versión. Se pinta en la cabecera de los tres documentos. */
-export const VIGENTE_DESDE = "13 de agosto de 2026"
+export const VIGENTE_DESDE = "10 de septiembre de 2026"
 
 /**
  * Quién presta el servicio.
