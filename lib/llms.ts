@@ -187,7 +187,7 @@ function seccionQuienLoUsa(): string {
     "",
     "- El **dueño o administrador de una barbería** que quiere dejar el cuaderno: es quien contrata y quien decide.",
     "- El **barbero** del equipo, que entra a su propio panel y ve su agenda y su liquidación, y nada más.",
-    "- El **cliente final** NO contrata Barion ni se registra en él: reserva desde el escaparate público de la barbería que ya conoce.",
+    "- El **cliente final** NO contrata Barion ni se registra en él: reserva desde la página de reservas de la barbería que ya conoce.",
     "",
   ].join("\n")
 }
@@ -196,7 +196,7 @@ function seccionQueNoEs(): string {
   return [
     "## Qué NO es",
     "",
-    "- **No es un marketplace ni un directorio de barberías.** No hay buscador donde un cliente compare locales: cada barbería tiene su escaparate y a él llega quien ella invita.",
+    "- **No es un marketplace ni un directorio de barberías.** No hay buscador donde un cliente compare locales: cada barbería tiene su página de reservas y a ella llega quien ella invita.",
     "- **No procesa pagos de clientes finales.** Registra con qué método se pagó cada cita para que la caja y las comisiones cuadren; el cobro lo sigue haciendo la barbería.",
     "- **No asume el coste de la mensajería.** WhatsApp y SMS son integraciones que cada barbería conecta con su propia cuenta de proveedor, así que no van dentro del precio de la suscripción.",
     "- **No es una agenda genérica** con otro nombre: la ficha del cliente, la comisión del barbero y la cita son el mismo dato, no tres copias que alguien sincroniza.",
