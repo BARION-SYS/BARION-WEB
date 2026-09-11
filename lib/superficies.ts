@@ -27,8 +27,12 @@ export const TARJETA = "rounded-2xl border border-border bg-card"
  * Antes iba de `p-5` a `p-7` según quién la escribiera. La diferencia es de ocho
  * píxeles y no se nota sola: se nota cuando dos tarjetas de secciones distintas
  * caen a la misma altura y una respira más que la otra.
+ *
+ * En el teléfono arranca en `p-5`: con el margen del contenedor sumado, `p-6`
+ * dejaba el texto de una tarjeta en menos de 280 px de ancho a 360 px de
+ * pantalla, y las listas de viñetas partían cada línea en dos.
  */
-export const TARJETA_AIRE = "p-6 sm:p-7"
+export const TARJETA_AIRE = "p-5 sm:p-7"
 
 /**
  * Cómo responde una tarjeta que se puede pulsar.
@@ -60,8 +64,12 @@ export const TARJETA_VIVA =
  * Estaba copiado en las seis secciones, y con él la decisión de cuánto aire hay
  * a los lados en cada tamaño. Un sitio donde una sección respira 24 px y la de
  * abajo 56 px se lee torcido sin que se pueda señalar dónde.
+ *
+ * 20 px en el teléfono y no 24: a 360 px de pantalla son 8 px más de ancho útil
+ * para todo lo que se lee, que es justo lo que le faltaba a la cabecera para que
+ * logotipo, llamada y menú cupieran en una fila sin apretarse.
  */
-export const CONTENEDOR = "mx-auto w-full max-w-[1500px] px-6 sm:px-8 lg:px-14"
+export const CONTENEDOR = "mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-14"
 
 /**
  * El numerito de un paso.

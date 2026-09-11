@@ -78,7 +78,7 @@ export function PreguntasFrecuentes({
 
   return (
     <Seccion tono={tono} separador={separador}>
-      <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
+      <div className="grid grid-cols-1 items-start gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16">
         {/* La columna que pregunta se queda fija mientras se leen las
             respuestas: en una lista larga, perder el título es perder el sitio */}
         <div className="lg:sticky lg:top-32 lg:col-span-4 lg:self-start">
@@ -117,8 +117,8 @@ export function PreguntasFrecuentes({
                       <details name={`faq-${grupo.clave}`} className="acordeon-suave group">
                         {/* `list-none` + el pseudoelemento de WebKit: el triángulo
                             del navegador compite con el signo de la derecha */}
-                        <summary className="flex cursor-pointer list-none items-start justify-between gap-4 px-5 py-5 transition-colors hover:bg-secondary/60 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none [&::-webkit-details-marker]:hidden">
-                          <NivelPregunta className="text-base font-medium text-balance">
+                        <summary className="flex cursor-pointer list-none items-start justify-between gap-3 px-4 py-4 transition-colors hover:bg-secondary/60 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:gap-4 sm:px-5 sm:py-5 [&::-webkit-details-marker]:hidden">
+                          <NivelPregunta className="text-[0.9375rem] font-medium text-balance sm:text-base">
                             {pregunta}
                           </NivelPregunta>
                           <ChevronDown
@@ -126,7 +126,7 @@ export function PreguntasFrecuentes({
                             aria-hidden
                           />
                         </summary>
-                        <p className="px-5 pb-5 text-sm leading-relaxed text-muted-foreground sm:pr-16">
+                        <p className="px-4 pb-4 text-sm leading-relaxed text-muted-foreground sm:px-5 sm:pr-16 sm:pb-5">
                           {respuesta}
                         </p>
                       </details>

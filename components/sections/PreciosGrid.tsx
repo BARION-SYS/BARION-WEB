@@ -54,11 +54,11 @@ export function PreciosGrid({ planes, region }: PreciosGridProps) {
 
   return (
     <>
-      <div className="mt-10 flex justify-center">
+      <div className="mt-8 flex justify-center sm:mt-10">
         <div
           role="radiogroup"
           aria-label={t("cadaCuanto")}
-          className="inline-flex rounded-full border border-border bg-card p-1"
+          className="inline-flex max-w-full rounded-full border border-border bg-card p-1"
         >
           {ordenPeriodos.map((opcion) => {
             const activo = opcion === periodo
@@ -69,8 +69,10 @@ export function PreciosGrid({ planes, region }: PreciosGridProps) {
                 role="radio"
                 aria-checked={activo}
                 onClick={() => setPeriodo(opcion)}
+                // En inglés «Every 6 months» es la etiqueta larga: con `px-4` las
+                // tres no cabían a 360 px y el grupo desbordaba la pantalla.
                 className={cn(
-                  "cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                  "min-h-10 cursor-pointer rounded-full px-3 py-2 text-[0.8125rem] font-medium whitespace-nowrap transition-colors sm:px-4 sm:text-sm",
                   activo
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
@@ -87,7 +89,7 @@ export function PreciosGrid({ planes, region }: PreciosGridProps) {
           columnas dejarían un hueco que se lee como un plan que falta */}
       <div
         className={cn(
-          "mt-10 grid grid-cols-1 gap-6",
+          "mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:gap-6",
           planes.length >= 3 ? "md:grid-cols-3" : "mx-auto max-w-4xl md:grid-cols-2"
         )}
       >

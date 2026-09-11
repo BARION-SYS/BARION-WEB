@@ -87,7 +87,7 @@ export function PlanCard({ plan, region, periodo, herencia }: PlanCardProps) {
       <h3 className="text-lg font-semibold tracking-tight">{plan.nombre}</h3>
       {descripcion && <p className="mt-1.5 text-sm text-muted-foreground">{descripcion}</p>}
 
-      <p className="mt-6 flex items-baseline gap-1.5">
+      <p className="mt-5 flex flex-wrap items-baseline gap-x-1.5 sm:mt-6">
         {/* Sin precio para este país NO se calcula uno: se dice. Un `usd × tasa`
             en el cliente es un precio inventado. */}
         {precio ? (
@@ -97,7 +97,7 @@ export function PlanCard({ plan, region, periodo, herencia }: PlanCardProps) {
                 cómo se acaba pintando un importe en dólares con el formato del
                 peso. El `locale` sí es el de quien mira — decide los puntos y los
                 decimales, no la escala. */}
-            <span className="text-4xl font-bold tracking-tight tabular-nums">
+            <span className="text-[2rem] font-bold tracking-tight tabular-nums sm:text-4xl">
               {formatMoney(precio.montoCentavos, precio.moneda, locale)}
             </span>
             <span className="text-sm text-muted-foreground">{t(`periodos.${periodo}.sufijo`)}</span>
@@ -150,7 +150,7 @@ export function PlanCard({ plan, region, periodo, herencia }: PlanCardProps) {
         nativeButton={false}
         variant={plan.destacado ? "default" : "outline"}
         size="lg"
-        className="group/cta mt-7 h-11 w-full font-semibold"
+        className="group/cta mt-6 h-11 w-full font-semibold sm:mt-7"
       >
         {t("empezarCon", { plan: plan.nombre })}
         <ArrowRight

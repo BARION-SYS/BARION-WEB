@@ -68,9 +68,9 @@ export function Footer() {
   ]
 
   return (
-    <footer className="border-t border-border bg-background py-14">
+    <footer className="border-t border-border bg-background py-12 sm:py-14">
       <div className={CONTENEDOR}>
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-5 sm:gap-10">
           <div className="col-span-2">
             <LogoBarion variante="completo" className="h-8 lg:h-9" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
@@ -107,7 +107,7 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 sm:mt-12 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">
             {t("derechos", { anio: String(new Date().getFullYear()) })}
           </p>

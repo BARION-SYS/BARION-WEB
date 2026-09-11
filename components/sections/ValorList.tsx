@@ -53,7 +53,7 @@ export function ValorList({
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         transition={{ staggerChildren: 0.06 }}
-        className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3"
+        className="mt-10 grid grid-cols-1 gap-4 sm:mt-14 sm:gap-6 md:grid-cols-3"
       >
         {CLAVES_BLOQUE.map((clave, indice) => {
           const Icono = iconosBloque[clave]
@@ -81,7 +81,7 @@ export function ValorList({
               />
 
               <div className="flex items-start justify-between">
-                <span className="flex size-12 items-center justify-center rounded-xl bg-accent text-accent-foreground transition-transform duration-300 motion-safe:group-hover:scale-110">
+                <span className="flex size-11 items-center justify-center rounded-xl bg-accent text-accent-foreground transition-transform duration-300 motion-safe:group-hover:scale-110 sm:size-12">
                   <Icono className="size-5" aria-hidden />
                 </span>
                 {/* Numeración editorial: da orden de lectura sin más palabras */}
@@ -90,7 +90,7 @@ export function ValorList({
                 </span>
               </div>
 
-              <h3 className="mt-6 text-xl font-semibold tracking-tight text-balance">
+              <h3 className="mt-5 text-lg font-semibold tracking-tight text-balance sm:mt-6 sm:text-xl">
                 {t(`bloques.${clave}.titulo`)}
               </h3>
               <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
@@ -100,7 +100,7 @@ export function ValorList({
               {/* También en la portada: es lo concreto, y lo concreto es lo
                   que convence. Esconderlo tras un clic mete un paso entre
                   alguien interesado y la compra. */}
-              <ul className="mt-6 space-y-2.5 border-t border-border pt-6">
+              <ul className="mt-5 space-y-2.5 border-t border-border pt-5 sm:mt-6 sm:pt-6">
                 {detalles.map((detalle) => (
                   <li key={detalle} className="flex gap-2.5 text-sm">
                     <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />
@@ -120,7 +120,7 @@ export function ValorList({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ type: "spring", stiffness: 140, damping: 22 }}
-          className="mt-12 flex flex-wrap items-center gap-3 border-t border-border pt-8"
+          className="mt-10 flex flex-wrap items-center gap-2.5 border-t border-border pt-8 sm:mt-12 sm:gap-3"
         >
           <span className="text-sm font-medium text-foreground">{t("ademas")}</span>
           {CLAVES_CAPACIDAD.map((clave) => {

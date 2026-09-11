@@ -48,7 +48,10 @@ export function Cierre({ tono = "alterno", separador = false }: CierreProps = {}
     <Seccion tono={tono} separador={separador}>
       <RevelarEnScroll
         recorrido="zoom"
-        className="relative isolate overflow-hidden rounded-3xl border border-border bg-card px-6 py-14 sm:px-10 lg:px-14 lg:py-20"
+        // El margen del contenedor y el de esta tarjeta se SUMAN: con `px-6`
+        // aquí dentro, a 360 px el texto del cierre se quedaba en 260 px de
+        // ancho. En el teléfono la tarjeta respira menos por dentro.
+        className="relative isolate overflow-hidden rounded-2xl border border-border bg-card px-5 py-10 sm:rounded-3xl sm:px-10 sm:py-14 lg:px-14 lg:py-20"
       >
         {/* Dos resplandores del oro de marca: dan cuerpo al cierre sin meter
             otra imagen ni otro color al sistema */}
@@ -61,22 +64,25 @@ export function Cierre({ tono = "alterno", separador = false }: CierreProps = {}
           aria-hidden
         />
 
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="grid grid-cols-1 items-start gap-10 sm:gap-12 lg:grid-cols-12 lg:gap-16">
           {/* ── El argumento y la acción ──────────────────────────────── */}
           <div className="lg:col-span-7">
-            <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+            <h2 className="max-w-2xl text-[1.75rem] leading-tight font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl">
               {t("titulo")}
             </h2>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-pretty text-muted-foreground sm:mt-5 sm:text-lg">
               {t("entrada")}
             </p>
 
-            <div className="mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            {/* En el teléfono el botón va a todo el ancho, como en el hero: un
+                botón a medio ancho alineado a la izquierda se lee como un
+                enlace más, y es la única acción que importa aquí. */}
+            <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4">
               <Button
                 render={<a href={rutasApp.registro} />}
                 nativeButton={false}
                 size="lg"
-                className="group/cta h-13 rounded-xl px-8 text-base font-semibold shadow-lg transition-transform motion-safe:hover:-translate-y-0.5"
+                className="group/cta h-12 rounded-xl px-6 text-[0.9375rem] font-semibold shadow-lg transition-transform motion-safe:hover:-translate-y-0.5 sm:h-13 sm:px-8 sm:text-base"
               >
                 {t("ctaPrimario")}
                 <ArrowRight
@@ -89,7 +95,7 @@ export function Cierre({ tono = "alterno", separador = false }: CierreProps = {}
                   del mismo rango. */}
               <Link
                 href={rutas.precios}
-                className="group inline-flex min-h-11 items-center gap-1.5 rounded-md text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                className="group inline-flex min-h-11 items-center justify-center gap-1.5 rounded-md text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none sm:justify-start"
               >
                 {t("ctaSecundario")}
                 <ArrowRight
@@ -99,11 +105,13 @@ export function Cierre({ tono = "alterno", separador = false }: CierreProps = {}
               </Link>
             </div>
 
-            <p className="mt-4 text-sm text-muted-foreground">{t("prueba")}</p>
+            <p className="mt-3 text-center text-sm text-muted-foreground sm:mt-4 sm:text-left">
+              {t("prueba")}
+            </p>
 
             {/* Lo que quita el miedo justo donde se decide. Estaba solo en la
                 página de precios, que es un clic más en el peor momento. */}
-            <ul className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 border-t border-border pt-6 sm:grid-cols-2">
+            <ul className="mt-7 grid grid-cols-1 gap-x-8 gap-y-2 border-t border-border pt-6 sm:mt-8 sm:grid-cols-2">
               {CLAVES_GARANTIA.map((clave) => (
                 <li key={clave} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                   <Check className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden />

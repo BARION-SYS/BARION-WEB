@@ -34,9 +34,14 @@ interface SeccionProps {
   className?: string
 }
 
+/**
+ * En el teléfono arranca un escalón por debajo: 96 px arriba y abajo de cada
+ * sección son casi media pantalla vacía por cada cambio de bloque, y la portada
+ * se leía como una serie de huecos con algo en medio.
+ */
 const AIRE = {
-  normal: "py-24 lg:py-28",
-  compacta: "py-12 lg:py-14",
+  normal: "py-16 sm:py-24 lg:py-28",
+  compacta: "py-10 sm:py-12 lg:py-14",
 } as const
 
 const TONO = {

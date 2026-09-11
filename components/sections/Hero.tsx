@@ -127,7 +127,7 @@ export function Hero({ region }: LandingHeroProps) {
   return (
     <section
       ref={seccion}
-      className="relative isolate flex min-h-dvh flex-col justify-center overflow-hidden bg-hero pt-28 pb-20 text-hero-foreground sm:pt-32 lg:pb-28"
+      className="relative isolate flex min-h-dvh flex-col justify-center overflow-hidden bg-hero pt-24 pb-16 text-hero-foreground sm:pt-32 sm:pb-20 lg:pb-28"
     >
       {/* Escala de sobra para que el parallax no descubra el borde en ningún
           ancho. Sin desenfoque: la sala es la mitad del argumento de venta */}
@@ -156,22 +156,25 @@ export function Hero({ region }: LandingHeroProps) {
         style={{ y: yContenido, opacity: opacidadContenido }}
         className={cn(
           CONTENEDOR,
-          "relative grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-8"
+          "relative grid grid-cols-1 items-center gap-12 sm:gap-16 lg:grid-cols-12 lg:gap-8"
         )}
       >
         <div className="lg:col-span-5">
+          {/* En el teléfono, con menos tracking y menos aire: con los de
+              escritorio el rótulo en mayúsculas no cabía en una línea a 360 px y
+              la pastilla se partía en dos. */}
           <p
-            className="entra-hero inline-flex items-center gap-2 rounded-full border border-hero-borde bg-hero-superficie/60 px-4 py-2 text-xs font-medium tracking-widest text-hero-primary uppercase backdrop-blur-md"
+            className="entra-hero inline-flex max-w-full items-center gap-2 rounded-full border border-hero-borde bg-hero-superficie/60 px-3 py-1.5 text-[0.6875rem] font-medium tracking-[0.14em] text-hero-primary uppercase backdrop-blur-md sm:px-4 sm:py-2 sm:text-xs sm:tracking-widest"
             style={conRetardo(0)}
           >
-            <Sparkles className="size-3.5" aria-hidden />
+            <Sparkles className="size-3.5 shrink-0" aria-hidden />
             {t("insignia")}
           </p>
 
           {/* El titular entra palabra a palabra. Es la única cascada larga de la
               página, y va aquí porque es lo primero que se lee: en el resto
               sería ruido. */}
-          <h1 className="mt-8 text-5xl leading-[0.95] font-black tracking-tight text-balance sm:text-6xl xl:text-7xl">
+          <h1 className="mt-6 text-[2.625rem] leading-[0.98] font-black tracking-tight text-balance sm:mt-8 sm:text-6xl sm:leading-[0.95] xl:text-7xl">
             <Palabras texto={t("titularUno")} desde={RETARDO_TITULAR} />
             <Palabras
               texto={t("titularDos")}
@@ -181,20 +184,24 @@ export function Hero({ region }: LandingHeroProps) {
           </h1>
 
           <p
-            className="entra-hero mt-7 max-w-lg text-base leading-relaxed text-hero-muted sm:text-lg"
+            className="entra-hero mt-5 max-w-lg text-base leading-relaxed text-hero-muted sm:mt-7 sm:text-lg"
             style={conRetardo(RETARDO_ENTRADA)}
           >
             {t("entrada")}
           </p>
 
+          {/* En el teléfono los dos botones van a todo el ancho y apilados, así
+              que la altura de escritorio (`h-14`) se multiplicaba por dos: un
+              bloque de 128 px que empujaba la prueba y las señales fuera de la
+              primera pantalla. `h-12` es lo que pide un pulgar y nada más. */}
           <div
-            className="entra-hero mt-9 flex flex-col gap-4 sm:flex-row"
+            className="entra-hero mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:gap-4"
             style={conRetardo(RETARDO_ENTRADA + 60)}
           >
             <Button
               render={<a href={rutasApp.registro} />}
               nativeButton={false}
-              className="group/cta h-14 rounded-2xl bg-hero-primary px-7 text-base font-semibold text-hero-primary-foreground shadow-lg transition-transform hover:bg-hero-primary/85 focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5"
+              className="group/cta h-12 rounded-xl bg-hero-primary px-6 text-[0.9375rem] font-semibold text-hero-primary-foreground shadow-lg transition-transform hover:bg-hero-primary/85 focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5 sm:h-14 sm:rounded-2xl sm:px-7 sm:text-base"
             >
               {t("ctaPrimario")}
               <ArrowRight
@@ -206,7 +213,7 @@ export function Hero({ region }: LandingHeroProps) {
               render={<Link href={rutas.precios} />}
               nativeButton={false}
               variant="ghost"
-              className="h-14 rounded-2xl border border-hero-borde bg-hero-superficie/50 px-7 text-base font-semibold text-hero-foreground backdrop-blur-md transition-transform hover:bg-hero-superficie/80 hover:text-hero-foreground focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5"
+              className="h-12 rounded-xl border border-hero-borde bg-hero-superficie/50 px-6 text-[0.9375rem] font-semibold text-hero-foreground backdrop-blur-md transition-transform hover:bg-hero-superficie/80 hover:text-hero-foreground focus-visible:ring-hero-primary/40 motion-safe:hover:-translate-y-0.5 sm:h-14 sm:rounded-2xl sm:px-7 sm:text-base"
             >
               {t("ctaSecundario")}
             </Button>
@@ -220,7 +227,7 @@ export function Hero({ region }: LandingHeroProps) {
           </p>
 
           <ul
-            className="entra-hero mt-10 flex flex-wrap items-center gap-x-6 gap-y-3"
+            className="entra-hero mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 sm:mt-10 sm:gap-x-6"
             style={conRetardo(RETARDO_ENTRADA + 180)}
           >
             {CLAVES_SENAL.map((clave) => {

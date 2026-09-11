@@ -47,7 +47,7 @@ export function EncabezadoSeccion({
   return (
     <RevelarEnScroll
       className={cn(
-        "flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12",
+        "flex flex-col gap-6 sm:gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12",
         className
       )}
     >
@@ -55,13 +55,15 @@ export function EncabezadoSeccion({
         <p className="text-xs font-medium tracking-widest text-primary uppercase">{etiqueta}</p>
         <Titulo
           className={cn(
-            "mt-4 font-bold tracking-tight text-balance",
-            nivel === "h1" ? "text-4xl sm:text-5xl lg:text-6xl" : "text-3xl sm:text-4xl lg:text-5xl"
+            "mt-3 font-bold tracking-tight text-balance sm:mt-4",
+            nivel === "h1"
+              ? "text-[2.125rem] leading-tight sm:text-5xl lg:text-6xl"
+              : "text-[1.75rem] leading-tight sm:text-4xl lg:text-5xl"
           )}
         >
           {titulo}
         </Titulo>
-        <p className="mt-5 text-base leading-relaxed text-pretty text-muted-foreground sm:text-lg">
+        <p className="mt-4 text-base leading-relaxed text-pretty text-muted-foreground sm:mt-5 sm:text-lg">
           {entrada}
         </p>
       </div>

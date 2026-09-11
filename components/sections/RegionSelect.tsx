@@ -47,7 +47,7 @@ export function RegionSelect({ region, operados }: RegionSelectProps) {
   }
 
   return (
-    <div className="flex shrink-0 items-center gap-2">
+    <div className="flex shrink-0 flex-wrap items-center gap-2">
       <Globe className="size-4 text-muted-foreground" aria-hidden />
       <label htmlFor="region-precios" className="text-sm text-muted-foreground">
         {t("verPreciosEn")}

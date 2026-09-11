@@ -64,7 +64,9 @@ export function VistaPrevia({
         enlace={enlace}
       />
 
-      <ol className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
+      {/* Tres columnas desde `md` y no desde `sm`: a 640 px cada tarjeta se
+          quedaba en 180 px de ancho, con el título partido en tres líneas. */}
+      <ol className="mt-10 grid grid-cols-1 gap-4 sm:mt-14 sm:gap-6 md:grid-cols-3">
         {/* El envoltorio de la animación ES el `<li>`, no un `<div>` metido
             entre la lista y sus elementos: eso dejaba la `<ol>` con hijos que no
             son elementos de lista, y para un lector de pantalla los tres pasos
@@ -86,7 +88,7 @@ export function VistaPrevia({
             {/* Hilo entre pasos: la secuencia se ve, no se deduce */}
             {indice < CLAVES_PASO.length - 1 && (
               <span
-                className="absolute top-1/2 -right-3 hidden h-px w-6 bg-border sm:block"
+                className="absolute top-1/2 -right-3 hidden h-px w-6 bg-border md:block"
                 aria-hidden
               />
             )}
@@ -96,7 +98,9 @@ export function VistaPrevia({
 
       <div
         className={
-          resumen ? "mt-12" : "mt-12 grid grid-cols-1 items-start gap-8 lg:grid-cols-5 lg:gap-10"
+          resumen
+            ? "mt-10 sm:mt-12"
+            : "mt-10 grid grid-cols-1 items-start gap-8 sm:mt-12 lg:grid-cols-5 lg:gap-10"
         }
       >
         <RevelarEnScroll recorrido="izquierda" className={resumen ? undefined : "lg:col-span-3"}>

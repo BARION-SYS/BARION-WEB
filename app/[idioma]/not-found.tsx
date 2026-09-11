@@ -20,7 +20,7 @@ export default function NoEncontrada() {
   const nav = useTranslations("navegacion")
 
   return (
-    <section className="flex min-h-dvh flex-col items-center justify-center px-6 py-32 text-center">
+    <section className="flex min-h-dvh flex-col items-center justify-center px-5 py-28 text-center sm:px-6 sm:py-32">
       <p className="text-xs font-medium tracking-widest text-primary uppercase">{t("codigo")}</p>
       <h1 className="mt-4 max-w-2xl text-3xl font-bold tracking-tight text-balance sm:text-4xl">
         {t("titulo")}
@@ -28,12 +28,12 @@ export default function NoEncontrada() {
       <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground">
         {t("entrada")}
       </p>
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+      <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
         <Button
           render={<Link href={rutas.inicio} />}
           nativeButton={false}
           size="lg"
-          className="h-12 rounded-xl px-6 font-semibold"
+          className="h-11 rounded-xl px-6 font-semibold sm:h-12"
         >
           <ArrowLeft aria-hidden />
           {t("volver")}
@@ -43,7 +43,7 @@ export default function NoEncontrada() {
           nativeButton={false}
           variant="outline"
           size="lg"
-          className="h-12 rounded-xl px-6 font-semibold"
+          className="h-11 rounded-xl px-6 font-semibold sm:h-12"
         >
           {nav("entrar")}
         </Button>
