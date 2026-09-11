@@ -8,8 +8,8 @@ import type { Idioma } from "@/i18n/routing"
  * `NextIntlClientProvider` sin `messages` manda el catálogo entero, y la mitad
  * no la usa nadie en el cliente: `identidad` y `paginas` son metadatos que se
  * resuelven en el servidor, `legal` son los tres documentos, y `preguntas`,
- * `cierre`, `vistaPrevia` y `pie` los pintan componentes de servidor. En una
- * página legal eso son decenas de kilobytes de texto viajando para nada.
+ * `cierre` y `vistaPrevia` los pintan componentes de servidor. En una página
+ * legal eso son decenas de kilobytes de texto viajando para nada.
  *
  * Este sitio existe para posicionar, y lo que tarda en pintar no vende: acotar
  * el payload no es una micro-optimización, es la misma decisión por la que aquí
@@ -25,6 +25,9 @@ import type { Idioma } from "@/i18n/routing"
  */
 const ESPACIOS_DEL_CLIENTE = [
   "navegacion", // Nav
+  // Nav: los tres enlaces legales del menú móvil. Faltaba, y el menú pintaba las
+  // claves (`pie.terminos`) en vez de los nombres de los documentos.
+  "pie",
   "tema", // ThemeToggle
   "idioma", // SelectorIdioma
   "hero", // Hero
