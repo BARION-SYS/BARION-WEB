@@ -61,10 +61,13 @@ export function Nav() {
 
   return (
     <>
-      {/* Velo bajo el menú abierto. Sin él la lista flota sobre la página y el
-          ojo sigue leyendo lo de detrás; con él, el menú es lo único que hay.
-          Además es la salida grande: se pulsa fuera y se cierra.
-          
+      {/* Velo bajo el menú abierto. El menú ya ocupa la pantalla entera bajo la
+          barra, así que el velo solo se ve mientras entra y sale —y en un
+          teléfono apaisado—: es lo que evita que la página asome en esos
+          fotogramas. Es `bg-velo`, oscuro en los dos temas; con
+          `foreground/50` en oscuro salía casi blanco y la mitad de abajo de la
+          pantalla se veía como una capa blanca difuminada.
+
           Va como HERMANO de la cabecera y no dentro: la cabecera crea contexto
           de apilamiento, así que un hijo suyo con z negativo se pintaría encima
           de su propio fondo — el velo acabaría tiñendo la barra. Fuera, con
@@ -80,7 +83,7 @@ export function Nav() {
             exit={{ opacity: 0, transition: { duration: 0.15 } }}
             transition={{ duration: 0.25 }}
             onClick={() => setMenuAbierto(false)}
-            className="fixed inset-0 z-40 cursor-default bg-foreground/50 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 cursor-default bg-velo backdrop-blur-sm lg:hidden"
           />
         )}
       </AnimatePresence>
@@ -97,7 +100,11 @@ export function Nav() {
           "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
           sobreElHero
             ? "bg-transparent"
-            : "border-b border-border bg-background/80 shadow-sm backdrop-blur-xl supports-[backdrop-filter]:bg-background/65"
+            : menuAbierto
+              ? // Con el menú abierto la barra es sólida: translúcida dejaba ver
+                // la página difuminada entre la barra y la lista.
+                "border-b border-border bg-background"
+              : "border-b border-border bg-background/80 shadow-sm backdrop-blur-xl supports-[backdrop-filter]:bg-background/65"
         )}
       >
         <div
@@ -309,11 +316,16 @@ export function Nav() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8, transition: { duration: 0.15 } }}
               transition={{ type: "spring", stiffness: 260, damping: 28 }}
+              // Ocupa TODA la pantalla bajo la barra (su alto menos los 2 px de
+              // la pista de avance). A media altura, lo de debajo era página
+              // difuminada y se leía como un bloque vacío; entero, el menú es lo
+              // único que hay y lo secundario —lo legal, idioma, tema y entrar—
+              // queda anclado abajo, a mano del pulgar.
+              //
               // Mismo margen lateral que la barra, para que la lista quede
-              // alineada con el logotipo. Y con tope de alto: en un teléfono
-              // apaisado la lista entera no cabe, y sin scroll propio los
-              // últimos enlaces quedaban por debajo del borde de la pantalla.
-              className="max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain border-t border-border bg-background px-5 pt-2 pb-6 sm:max-h-[calc(100dvh-5rem)] sm:px-8 lg:hidden"
+              // alineada con el logotipo, y con scroll propio: en un teléfono
+              // apaisado la lista entera no cabe.
+              className="flex h-[calc(100dvh-4rem-2px)] flex-col overflow-y-auto overscroll-contain border-t border-border bg-background px-5 pt-2 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:h-[calc(100dvh-5rem-2px)] sm:px-8 lg:hidden"
               aria-label={t("aria")}
             >
               <motion.ul
@@ -368,38 +380,42 @@ export function Nav() {
                 ))}
               </motion.ul>
 
-              {/* Lo legal también en el menú móvil: es la única forma de cruzar
-                entre documentos sin recorrer uno entero hasta el pie, y desde
-                una página legal el menú es la única navegación a mano. */}
-              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-border pt-4">
-                {(["terminos", "privacidad", "cookies"] as const).map((documento) => (
-                  <Link
-                    key={documento}
-                    href={rutas[documento]}
-                    onClick={() => setMenuAbierto(false)}
-                    aria-current={activa(rutas[documento]) ? "page" : undefined}
-                    className={cn(
-                      "flex min-h-11 items-center text-sm transition-colors",
-                      activa(rutas[documento]) ? "text-primary" : "text-muted-foreground"
-                    )}
-                  >
-                    {legal(documento)}
-                  </Link>
-                ))}
-              </div>
+              {/* `mt-auto`: lo secundario baja al pie del menú y el hueco queda
+                entre la navegación y esto, no debajo de todo. */}
+              <div className="mt-auto pt-6">
+                {/* Lo legal también en el menú móvil: es la única forma de cruzar
+                  entre documentos sin recorrer uno entero hasta el pie, y desde
+                  una página legal el menú es la única navegación a mano. */}
+                <div className="flex flex-wrap gap-x-4 gap-y-1 border-t border-border pt-4">
+                  {(["terminos", "privacidad", "cookies"] as const).map((documento) => (
+                    <Link
+                      key={documento}
+                      href={rutas[documento]}
+                      onClick={() => setMenuAbierto(false)}
+                      aria-current={activa(rutas[documento]) ? "page" : undefined}
+                      className={cn(
+                        "flex min-h-11 items-center text-sm transition-colors",
+                        activa(rutas[documento]) ? "text-primary" : "text-muted-foreground"
+                      )}
+                    >
+                      {legal(documento)}
+                    </Link>
+                  ))}
+                </div>
 
-              {/* Los dos controles son `size-9` en la barra de escritorio; aquí se
-                pulsan con el pulgar y van a 40 px, el mínimo cómodo. */}
-              <div className="mt-2 flex items-center gap-2 border-t border-border pt-4 [&_button]:size-10">
-                <SelectorIdioma />
-                <ThemeToggle />
-                <a
-                  href={rutasApp.entrar}
-                  onClick={() => setMenuAbierto(false)}
-                  className="ml-auto flex min-h-11 items-center text-sm font-medium text-muted-foreground"
-                >
-                  {t("entrar")}
-                </a>
+                {/* Los dos controles son `size-9` en la barra de escritorio; aquí
+                  se pulsan con el pulgar y van a 40 px, el mínimo cómodo. */}
+                <div className="mt-2 flex items-center gap-2 border-t border-border pt-4 [&_button]:size-10">
+                  <SelectorIdioma />
+                  <ThemeToggle />
+                  <a
+                    href={rutasApp.entrar}
+                    onClick={() => setMenuAbierto(false)}
+                    className="ml-auto flex min-h-11 items-center text-sm font-medium text-muted-foreground"
+                  >
+                    {t("entrar")}
+                  </a>
+                </div>
               </div>
             </motion.nav>
           )}

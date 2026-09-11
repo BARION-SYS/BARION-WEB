@@ -32,6 +32,7 @@
   --color-hero-primary: var(--hero-primary);
   --color-hero-primary-foreground: var(--hero-primary-foreground);
   --color-hero-exito: var(--hero-exito);
+  --color-velo: var(--velo);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -134,6 +135,12 @@
   --hero-primary: #7d5c1b;
   --hero-primary-foreground: #ffffff;
   --hero-exito: #15803d;
+  /*
+    Velo bajo lo que se abre encima de la página (el menú móvil). Oscuro en los
+    DOS temas: estaba escrito como `foreground/50`, y en oscuro `foreground` es
+    casi blanco — el velo blanqueaba la página en vez de apagarla.
+  */
+  --velo: #18181b73;
   /* Radio contenido: formularios e inputs rectos suaves, no circulares */
   --radius: 0.45rem;
   --sidebar: #ffffff;
@@ -189,6 +196,7 @@
   --hero-primary: #d4a843;
   --hero-primary-foreground: #0a0a0b;
   --hero-exito: #34d399;
+  --velo: #000000a6;
   --sidebar: #111113;
   --sidebar-foreground: #fafafa;
   --sidebar-primary: #d4a843;
