@@ -458,7 +458,7 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
           className="-top-5 -left-3 sm:-left-10"
           icono={<UserPlus className="size-3.5 text-hero-primary" aria-hidden />}
           titulo={panel("clienteRegistrado")}
-          detalle="Camila Ortega · desde el escaparate"
+          detalle={panel("reservoEnLinea", { cliente: "Camila Ortega" })}
           retardo={1}
           profundidad={70}
         />
@@ -466,7 +466,7 @@ export function HeroPanel({ moneda, locale, progreso }: LandingHeroPanelProps) {
           className="-bottom-7 left-4 sm:left-10"
           icono={<CheckCircle2 className="size-3.5 text-hero-exito" aria-hidden />}
           titulo={panel("recordatorioEnviado")}
-          detalle="Cita de mañana · 10:30"
+          detalle={panel("citaDeManana", { hora: "10:30" })}
           retardo={1.15}
           profundidad={90}
         />

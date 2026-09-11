@@ -403,7 +403,9 @@
       "ticketPromedio": "Ticket promedio",
       "servicioTop": "Servicio top",
       "clienteRegistrado": "Cliente registrado",
+      "reservoEnLinea": "{cliente} · reservó en línea",
       "recordatorioEnviado": "Recordatorio enviado",
+      "citaDeManana": "Cita de mañana · {hora}",
       "proximaCita": "Próxima cita"
     },
     "escaparate": {

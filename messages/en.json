@@ -404,7 +404,9 @@
       "ticketPromedio": "Average ticket",
       "servicioTop": "Top service",
       "clienteRegistrado": "Client added",
+      "reservoEnLinea": "{cliente} · booked online",
       "recordatorioEnviado": "Reminder sent",
+      "citaDeManana": "Tomorrow's appointment · {hora}",
       "proximaCita": "Next appointment"
     },
     "escaparate": {
